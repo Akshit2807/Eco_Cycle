@@ -1,5 +1,5 @@
-import 'package:e_waste/presentation/views/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'core/router/app_router.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -10,7 +10,8 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'E-Waste',
-      home: SplashScreen(),
+      initialRoute: '/',
+      onGenerateRoute: AppRouter.generateRoute,
     );
   }
 }
