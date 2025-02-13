@@ -7,7 +7,11 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("Signup"),
+        child: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/home');
+            },
+            child: Text("Tap to go Home Screen")),
       ),
     );
   }
