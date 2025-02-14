@@ -1,5 +1,7 @@
+import 'package:e_waste/viewmodels/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'core/router/app_router.dart';
 
 class MyApp extends StatelessWidget {
@@ -8,11 +10,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'E-Waste',
-      initialRoute: '/',
-      onGenerateRoute: AppRouter.generateRoute,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+      ],
+      child: const GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'E-Waste',
+        initialRoute: '/',
+        onGenerateRoute: AppRouter.generateRoute,
+      ),
     );
   }
 }

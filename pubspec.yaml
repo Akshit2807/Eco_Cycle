@@ -41,6 +41,8 @@ dependencies:
   get: ^4.6.6
   flutter_speed_dial: ^7.0.0
   firebase_core: ^3.10.1
+  provider: ^6.1.2
+  firebase_auth: ^5.4.2
 
 dev_dependencies:
   flutter_test:
