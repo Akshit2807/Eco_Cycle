@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:e_waste/core/router/app_router.dart';
+import 'package:e_waste/widgets/carousel_slider.dart';
 import 'package:e_waste/widgets/custom_button.dart';
 import 'package:e_waste/widgets/custom_text.dart';
+import 'package:e_waste/widgets/percentage_sized_box.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,7 +16,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   CarouselSliderController con = CarouselSliderController();
-  int ind = 0;
+  final SplashController currentIndex = Get.put(SplashController());
   List<String> imgList = [
     "assets/splash0.png",
     "assets/splash1.png",
@@ -64,62 +66,46 @@ class _SplashScreenState extends State<SplashScreen> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
-              CarouselSlider.builder(
-                carouselController: con,
-                itemCount: 4,
-                itemBuilder: (context, index, pageViewIndex) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        image: DecorationImage(
-                            fit: BoxFit.scaleDown,
-                            image: AssetImage(imgList[index]))),
-                  );
-                },
-                options: CarouselOptions(
-                    autoPlay: true,
-                    autoPlayCurve: Curves.easeInOut,
-                    autoPlayAnimationDuration:
-                        const Duration(milliseconds: 500),
-                    viewportFraction: 1,
-                    initialPage: 0,
-                    enableInfiniteScroll: false,
-                    pageSnapping: true,
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    scrollPhysics: const BouncingScrollPhysics(),
-                    onPageChanged: (index, pageChangeReason) {
-                      setState(() {
-                        ind = index;
-                      });
-                    }),
+              AppCarouselSlider(
+                con: con,
+                imgList: imgList,
+                currentIndex: currentIndex,
               ),
-              CustomText(
-                textName: texts[ind],
-                fontWeight: FontWeight.bold,
-                textColor: const Color(0xff232323),
-                letterSpacing: 2,
-                textAlign: TextAlign.center,
-                fontSize: 24,
-              ),
+              Obx(() => Column(
+                    children: [
+                      /// Changing Text
+                      CustomText(
+                        textName: texts[currentIndex.ind.value],
+                        fontWeight: FontWeight.bold,
+                        textColor: const Color(0xff232323),
+                        letterSpacing: 2,
+                        textAlign: TextAlign.center,
+                        fontSize: 24,
+                      ),
+
+                      /// Spacing
+                      PercentSizedBox.height(0.05),
+
+                      /// Dot Indicator
+                      AnimatedSmoothIndicator(
+                        activeIndex: currentIndex.ind.value,
+                        count: 4,
+                        curve: Curves.easeInOut,
+                        duration: const Duration(milliseconds: 300),
+                        effect: const WormEffect(
+                          dotHeight: 16,
+                          dotWidth: 16,
+                          spacing: 16,
+                          dotColor: Color(0xff232323),
+                          activeDotColor: Color(0xff4CAF50),
+                          type: WormType.normal,
+                        ),
+                      ),
+                    ],
+                  )),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
-              ),
-              AnimatedSmoothIndicator(
-                activeIndex: ind,
-                count: 4,
-                curve: Curves.easeInOut,
-                duration: const Duration(milliseconds: 300),
-                effect: const WormEffect(
-                  dotHeight: 16,
-                  dotWidth: 16,
-                  spacing: 16,
-                  dotColor: Color(0xff232323),
-                  activeDotColor: Color(0xff4CAF50),
-                  type: WormType.normal,
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
+                width: double.maxFinite,
               ),
               CustomButton(
                   onTap: () {
