@@ -64,6 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '131913164620',
     projectId: 'e-waste-d44a8',
     storageBucket: 'e-waste-d44a8.firebasestorage.app',
+    iosClientId: '131913164620-1f77jk5nnk0tjkg2iurcf3c63ob1k6k9.apps.googleusercontent.com',
     iosBundleId: 'com.example.eWaste',
   );
 
@@ -73,6 +74,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '131913164620',
     projectId: 'e-waste-d44a8',
     storageBucket: 'e-waste-d44a8.firebasestorage.app',
+    iosClientId: '131913164620-1f77jk5nnk0tjkg2iurcf3c63ob1k6k9.apps.googleusercontent.com',
     iosBundleId: 'com.example.eWaste',
   );
 
@@ -85,4 +87,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'e-waste-d44a8.firebasestorage.app',
     measurementId: 'G-DGE36ZSDZD',
   );
+
 }

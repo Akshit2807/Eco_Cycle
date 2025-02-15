@@ -12,7 +12,12 @@
           "package_name": "com.example.e_waste"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "131913164620-pkvtc6p96caojbln0q247u8n04kqrnc2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBLY6XLifEJovvUjqthRrhtryJKFVLs2gQ"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "131913164620-pkvtc6p96caojbln0q247u8n04kqrnc2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "131913164620-1f77jk5nnk0tjkg2iurcf3c63ob1k6k9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eWaste"
+              }
+            }
+          ]
         }
       }
     }
