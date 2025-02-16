@@ -1,4 +1,5 @@
 import 'package:e_waste/presentation/dashboard/home_screen.dart';
+import 'package:e_waste/presentation/views/auth/auth_screen.dart';
 import 'package:e_waste/presentation/views/auth/login_screen.dart';
 import 'package:e_waste/presentation/views/auth/signup_screen.dart';
 import 'package:e_waste/presentation/views/splash_screen.dart';
@@ -15,6 +16,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => SignupScreen());
       case '/home':
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case '/auth':
+        return MaterialPageRoute(builder: (_) => const AuthScreen());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(
