@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import '../core/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+import '../core/services/auth_service.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -62,5 +63,22 @@ class AuthViewModel extends ChangeNotifier {
           content: Text("Logged out successfully!"),
           backgroundColor: Colors.blue),
     );
+  }
+
+  Future<void> signInWithGoogle(BuildContext context) async {
+    try {
+      _user = await _authService.signInWithGoogle();
+      notifyListeners();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text("Google Sign-In successful!"),
+            backgroundColor: Colors.green),
+      );
+    } catch (error) {
+      print(error.toString());
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.toString()), backgroundColor: Colors.red),
+      );
+    }
   }
 }

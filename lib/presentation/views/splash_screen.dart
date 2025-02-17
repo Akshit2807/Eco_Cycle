@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      /// Head Text
+                      /// App Name
                       const CustomText(
                         textName: "Eco Cycle",
                         fontWeight: FontWeight.bold,
@@ -55,6 +55,8 @@ class _SplashScreenState extends State<SplashScreen> {
                         textAlign: TextAlign.center,
                         fontSize: 32,
                       ),
+
+                      /// App Logo
                       Container(
                         height: 80,
                         width: 80,
@@ -65,9 +67,9 @@ class _SplashScreenState extends State<SplashScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.05,
-                ),
+                PercentSizedBox.height(0.05),
+
+                /// Top Image carousel
                 AppCarouselSlider(
                   con: con,
                   imgList: imgList,
@@ -113,7 +115,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 /// Sign Up Button
                 CustomButton(
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, '/signup');
+                      Navigator.pushNamed(context, '/auth');
                     },
                     color: const Color(0xff4CAF50),
                     child: const CustomText(
@@ -136,7 +138,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacementNamed(context, '/login');
+                        Navigator.pushNamed(context, '/login');
                       },
                       child: const CustomText(
                         textName: "Sign in",
