@@ -47,9 +47,9 @@ class _AuthScreenState extends State<AuthScreen> {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      body: SafeArea(
-        child: LayoutBuilder(
+    return SafeArea(
+      child: Scaffold(
+        body: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
               child: ConstrainedBox(
@@ -84,8 +84,8 @@ class _AuthScreenState extends State<AuthScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _authTab('Sign Up', !isLogin), // Sign Up tab
-                          _authTab('Login', isLogin), // Login tab
+                          _authTab('Sign Up', !isLogin, false), // Sign Up tab
+                          _authTab('Login', isLogin, true), // Login tab
                         ],
                       ),
 
@@ -196,7 +196,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 label: const Text(' Continue with Google',
                                     style: TextStyle(color: Colors.black)),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFFF1F1F1),
+                                  backgroundColor: const Color(0xFFF1F1F1),
                                   padding: EdgeInsets.symmetric(
                                       vertical: size.height * 0.015),
                                 ),
@@ -296,7 +296,7 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   // Builds the tab selector for Login/Signup with styling
-  Widget _authTab(String text, bool active) {
+  Widget _authTab(String text, bool active, bool isLoginTile) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.41,
       child: GestureDetector(
@@ -305,7 +305,20 @@ class _AuthScreenState extends State<AuthScreen> {
           padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
             color: active ? Colors.green : Colors.white,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.only(
+              topLeft: isLoginTile
+                  ? const Radius.circular(0)
+                  : const Radius.circular(10),
+              topRight: isLoginTile
+                  ? const Radius.circular(10)
+                  : const Radius.circular(0),
+              bottomRight: isLoginTile
+                  ? const Radius.circular(10)
+                  : const Radius.circular(0),
+              bottomLeft: isLoginTile
+                  ? const Radius.circular(0)
+                  : const Radius.circular(10),
+            ),
           ),
           alignment: Alignment.center,
           child: Text(
