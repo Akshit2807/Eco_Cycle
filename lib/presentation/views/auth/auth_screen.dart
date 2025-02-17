@@ -157,7 +157,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   await authViewModel.signInWithGoogle(context);
                                   if (authViewModel.user != null) {
                                     Navigator.pushReplacementNamed(
-                                        context, '/dashboard');
+                                        context, '/home');
                                   }
                                 },
                                 icon: Image.asset('assets/google_logo.png',
