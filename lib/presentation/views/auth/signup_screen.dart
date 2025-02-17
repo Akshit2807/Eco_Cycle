@@ -25,11 +25,11 @@ class SignupScreen extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await authViewModel.signUp(
-                    context, emailController.text, passwordController.text);
-                if (authViewModel.user != null) {
-                  Navigator.pushReplacementNamed(context, '/nav');
-                }
+                // await authViewModel.signUp(
+                //     context, emailController.text, passwordController.text);
+                // if (authViewModel.user != null) {
+                //   Navigator.pushReplacementNamed(context, '/nav');
+                // }
               },
               child: Text("Sign Up"),
             ),

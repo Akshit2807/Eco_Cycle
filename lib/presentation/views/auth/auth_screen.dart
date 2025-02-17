@@ -1,3 +1,4 @@
+import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/viewmodels/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,8 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   bool isLogin = false;
 
   // Toggles between Login and Signup screens
@@ -117,6 +120,30 @@ class _AuthScreenState extends State<AuthScreen> {
                                 isObscure: true,
                                 controller: passwordController,
                                 isEmail: false),
+                            if (isLogin)
+                              GestureDetector(
+                                onTap: () {
+                                  forgetButtonAction(
+                                    authViewModel: authViewModel,
+                                    context: context,
+                                  );
+                                },
+                                child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Forget Password?",
+                                      style: TextStyle(
+                                          color: AppColors.placeHolder,
+                                          fontWeight: FontWeight.w500),
+                                    )),
+                              ),
+                            if (!isLogin)
+                              _buildTextField(
+                                  label: 'Confirm Password',
+                                  icon: Icons.lock,
+                                  isObscure: true,
+                                  controller: confirmPasswordController,
+                                  isEmail: false),
                             const SizedBox(height: 20),
 
                             /// Login/SignUp Button
@@ -211,28 +238,60 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  // Login Button Action
+  // Forget Pass Button Action
+  void forgetButtonAction({
+    required AuthViewModel authViewModel,
+    required BuildContext context,
+  }) async {
+    if (emailController.text == null || emailController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text("Enter Valid Email"), backgroundColor: Colors.red),
+      );
+    } else if (!RegExp(
+            r'^(?!.*\s)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+        .hasMatch(emailController.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text("Enter Valid Email"), backgroundColor: Colors.red),
+      );
+    } else {
+      await authViewModel.forgetPass(
+        context,
+        emailController.text,
+      );
+    }
+  }
 
+  // Login Button Action
   void loginButtonAction({
     required AuthViewModel authViewModel,
     required BuildContext context,
   }) async {
-    await authViewModel.signIn(
-        context, emailController.text, passwordController.text);
-    if (authViewModel.user != null) {
+    await authViewModel.signIn(context, emailController.text,
+        passwordController.text, nameController.text);
+    if (authViewModel.userInfoMap != null) {
       Navigator.pushReplacementNamed(context, '/nav');
     }
   }
-  // SignUp Button Action
 
+  // SignUp Button Action
   void signUpButtonAction({
     required AuthViewModel authViewModel,
     required BuildContext context,
   }) async {
-    await authViewModel.signUp(
-        context, emailController.text, passwordController.text);
-    if (authViewModel.user != null) {
-      Navigator.pushReplacementNamed(context, '/nav');
+    if (passwordController.text != confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text("Confirm password does not match"),
+            backgroundColor: Colors.red),
+      );
+    } else {
+      await authViewModel.signUp(context, emailController.text,
+          passwordController.text, nameController.text);
+      if (authViewModel.user != null) {
+        Navigator.pushReplacementNamed(context, '/nav');
+      }
     }
   }
 
