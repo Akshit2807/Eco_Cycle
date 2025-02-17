@@ -1,4 +1,6 @@
+import 'package:e_waste/core/utils/custom_nav_bar.dart';
 import 'package:e_waste/presentation/dashboard/home_screen.dart';
+import 'package:e_waste/presentation/views/auth/auth_screen.dart';
 import 'package:e_waste/presentation/views/auth/login_screen.dart';
 import 'package:e_waste/presentation/views/auth/signup_screen.dart';
 import 'package:e_waste/presentation/views/splash_screen.dart';

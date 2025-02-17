@@ -100,19 +100,23 @@ class _AuthScreenState extends State<AuthScreen> {
                                   label: 'Name',
                                   icon: Icons.person,
                                   isObscure: false,
-                                  controller: nameController),
+                                  controller: nameController,
+                                  isEmail: false),
 
-                            /// Default text feilds
+                            /// Default text fields
                             _buildTextField(
-                                label: 'Email',
-                                icon: Icons.email,
-                                isObscure: false,
-                                controller: emailController),
+                              label: 'Email',
+                              icon: Icons.email,
+                              isObscure: false,
+                              controller: emailController,
+                              isEmail: true,
+                            ),
                             _buildTextField(
                                 label: 'Password',
                                 icon: Icons.lock,
                                 isObscure: true,
-                                controller: passwordController),
+                                controller: passwordController,
+                                isEmail: false),
                             const SizedBox(height: 20),
 
                             /// Login/SignUp Button
@@ -137,7 +141,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 ),
                                 child: Text(
                                   isLogin ? 'Login' : 'Sign Up',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
@@ -157,7 +161,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   await authViewModel.signInWithGoogle(context);
                                   if (authViewModel.user != null) {
                                     Navigator.pushReplacementNamed(
-                                        context, '/home');
+                                        context, '/nav');
                                   }
                                 },
                                 icon: Image.asset('assets/google_logo.png',
@@ -216,7 +220,7 @@ class _AuthScreenState extends State<AuthScreen> {
     await authViewModel.signIn(
         context, emailController.text, passwordController.text);
     if (authViewModel.user != null) {
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/nav');
     }
   }
   // SignUp Button Action
@@ -228,7 +232,7 @@ class _AuthScreenState extends State<AuthScreen> {
     await authViewModel.signUp(
         context, emailController.text, passwordController.text);
     if (authViewModel.user != null) {
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/nav');
     }
   }
 
@@ -261,10 +265,23 @@ class _AuthScreenState extends State<AuthScreen> {
       {required String label,
       required IconData icon,
       required bool isObscure,
-      required TextEditingController controller}) {
+      required TextEditingController controller,
+      required bool isEmail}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextField(
+      child: TextFormField(
+        validator: (value) {
+          if (isEmail) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter an email';
+            } else if (!RegExp(
+                    r'^(?!.*\s)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                .hasMatch(value)) {
+              return 'Enter a valid email';
+            }
+          }
+          return null;
+        },
         controller: controller,
         obscureText: isObscure,
         decoration: InputDecoration(
