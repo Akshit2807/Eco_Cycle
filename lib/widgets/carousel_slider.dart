@@ -26,9 +26,7 @@ class _AppCarouselSliderState extends State<AppCarouselSlider> {
         return Container(
           decoration: BoxDecoration(
               color: Colors.transparent,
-              image: DecorationImage(
-                  fit: BoxFit.scaleDown,
-                  image: AssetImage(widget.imgList[index]))),
+              image: DecorationImage(image: AssetImage(widget.imgList[index]))),
         );
       },
       options: CarouselOptions(

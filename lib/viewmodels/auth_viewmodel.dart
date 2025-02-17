@@ -13,8 +13,15 @@ class AuthViewModel extends ChangeNotifier {
       _user = await _authService.signIn(email, password);
       notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text("Login successful!"), backgroundColor: Colors.green),
+        const SnackBar(
+            margin: EdgeInsets.only(
+              bottom: kBottomNavigationBarHeight + 16,
+              left: 16,
+              right: 16,
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: Text("Login successful!"),
+            backgroundColor: Colors.green),
       );
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -29,8 +36,15 @@ class AuthViewModel extends ChangeNotifier {
       _user = await _authService.signUp(email, password);
       notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text("Signup successful!"), backgroundColor: Colors.green),
+        const SnackBar(
+            margin: EdgeInsets.only(
+              bottom: kBottomNavigationBarHeight + 16,
+              left: 16,
+              right: 16,
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: Text("Signup successful!"),
+            backgroundColor: Colors.green),
       );
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(

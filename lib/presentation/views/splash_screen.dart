@@ -113,7 +113,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 /// Sign Up Button
                 CustomButton(
                     onTap: () {
-                      Navigator.pushNamed(context, '/signup');
+                      Navigator.pushReplacementNamed(context, '/signup');
                     },
                     color: const Color(0xff4CAF50),
                     child: const CustomText(
@@ -136,7 +136,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, '/login');
+                        Navigator.pushReplacementNamed(context, '/login');
                       },
                       child: const CustomText(
                         textName: "Sign in",

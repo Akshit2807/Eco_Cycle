@@ -10,32 +10,32 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: Text("Login")),
+      appBar: AppBar(title: const Text("Login")),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
                 controller: emailController,
-                decoration: InputDecoration(labelText: "Email")),
+                decoration: const InputDecoration(labelText: "Email")),
             TextField(
                 controller: passwordController,
                 obscureText: true,
-                decoration: InputDecoration(labelText: "Password")),
-            SizedBox(height: 20),
+                decoration: const InputDecoration(labelText: "Password")),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 await authViewModel.signIn(
                     context, emailController.text, passwordController.text);
                 if (authViewModel.user != null) {
-                  Navigator.pushReplacementNamed(context, '/home');
+                  Navigator.pushReplacementNamed(context, '/nav');
                 }
               },
-              child: Text("Login"),
+              child: const Text("Login"),
             ),
             TextButton(
               onPressed: () => Navigator.pushNamed(context, '/signup'),
-              child: Text("Don't have an account? Sign Up"),
+              child: const Text("Don't have an account? Sign Up"),
             )
           ],
         ),
