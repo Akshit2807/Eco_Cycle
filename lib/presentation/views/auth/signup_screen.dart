@@ -28,7 +28,7 @@ class SignupScreen extends StatelessWidget {
                 await authViewModel.signUp(
                     context, emailController.text, passwordController.text);
                 if (authViewModel.user != null) {
-                  Navigator.pushReplacementNamed(context, '/home');
+                  Navigator.pushReplacementNamed(context, '/nav');
                 }
               },
               child: Text("Sign Up"),

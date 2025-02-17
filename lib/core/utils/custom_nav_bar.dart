@@ -1,47 +1,111 @@
-import 'package:e_waste/widgets/percentage_sized_box.dart';
+import 'package:e_waste/core/utils/app_colors.dart';
+import 'package:e_waste/core/utils/app_icons.dart';
+import 'package:e_waste/presentation/dashboard/community_screen.dart';
+import 'package:e_waste/presentation/dashboard/home_screen.dart';
+import 'package:e_waste/presentation/dashboard/marketplace_screen.dart';
+import 'package:e_waste/presentation/dashboard/reward_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:get/get.dart';
 
-class CustomBottomNavigation extends StatefulWidget {
-  RxInt selectedIndex;
+class NavigationScreen extends StatelessWidget {
+  const NavigationScreen({super.key});
 
-  CustomBottomNavigation({super.key, required this.selectedIndex});
-
-  @override
-  State<CustomBottomNavigation> createState() => _CustomBottomNavigationState();
-}
-
-class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
   @override
   Widget build(BuildContext context) {
-    return ClipPath(
-      clipper: CustomBottomBarClipper(),
-      child: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        currentIndex: widget.selectedIndex.value,
-        onTap: (int newIndex) {
-          widget.selectedIndex.value = newIndex;
-        },
-        items: [
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.people, color: Colors.grey, size: 30),
-              label: "Home"),
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.storefront, color: Colors.green, size: 30),
-              label: "Store"),
-          BottomNavigationBarItem(
-              icon: PercentSizedBox.width(0.04), label: "Store"),
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart, color: Colors.grey, size: 30),
-              label: "Cart"),
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.emoji_events, color: Colors.grey, size: 30),
-              label: "Events")
-        ],
+    RxInt selectedIndex = 0.obs;
+    final PageController pageController = PageController(initialPage: 0);
+    const List pages = [
+      HomeScreen(),
+      CommunityScreen(),
+      MarketplaceScreen(),
+      RewardScreen()
+    ];
+    return Scaffold(
+      backgroundColor: AppColors.white,
+
+      /// Navigation Screens
+      body: PageView.builder(
+          onPageChanged: (int newIndex) {
+            selectedIndex.value = newIndex;
+          },
+          itemCount: 4,
+          controller: pageController,
+          itemBuilder: (BuildContext context, int index) {
+            return Obx(() => pages[selectedIndex.value]);
+          }),
+
+      /// Bottom Bar Centre Button
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
+      floatingActionButton: const CustomBottomNavigationCentreButton(),
+
+      /// Bottom Nav Bar
+      bottomNavigationBar: CustomBottomNavigation(
+        selectedIndex: selectedIndex,
       ),
+    );
+  }
+}
+
+//TODO: Convert into class
+class CustomBottomNavigation extends StatelessWidget {
+  final RxInt selectedIndex;
+
+  const CustomBottomNavigation({super.key, required this.selectedIndex});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        ClipPath(
+          clipper: CustomBottomBarClipper(),
+          child: Container(
+            height: kBottomNavigationBarHeight + 10,
+            width: double.infinity,
+            color: AppColors.placeHolder,
+          ),
+        ),
+        ClipPath(
+          clipper: CustomBottomBarClipper(),
+          child: Obx(
+            () => BottomNavigationBar(
+              backgroundColor: AppColors.white,
+              elevation: 0,
+              showSelectedLabels: true,
+              type: BottomNavigationBarType.fixed,
+              showUnselectedLabels: true,
+              currentIndex: selectedIndex.value >= 2
+                  ? selectedIndex.value + 1
+                  : selectedIndex.value,
+              onTap: (int newIndex) {
+                if (newIndex == 2) return; // Skip SizedBox index
+                selectedIndex.value = newIndex > 2 ? newIndex - 1 : newIndex;
+              },
+              selectedItemColor: AppColors.green,
+              unselectedItemColor: AppColors.placeHolder,
+              items: [
+                BottomNavigationBarItem(
+                    icon: ImageIcon(AssetImage(AppIcons.home), size: 30),
+                    label: "Home"),
+                BottomNavigationBarItem(
+                    icon: ImageIcon(AssetImage(AppIcons.community), size: 30),
+                    label: "Community"),
+                const BottomNavigationBarItem(
+                    icon: SizedBox.shrink(), label: ''), // Spacer
+                BottomNavigationBarItem(
+                    icon: ImageIcon(AssetImage(AppIcons.marketplace), size: 30),
+                    label: "Marketplace"),
+                BottomNavigationBarItem(
+                    icon: ImageIcon(AssetImage(AppIcons.rewards), size: 30),
+                    label: "Rewards")
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -53,7 +117,7 @@ class CustomBottomBarClipper extends CustomClipper<Path> {
     double width = size.width;
     double height = size.height;
     double radius = 24; // Maintain radius
-    double deepness = 40; // Increase this for a deeper cutout
+    double deepness = 34; // Increase this for a deeper cutout
 
     Path path = Path();
     path.lineTo((width / 2) - (radius * 2), 0);
