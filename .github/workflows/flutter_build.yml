@@ -3,7 +3,7 @@ name: Flutter Build & Release
 on:
   push:
     branches:
-      - main  # Change this to your default branch if needed
+      - main
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.5.4'  # Ensure this matches your pubspec.yaml
+          flutter-version: '3.5.4'
           channel: stable
 
       - name: Install dependencies
