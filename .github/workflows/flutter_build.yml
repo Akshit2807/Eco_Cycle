@@ -3,7 +3,8 @@ name: Flutter Builder
 on:
   push:
     branches:
-      - master
+      - master  # Change to `main` if your repo uses that
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   build:
@@ -11,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Setup Flutter
@@ -19,16 +20,25 @@ jobs:
         with:
           flutter-version: "3.29.0"
           channel: stable
+          cache: true  # Enables caching
 
-      - name: Install dependencies
+      - name: Restore Cached Dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+            build/
+          key: flutter-deps-${{ hashFiles('pubspec.yaml') }}
+          restore-keys: |
+            flutter-deps-
+
+      - name: Install Dependencies
         run: flutter pub get
 
       - name: Build APK
         run: flutter build apk --release
-      - name: Build IPA
-        run: flutter build ios --release
 
-      - name: Upload APK as artifact
+      - name: Upload APK as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-apk
@@ -40,17 +50,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download built APK
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Built APK
         uses: actions/download-artifact@v4
         with:
           name: release-apk
           path: build/app/outputs/flutter-apk/
 
+      - name: Check for Changes
+        id: check_changes
+        run: echo "CHANGES=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.${{ github.run_number }}
-          name: Release v1.${{ github.run_number }}
+          tag_name: "v1.${{ github.run_number }}-${{ env.CHANGES }}"
+          name: "Release v1.${{ github.run_number }}-${{ env.CHANGES }}"
           body: "New release of the app with latest changes."
           files: build/app/outputs/flutter-apk/app-release.apk
         env:
