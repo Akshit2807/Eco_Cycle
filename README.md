@@ -1,4 +1,4 @@
-# e_waste
+# e_waste_man
 
 A new Flutter project.
 
