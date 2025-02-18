@@ -25,11 +25,11 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await authViewModel.signIn(
-                    context, emailController.text, passwordController.text);
-                if (authViewModel.user != null) {
-                  Navigator.pushReplacementNamed(context, '/nav');
-                }
+                // await authViewModel.signIn(
+                //     context, emailController.text, passwordController.text,nameController.text);
+                // if (authViewModel.user != null) {
+                //   Navigator.pushReplacementNamed(context, '/nav');
+                // }
               },
               child: const Text("Login"),
             ),

@@ -22,28 +22,33 @@ class NavigationScreen extends StatelessWidget {
       MarketplaceScreen(),
       RewardScreen()
     ];
-    return Scaffold(
-      backgroundColor: AppColors.white,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.white,
 
-      /// Navigation Screens
-      body: PageView.builder(
-          onPageChanged: (int newIndex) {
-            selectedIndex.value = newIndex;
-          },
-          itemCount: 4,
-          controller: pageController,
-          itemBuilder: (BuildContext context, int index) {
-            return Obx(() => pages[selectedIndex.value]);
-          }),
+        /// Navigation Screens
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
+          child: PageView.builder(
+              onPageChanged: (int newIndex) {
+                selectedIndex.value = newIndex;
+              },
+              itemCount: 4,
+              controller: pageController,
+              itemBuilder: (BuildContext context, int index) {
+                return Obx(() => pages[selectedIndex.value]);
+              }),
+        ),
 
-      /// Bottom Bar Centre Button
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
-      floatingActionButton: const CustomBottomNavigationCentreButton(),
+        /// Bottom Bar Centre Button
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.miniCenterDocked,
+        floatingActionButton: const CustomBottomNavigationCentreButton(),
 
-      /// Bottom Nav Bar
-      bottomNavigationBar: CustomBottomNavigation(
-        selectedIndex: selectedIndex,
+        /// Bottom Nav Bar
+        bottomNavigationBar: CustomBottomNavigation(
+          selectedIndex: selectedIndex,
+        ),
       ),
     );
   }
