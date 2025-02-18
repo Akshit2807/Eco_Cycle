@@ -1,4 +1,4 @@
-name: Flutter Build & Release
+name: Flutter Builder
 
 on:
   push:
