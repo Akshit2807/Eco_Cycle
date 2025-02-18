@@ -3,8 +3,8 @@ name: Flutter Builder
 on:
   push:
     branches:
-      - master  # Change to `main` if your repo uses that
-  workflow_dispatch:  # Allows manual triggering
+      - master # agr koi specific branch related triggering krni ho to yhn uss branch ka naam daal dena
+  workflow_dispatch:  # For the situations like apne hath jaggannath
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
         with:
           flutter-version: "3.29.0"
           channel: stable
-          cache: true  # Enables caching
+          cache: true
 
       - name: Restore Cached Dependencies
         uses: actions/cache@v3
