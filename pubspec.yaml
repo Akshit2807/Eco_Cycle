@@ -36,4 +36,6 @@ flutter:
   assets:
      - assets/
      - assets/icons/
+     - assets/splash/
+     - assets/home/
 

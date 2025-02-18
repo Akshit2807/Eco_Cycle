@@ -18,10 +18,10 @@ class _SplashScreenState extends State<SplashScreen> {
   CarouselSliderController con = CarouselSliderController();
   final SplashController currentIndex = Get.put(SplashController());
   List<String> imgList = [
-    "assets/splash0.png",
-    "assets/splash1.png",
-    "assets/splash2.png",
-    "assets/splash3.png",
+    "assets/splash/splash0.png",
+    "assets/splash/splash1.png",
+    "assets/splash/splash2.png",
+    "assets/splash/splash3.png",
   ];
   List<String> texts = [
     "♻️ Recycle Today for a Greener Tomorrow!",
