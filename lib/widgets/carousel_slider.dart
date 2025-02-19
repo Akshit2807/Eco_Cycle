@@ -6,11 +6,13 @@ class AppCarouselSlider extends StatefulWidget {
   final CarouselSliderController con;
   final List<String> imgList;
   final SplashController currentIndex;
+  final double height;
   const AppCarouselSlider(
       {super.key,
       required this.con,
       required this.imgList,
-      required this.currentIndex});
+      required this.currentIndex,
+      required this.height});
 
   @override
   State<AppCarouselSlider> createState() => _AppCarouselSliderState();
@@ -24,8 +26,9 @@ class _AppCarouselSliderState extends State<AppCarouselSlider> {
       itemCount: widget.imgList.length,
       itemBuilder: (context, index, pageViewIndex) {
         return Container(
+          width: double.maxFinite,
           decoration: BoxDecoration(
-              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(16),
               image: DecorationImage(image: AssetImage(widget.imgList[index]))),
         );
       },
@@ -37,7 +40,7 @@ class _AppCarouselSliderState extends State<AppCarouselSlider> {
           initialPage: 0,
           enableInfiniteScroll: false,
           pageSnapping: true,
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: widget.height,
           scrollPhysics: const BouncingScrollPhysics(),
           onPageChanged: (index, pageChangeReason) {
             widget.currentIndex.change(index);

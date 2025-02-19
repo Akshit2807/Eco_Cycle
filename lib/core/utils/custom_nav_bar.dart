@@ -28,7 +28,7 @@ class NavigationScreen extends StatelessWidget {
 
         /// Navigation Screens
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 40),
           child: PageView.builder(
               onPageChanged: (int newIndex) {
                 selectedIndex.value = newIndex;

@@ -74,6 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   con: con,
                   imgList: imgList,
                   currentIndex: currentIndex,
+                  height: MediaQuery.of(context).size.height * 0.4,
                 ),
                 Obx(() => Column(
                       children: [
