@@ -3,69 +3,73 @@ import 'package:e_waste/core/utils/app_icons.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
-Row customAppBar(
-    {required bool isHome,
-    required String title,
-    required String rank,
-    required String points,
-    required Image prf}) {
+Row customAppBar({
+  required BuildContext context,
+  required bool isHome,
+  required String title,
+  required String rank,
+  required String points,
+  required Image prf,
+}) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  double screenHeight = MediaQuery.of(context).size.height;
+
   return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      CustomText(
-        textName: title,
-        fontSize: 28,
-        fontWeight: FontWeight.bold,
+      Expanded(
+        child: CustomText(
+          textName: title,
+          fontSize: screenWidth * 0.06, // Adjusts dynamically
+          fontWeight: FontWeight.bold,
+        ),
       ),
       const Spacer(),
-      if (isHome)
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-          width: 56,
-          height: 28,
-          decoration: BoxDecoration(
-              border: Border.all(color: AppColors.green, width: 3),
-              borderRadius: BorderRadius.circular(30)),
-          child: Row(
-            children: [
-              Image.asset(AppIcons.leaderboard),
-              const Spacer(),
-              CustomText(
-                textName: rank,
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-              )
-            ],
-          ),
+      if (isHome) ...[
+        _buildStatContainer(
+          screenWidth,
+          icon: AppIcons.leaderboard,
+          text: rank,
         ),
-      if (isHome)
-        const SizedBox(
-          width: 6,
+        SizedBox(width: screenWidth * 0.02),
+        _buildStatContainer(
+          screenWidth,
+          icon: AppIcons.medal,
+          text: points,
         ),
-      if (isHome)
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-          width: 56,
-          height: 28,
-          decoration: BoxDecoration(
-              border: Border.all(color: AppColors.green, width: 3),
-              borderRadius: BorderRadius.circular(30)),
-          child: Row(
-            children: [
-              Image.asset(AppIcons.medal),
-              const Spacer(),
-              CustomText(
-                textName: points,
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-              )
-            ],
-          ),
-        ),
-      if (isHome)
-        const SizedBox(
-          width: 8,
-        ),
-      CircleAvatar(radius: 28, child: prf),
+        SizedBox(width: screenWidth * 0.03),
+      ],
+      CircleAvatar(
+        radius: screenWidth * 0.07, // Dynamic size
+        child: prf,
+      ),
     ],
+  );
+}
+
+Widget _buildStatContainer(double screenWidth,
+    {required String icon, required String text}) {
+  return Container(
+    padding: EdgeInsets.symmetric(
+      horizontal: screenWidth * 0.015,
+      vertical: screenWidth * 0.007,
+    ),
+    width: screenWidth * 0.15, // Scalable width
+    height: screenWidth * 0.07, // Scalable height
+    decoration: BoxDecoration(
+      border: Border.all(color: AppColors.green, width: 2),
+      borderRadius: BorderRadius.circular(30),
+    ),
+    child: Row(
+      children: [
+        Image.asset(icon, width: screenWidth * 0.05), // Dynamic icon size
+        const Spacer(),
+        CustomText(
+          textName: text,
+          fontSize: screenWidth * 0.03, // Scalable font size
+          fontWeight: FontWeight.w400,
+        ),
+      ],
+    ),
   );
 }

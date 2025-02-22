@@ -1,24 +1,13 @@
+import 'package:e_waste/core/controller/login/login_ctrl.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
+import 'package:e_waste/core/utils/text_validator.dart';
 import 'package:e_waste/viewmodels/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.green),
-      home: const AuthScreen(),
-    );
-  }
-}
+import 'auth_actions.dart';
+import 'google_signin.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -28,271 +17,206 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
-  bool isLogin = false;
-
-  // Toggles between Login and Signup screens
-  void toggleAuthMode() {
-    setState(() {
-      isLogin = !isLogin;
-    });
-  }
+  LoginController loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     final size = MediaQuery.of(context).size;
 
-    return SafeArea(
-      child: Scaffold(
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
-                child: IntrinsicHeight(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SizedBox(height: size.height * 0.05),
-
-                      /// Head Image
-                      Image.asset('assets/auth_top_screen.png',
-                          height: size.height * 0.2, fit: BoxFit.contain),
-
-                      const SizedBox(height: 10),
-
-                      ///Head Text
-                      const Text(
-                        'Join Us in Building a Greener Tomorrow!',
-                        style: TextStyle(
-                            fontSize: 24,
-                            // fontWeight: FontWeight.bold,
-                            color: Colors.green),
-                        textAlign: TextAlign.center,
-                      ),
-
-                      const SizedBox(height: 20),
-
-                      /// Sliding tab
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+    return Scaffold(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return GetBuilder(
+              init: loginController,
+              builder: (ctrl) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: IntrinsicHeight(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          _authTab('Sign Up', !isLogin, false), // Sign Up tab
-                          _authTab('Login', isLogin, true), // Login tab
-                        ],
-                      ),
+                          SizedBox(height: size.height * 0.05),
 
-                      const SizedBox(height: 20),
+                          /// Head Image
+                          Image.asset('assets/auth_top_screen.png',
+                              height: size.height * 0.2, fit: BoxFit.contain),
 
-                      Padding(
-                        key: ValueKey<bool>(isLogin),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: size.width * 0.08),
-                        child: Column(
-                          children: [
-                            /// Text field when signUp
-                            if (!isLogin)
-                              _buildTextField(
-                                  label: 'Name',
-                                  icon: Icons.person,
+                          const SizedBox(height: 10),
+
+                          ///Head Text
+                          const Text(
+                            'Join Us in Building a Greener Tomorrow!',
+                            style: TextStyle(
+                                fontSize: 24,
+                                // fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                            textAlign: TextAlign.center,
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          /// Sliding tab
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _authTab('Sign Up', !ctrl.isLogin,
+                                  false), // Sign Up tab
+                              _authTab(
+                                  'Login', ctrl.isLogin, true), // Login tab
+                            ],
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          Padding(
+                            key: ValueKey<bool>(ctrl.isLogin),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: size.width * 0.08),
+                            child: Column(
+                              children: [
+                                /// Text field when signUp
+                                if (!ctrl.isLogin)
+                                  _buildTextField(
+                                      label: 'Name',
+                                      icon: Icons.person,
+                                      isObscure: false,
+                                      controller: ctrl.nameController,
+                                      validator: (name) =>
+                                          TxtValidator.validateNull(name)),
+
+                                /// Default text fields
+
+                                /// Email field
+                                _buildTextField(
+                                  label: 'Email',
+                                  icon: Icons.email,
                                   isObscure: false,
-                                  controller: nameController,
-                                  isEmail: false),
+                                  controller: ctrl.emailController,
+                                  validator: (email) =>
+                                      TxtValidator.validateEmail(email),
+                                ),
 
-                            /// Default text fields
-                            _buildTextField(
-                              label: 'Email',
-                              icon: Icons.email,
-                              isObscure: false,
-                              controller: emailController,
-                              isEmail: true,
-                            ),
-                            _buildTextField(
-                                label: 'Password',
-                                icon: Icons.lock,
-                                isObscure: true,
-                                controller: passwordController,
-                                isEmail: false),
-                            if (isLogin)
-                              GestureDetector(
-                                onTap: () {
-                                  forgetButtonAction(
-                                    authViewModel: authViewModel,
-                                    context: context,
-                                  );
-                                },
-                                child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Forget Password?",
-                                      style: TextStyle(
-                                          color: AppColors.placeHolder,
-                                          fontWeight: FontWeight.w500),
-                                    )),
-                              ),
-                            if (!isLogin)
-                              _buildTextField(
-                                  label: 'Confirm Password',
+                                /// Password field
+                                _buildTextField(
+                                  label: 'Password',
                                   icon: Icons.lock,
                                   isObscure: true,
-                                  controller: confirmPasswordController,
-                                  isEmail: false),
-                            const SizedBox(height: 20),
+                                  controller: ctrl.passwordController,
+                                  validator: (password) =>
+                                      TxtValidator.validatePassword(password),
+                                ),
 
-                            /// Login/SignUp Button
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  isLogin
-                                      ? loginButtonAction(
-                                          authViewModel: authViewModel,
-                                          context: context,
-                                        )
-                                      : signUpButtonAction(
-                                          authViewModel: authViewModel,
-                                          context: context,
-                                        );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: size.height * 0.015),
-                                ),
-                                child: Text(
-                                  isLogin ? 'Login' : 'Sign Up',
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            const Text('OR',
-                                style: TextStyle(color: Colors.grey)),
-                            const SizedBox(height: 10),
+                                /// Forget Password
+                                if (ctrl.isLogin)
+                                  GestureDetector(
+                                    onTap: () {
+                                      forgetButtonAction(
+                                        authViewModel: authViewModel,
+                                        context: context,
+                                      );
+                                    },
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          "Forget Password?",
+                                          style: TextStyle(
+                                              color: AppColors.placeHolder,
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                  ),
 
-                            ///Google sign in
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton.icon(
-                                onPressed: () async {
-                                  await authViewModel.signInWithGoogle(context);
-                                  if (authViewModel.user != null) {
-                                    Navigator.pushReplacementNamed(
-                                        context, '/nav');
-                                  }
-                                },
-                                icon: Image.asset('assets/google_logo.png',
-                                    height: 24),
-                                label: const Text(' Continue with Google',
-                                    style: TextStyle(color: Colors.black)),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFF1F1F1),
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: size.height * 0.015),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            TextButton(
-                              onPressed:
-                                  toggleAuthMode, // Switch between login and signup
-                              child: RichText(
-                                text: TextSpan(
-                                  text: isLogin
-                                      ? "Don't have an account? "
-                                      : "Already have an account? ",
-                                  style: const TextStyle(color: Colors.black),
-                                  children: [
-                                    TextSpan(
-                                      text: isLogin ? "Sign Up" : "Login",
+                                /// Confirm Password field
+                                if (!ctrl.isLogin)
+                                  _buildTextField(
+                                    label: 'Confirm Password',
+                                    icon: Icons.lock,
+                                    isObscure: true,
+                                    controller: ctrl.confirmPasswordController,
+                                    validator: (confirmPassword) =>
+                                        TxtValidator.validatePassword(
+                                            confirmPassword),
+                                  ),
+                                const SizedBox(height: 20),
+
+                                /// Login/SignUp Button
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      ctrl.isLogin
+                                          ? loginButtonAction(
+                                              authViewModel: authViewModel,
+                                              context: context,
+                                            )
+                                          : signUpButtonAction(
+                                              authViewModel: authViewModel,
+                                              context: context,
+                                            );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: size.height * 0.015),
+                                    ),
+                                    child: Text(
+                                      ctrl.isLogin ? 'Login' : 'Sign Up',
                                       style: const TextStyle(
-                                          color: Colors.green,
+                                          color: Colors.white,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(height: 10),
+                                const Text('OR',
+                                    style: TextStyle(color: Colors.grey)),
+                                const SizedBox(height: 10),
+
+                                ///Google sign in
+                                googleSignIn(authViewModel, context, size),
+
+                                const SizedBox(height: 10),
+
+                                TextButton(
+                                  onPressed: ctrl
+                                      .toggleAuthMode, // Switch between login and signup
+                                  child: RichText(
+                                    text: TextSpan(
+                                      text: ctrl.isLogin
+                                          ? "Don't have an account? "
+                                          : "Already have an account? ",
+                                      style:
+                                          const TextStyle(color: Colors.black),
+                                      children: [
+                                        TextSpan(
+                                          text: ctrl.isLogin
+                                              ? "Sign Up"
+                                              : "Login",
+                                          style: const TextStyle(
+                                              color: Colors.green,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          const Spacer(),
+                        ],
                       ),
-                      const Spacer(),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            );
-          },
-        ),
+                );
+              });
+        },
       ),
     );
-  }
-
-  // Forget Pass Button Action
-  void forgetButtonAction({
-    required AuthViewModel authViewModel,
-    required BuildContext context,
-  }) async {
-    if (emailController.text == null || emailController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text("Enter Valid Email"), backgroundColor: Colors.red),
-      );
-    } else if (!RegExp(
-            r'^(?!.*\s)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-        .hasMatch(emailController.text)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text("Enter Valid Email"), backgroundColor: Colors.red),
-      );
-    } else {
-      await authViewModel.forgetPass(
-        context,
-        emailController.text,
-      );
-    }
-  }
-
-  // Login Button Action
-  void loginButtonAction({
-    required AuthViewModel authViewModel,
-    required BuildContext context,
-  }) async {
-    await authViewModel.signIn(context, emailController.text,
-        passwordController.text, nameController.text);
-    if (authViewModel.userInfoMap != null) {
-      Navigator.pushReplacementNamed(context, '/nav');
-    }
-  }
-
-  // SignUp Button Action
-  void signUpButtonAction({
-    required AuthViewModel authViewModel,
-    required BuildContext context,
-  }) async {
-    if (passwordController.text != confirmPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text("Confirm password does not match"),
-            backgroundColor: Colors.red),
-      );
-    } else {
-      await authViewModel.signUp(context, emailController.text,
-          passwordController.text, nameController.text);
-      if (authViewModel.user != null) {
-        Navigator.pushReplacementNamed(context, '/nav');
-      }
-    }
   }
 
   // Builds the tab selector for Login/Signup with styling
@@ -300,7 +224,7 @@ class _AuthScreenState extends State<AuthScreen> {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.41,
       child: GestureDetector(
-        onTap: toggleAuthMode,
+        onTap: ctrl.toggleAuthMode,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
@@ -338,22 +262,11 @@ class _AuthScreenState extends State<AuthScreen> {
       required IconData icon,
       required bool isObscure,
       required TextEditingController controller,
-      required bool isEmail}) {
+      String? Function(String?)? validator}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
-        validator: (value) {
-          if (isEmail) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter an email';
-            } else if (!RegExp(
-                    r'^(?!.*\s)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-                .hasMatch(value)) {
-              return 'Enter a valid email';
-            }
-          }
-          return null;
-        },
+        validator: validator,
         controller: controller,
         obscureText: isObscure,
         decoration: InputDecoration(
