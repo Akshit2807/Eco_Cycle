@@ -26,10 +26,12 @@ class _AppCarouselSliderState extends State<AppCarouselSlider> {
       itemCount: widget.imgList.length,
       itemBuilder: (context, index, pageViewIndex) {
         return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 24.0),
           width: double.maxFinite,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              image: DecorationImage(image: AssetImage(widget.imgList[index]))),
+              image: DecorationImage(
+                  fit: BoxFit.cover, image: AssetImage(widget.imgList[index]))),
         );
       },
       options: CarouselOptions(

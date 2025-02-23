@@ -23,7 +23,7 @@ Row customAppBar(
           width: 56,
           height: 28,
           decoration: BoxDecoration(
-              border: Border.all(color: AppColors.green, width: 3),
+              border: Border.all(color: AppColors.green, width: 2),
               borderRadius: BorderRadius.circular(30)),
           child: Row(
             children: [
@@ -47,7 +47,7 @@ Row customAppBar(
           width: 56,
           height: 28,
           decoration: BoxDecoration(
-              border: Border.all(color: AppColors.green, width: 3),
+              border: Border.all(color: AppColors.green, width: 2),
               borderRadius: BorderRadius.circular(30)),
           child: Row(
             children: [

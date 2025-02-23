@@ -16,7 +16,7 @@ class RewardScreen extends StatelessWidget {
         children: [
           /// App Bar
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: customAppBar(
                 isHome: false,
                 title: "Rewards",
@@ -36,7 +36,7 @@ class RewardScreen extends StatelessWidget {
           /// Rewards Section
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
-            margin: const EdgeInsets.symmetric(horizontal: 32.0),
+            margin: const EdgeInsets.symmetric(horizontal: 24.0),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(16)),
             child: Column(
@@ -77,7 +77,7 @@ class RewardScreen extends StatelessWidget {
           /// Point History Section
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
-            margin: const EdgeInsets.symmetric(horizontal: 32.0),
+            margin: const EdgeInsets.symmetric(horizontal: 24.0),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(16)),
             child: Column(

@@ -16,7 +16,7 @@ class CommunityScreen extends StatelessWidget {
         children: [
           /// App Bar
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 0),
             child: customAppBar(
                 isHome: false,
                 title: "Blogs",
@@ -70,7 +70,7 @@ class CommunityScreen extends StatelessWidget {
                         child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           padding: const EdgeInsets.only(
-                              right: 32, left: 32, top: 0),
+                              right: 24, left: 24, top: 0),
                           itemCount: 10,
                           itemBuilder: (context, index) {
                             return communityViews().buildBlogCard();

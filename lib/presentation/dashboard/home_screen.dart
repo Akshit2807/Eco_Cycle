@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
       children: [
         /// App Bar
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: customAppBar(
               isHome: true,
               title: "Eco Cycle",

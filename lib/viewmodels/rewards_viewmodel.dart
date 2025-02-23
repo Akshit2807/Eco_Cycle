@@ -8,7 +8,7 @@ class rewardView {
   Padding buildYourRank(
       String name, String rank, String points, ImageProvider prf) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Container(
         height: 108,
         alignment: Alignment.topCenter,
