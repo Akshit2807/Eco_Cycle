@@ -41,8 +41,8 @@ class RouteNavigation {
       case authScreenRoute:
         return _customFadeRoute(child: const AuthScreen());
 
-      case homeScreenRoute:
-        return _customFadeRoute(child: const HomeScreen());
+      // case homeScreenRoute:
+      //   return _customFadeRoute(child: const HomeScreen());
 
       // case resetPasswordScreenRoute:
       //   final args = settings.arguments as Map<String, dynamic>? ?? {};
@@ -74,7 +74,8 @@ class RouteNavigation {
           page: () => Scaffold(
             body: Center(
               child: Text('No route defined for ${settings.name}',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold)),
             ),
           ),
         );

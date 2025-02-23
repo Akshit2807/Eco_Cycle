@@ -13,7 +13,11 @@ class communityViews {
       child: Column(
         children: [
           /// Image
-          Image.asset("assets/blog.png"),
+          Image.asset(
+            "assets/blog.png",
+            width: double.maxFinite,
+            fit: BoxFit.cover,
+          ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),
             child: CustomText(

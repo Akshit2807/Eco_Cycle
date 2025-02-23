@@ -4,7 +4,9 @@ import 'package:e_waste/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 
 class CommunityScreen extends StatelessWidget {
-  const CommunityScreen({super.key});
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const CommunityScreen({super.key, required this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class CommunityScreen extends StatelessWidget {
               title: "Blogs",
               rank: '12',
               points: '40',
+              scaffoldKey: scaffoldKey,
               prf: const Image(image: AssetImage("assets/prf.png")),
               context: context,
             ),

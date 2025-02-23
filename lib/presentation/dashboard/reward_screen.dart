@@ -4,7 +4,9 @@ import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class RewardScreen extends StatelessWidget {
-  const RewardScreen({super.key});
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const RewardScreen({super.key, required this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class RewardScreen extends StatelessWidget {
                 title: "Rewards",
                 rank: '12',
                 points: '40',
+                scaffoldKey: scaffoldKey,
                 prf: const Image(image: AssetImage("assets/prf.png")),
                 context: context,
               ),

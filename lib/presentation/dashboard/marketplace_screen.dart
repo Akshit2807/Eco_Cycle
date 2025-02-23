@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import '../../core/utils/app_colors.dart';
 
 class MarketplaceScreen extends StatefulWidget {
-  const MarketplaceScreen({super.key});
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const MarketplaceScreen({super.key, required this.scaffoldKey});
 
   @override
   State<MarketplaceScreen> createState() => _MarketplaceScreenState();
@@ -77,6 +79,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
               title: "Marketplace",
               rank: '12',
               points: '40',
+              scaffoldKey: widget.scaffoldKey,
               prf: const Image(image: AssetImage("assets/prf.png")),
               context: context,
             ),
