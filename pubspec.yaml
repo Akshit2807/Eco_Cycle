@@ -22,6 +22,8 @@ dependencies:
   firebase_auth: ^5.4.2
   google_sign_in: ^6.2.2
   cloud_firestore: ^5.4.3
+  page_transition: ^2.2.1
+  animated_bottom_navigation_bar: ^1.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

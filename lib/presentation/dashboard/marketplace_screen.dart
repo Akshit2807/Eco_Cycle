@@ -3,6 +3,7 @@ import 'package:e_waste/viewmodels/marketplace_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:e_waste/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
+
 import '../../core/utils/app_colors.dart';
 
 class MarketplaceScreen extends StatefulWidget {
@@ -65,80 +66,82 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        /// App Bar
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 0),
-          child: customAppBar(
+    return SafeArea(
+      child: Column(
+        children: [
+          /// App Bar
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 0),
+            child: customAppBar(
               isHome: false,
               title: "Marketplace",
               rank: '12',
               points: '40',
-              prf: const Image(image: AssetImage("assets/prf.png"))),
-        ),
-
-        const SizedBox(
-          height: 12,
-        ),
-
-        /// Search Bar
-        buildSearchBar(),
-
-        /// Tab Bar
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            physics: const BouncingScrollPhysics(),
-            child: Row(
-              children: _tabs.asMap().entries.map((entry) {
-                final index = entry.key;
-                final tab = entry.value;
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: FilterChip(
-                    selected: _selectedTabIndex == index,
-                    label: CustomText(
-                      textName: tab,
-                      textColor: _selectedTabIndex == index
-                          ? Colors.white
-                          : AppColors.green,
-                    ),
-                    backgroundColor: Colors.white,
-                    selectedColor: Colors.green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      side: BorderSide(
-                        color: _selectedTabIndex == index
-                            ? Colors.transparent
-                            : AppColors.green,
-                      ),
-                    ),
-                    onSelected: (bool selected) {
-                      setState(() {
-                        _selectedTabIndex = index;
-                      });
-                    },
-                  ),
-                );
-              }).toList(),
+              prf: const Image(image: AssetImage("assets/prf.png")),
+              context: context,
             ),
           ),
-        ),
 
-        /// Product Grid
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          const SizedBox(
+            height: 12,
+          ),
+
+          /// Search Bar
+          buildSearchBar(),
+
+          /// Tab Bar
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 2),
+            // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              child: Row(
+                children: _tabs.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final tab = entry.value;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: FilterChip(
+                      selected: _selectedTabIndex == index,
+                      label: CustomText(
+                        textName: tab,
+                        textColor: _selectedTabIndex == index
+                            ? Colors.white
+                            : AppColors.green,
+                      ),
+                      backgroundColor: Colors.white,
+                      selectedColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        side: BorderSide(
+                          color: _selectedTabIndex == index
+                              ? Colors.transparent
+                              : AppColors.green,
+                        ),
+                      ),
+                      onSelected: (bool selected) {
+                        setState(() {
+                          _selectedTabIndex = index;
+                        });
+                      },
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+
+          /// Product Grid
+          Expanded(
             child: GridView.builder(
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.all(16),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 1,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
               ),
               itemCount: _products.length,
               itemBuilder: (context, index) {
@@ -147,8 +150,8 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
               },
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
