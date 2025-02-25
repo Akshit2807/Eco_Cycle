@@ -10,6 +10,7 @@ Row customAppBar({
   required String rank,
   required String points,
   required Image prf,
+  required GlobalKey<ScaffoldState> scaffoldKey,
 }) {
   double screenWidth = MediaQuery.of(context).size.width;
   double screenHeight = MediaQuery.of(context).size.height;
@@ -17,12 +18,11 @@ Row customAppBar({
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      Expanded(
-        child: CustomText(
-          textName: title,
-          fontSize: screenWidth * 0.06, // Adjusts dynamically
-          fontWeight: FontWeight.bold,
-        ),
+      CustomText(
+        textName: title,
+        fontSize: screenWidth * 0.06, // Adjusts dynamically
+        fontWeight: FontWeight.bold,
+        maxLines: 1,
       ),
       const Spacer(),
       if (isHome) ...[
@@ -38,10 +38,16 @@ Row customAppBar({
           text: points,
         ),
         SizedBox(width: screenWidth * 0.03),
+        SizedBox(width: screenWidth * 0.03),
       ],
-      CircleAvatar(
-        radius: screenWidth * 0.07, // Dynamic size
-        child: prf,
+      GestureDetector(
+        onTap: () {
+          scaffoldKey.currentState?.openDrawer();
+        },
+        child: CircleAvatar(
+          radius: screenWidth * 0.07, // Dynamic size
+          child: prf,
+        ),
       ),
     ],
   );

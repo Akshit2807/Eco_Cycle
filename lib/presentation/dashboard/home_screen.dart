@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
   const HomeScreen({
     super.key,
+    required this.scaffoldKey,
   });
 
   @override
@@ -24,12 +27,13 @@ class HomeScreen extends StatelessWidget {
         children: [
           /// App Bar
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: customAppBar(
               isHome: true,
               title: "Eco Cycle",
               rank: '12',
               points: '40',
+              scaffoldKey: scaffoldKey,
               prf: const Image(image: AssetImage("assets/prf.png")),
               context: context,
             ),

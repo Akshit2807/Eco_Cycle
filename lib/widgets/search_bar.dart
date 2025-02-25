@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 Padding buildSearchBar() {
   return Padding(
-    padding: const EdgeInsets.only(right: 32, left: 32),
+    padding: const EdgeInsets.only(right: 24, left: 24),
     child: Container(
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.green),

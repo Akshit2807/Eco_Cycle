@@ -17,4 +17,13 @@ class AppIcons {
   static String share = "assets/icons/share.png";
   static String gift = "assets/icons/gift.png";
   static String star = "assets/icons/star.png";
+  static String edit = "assets/icons/edit.png";
+  static String bookmark2 = "assets/icons/bookmark2.png";
+  static String faq = "assets/icons/faq.png";
+  static String bill = "assets/icons/bill.png";
+  static String help = "assets/icons/help.png";
+  static String sf = "assets/icons/sf.png";
+  static String setting = "assets/icons/setting.png";
+  static String logout = "assets/icons/logout.png";
+  static String back = "assets/icons/back.png";
 }

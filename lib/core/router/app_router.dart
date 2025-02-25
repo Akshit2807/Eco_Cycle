@@ -1,5 +1,7 @@
 import 'package:e_waste/presentation/dashboard/home_screen.dart';
+import 'package:e_waste/presentation/dashboard/reward_components/leaderboard_screen.dart';
 import 'package:e_waste/presentation/views/auth/auth_screen.dart';
+import 'package:e_waste/presentation/views/camera_screen.dart';
 import 'package:e_waste/presentation/views/navigation_screen.dart';
 import 'package:e_waste/presentation/views/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -32,17 +34,24 @@ class RouteNavigation {
   static const String homeScreenRoute = '/home';
   static const String authScreenRoute = '/auth';
   static const String navScreenRoute = '/nav';
-
+  static const String leaderboardScreenRoute = '/leaderboard';
+  static const String cameraScreenRoute = '/cam';
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splashScreenRoute:
         return _customFadeRoute(child: const SplashScreen());
-
       case authScreenRoute:
         return _customFadeRoute(child: const AuthScreen());
-
-      case homeScreenRoute:
-        return _customFadeRoute(child: const HomeScreen());
+      case leaderboardScreenRoute:
+        return _customFadeRoute(child: const LeaderboardScreen());
+      case cameraScreenRoute:
+        final args = settings.arguments as Map<String, dynamic>? ?? {};
+        return _customFadeRoute(
+            child: CameraScreen(
+          base64Image: args["base64Image"],
+        ));
+      // case homeScreenRoute:
+      //   return _customFadeRoute(child: const HomeScreen());
 
       // case resetPasswordScreenRoute:
       //   final args = settings.arguments as Map<String, dynamic>? ?? {};
@@ -74,7 +83,8 @@ class RouteNavigation {
           page: () => Scaffold(
             body: Center(
               child: Text('No route defined for ${settings.name}',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold)),
             ),
           ),
         );
