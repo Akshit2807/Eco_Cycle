@@ -2,6 +2,9 @@ import 'package:e_waste/core/utils/custom_app_bar.dart';
 import 'package:e_waste/viewmodels/rewards_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../core/router/app_router.dart';
 
 class RewardScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -17,7 +20,7 @@ class RewardScreen extends StatelessWidget {
           children: [
             /// App Bar
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: customAppBar(
                 isHome: false,
                 title: "Rewards",
@@ -33,15 +36,21 @@ class RewardScreen extends StatelessWidget {
             ),
 
             /// Your Ranking Card
-            rewardView().buildYourRank("Sarthak Patil", "#12", "40",
-                const AssetImage("assets/prf.png")),
+            rewardView().buildYourRank(
+                name: "Sarthak Patil",
+                rank: "#12",
+                points: "40",
+                prf: const AssetImage("assets/prf.png"),
+                onTap: () {
+                  Get.toNamed(RouteNavigation.leaderboardScreenRoute);
+                }),
             const SizedBox(height: 32),
 
             /// Rewards Section
             Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
-              margin: const EdgeInsets.symmetric(horizontal: 32.0),
+              margin: const EdgeInsets.symmetric(horizontal: 24.0),
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(16)),
               child: Column(
@@ -57,7 +66,7 @@ class RewardScreen extends StatelessWidget {
                       TextButton(
                         onPressed: () {},
                         child: const CustomText(
-                          textName: 'View More',
+                          textName: 'Reward History',
                           textColor: Color(0xff569FFF),
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -83,7 +92,7 @@ class RewardScreen extends StatelessWidget {
             Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
-              margin: const EdgeInsets.symmetric(horizontal: 32.0),
+              margin: const EdgeInsets.symmetric(horizontal: 24.0),
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(16)),
               child: Column(

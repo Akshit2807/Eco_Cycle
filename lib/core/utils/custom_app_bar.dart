@@ -18,12 +18,11 @@ Row customAppBar({
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      Expanded(
-        child: CustomText(
-          textName: title,
-          fontSize: screenWidth * 0.06, // Adjusts dynamically
-          fontWeight: FontWeight.bold,
-        ),
+      CustomText(
+        textName: title,
+        fontSize: screenWidth * 0.06, // Adjusts dynamically
+        fontWeight: FontWeight.bold,
+        maxLines: 1,
       ),
       const Spacer(),
       if (isHome) ...[

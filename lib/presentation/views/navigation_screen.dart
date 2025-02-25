@@ -1,10 +1,16 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:e_waste/core/services/camera_service.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/app_icons.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../core/router/app_router.dart';
 import '../dashboard/community_screen.dart';
 import '../dashboard/home_screen.dart';
 import '../dashboard/marketplace_screen.dart';
@@ -144,9 +150,19 @@ class NavigationScreen extends StatelessWidget {
 
       /// Floating Camera Button
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           // Camera button action
-          print("Camera Button Pressed");
+          String? base64 = await CameraService().imgToBase64();
+          if (base64 != null) {
+            Get.toNamed(RouteNavigation.cameraScreenRoute,
+                arguments: {"base64Image": base64});
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content: Text("Something Went Wrong"),
+                  backgroundColor: Colors.red),
+            );
+          }
         },
         backgroundColor: Colors.green,
         shape: const CircleBorder(),

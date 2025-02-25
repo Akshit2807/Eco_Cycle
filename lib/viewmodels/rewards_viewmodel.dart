@@ -6,7 +6,11 @@ import '../widgets/custom_text.dart';
 
 class rewardView {
   Padding buildYourRank(
-      String name, String rank, String points, ImageProvider prf) {
+      {required String name,
+      required String rank,
+      required String points,
+      required ImageProvider prf,
+      required void Function() onTap}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Container(
@@ -28,19 +32,26 @@ class rewardView {
                   textColor: AppColors.dark,
                 ),
                 const Spacer(),
-                const CustomText(
-                  textName: "View",
-                  textColor: Color(0xff569FFF),
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Image.asset(
-                  AppIcons.leaderboard,
-                  height: 27,
-                  width: 27,
+                GestureDetector(
+                  onTap: onTap,
+                  child: Row(
+                    children: [
+                      const CustomText(
+                        textName: "View",
+                        textColor: Color(0xff569FFF),
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Image.asset(
+                        AppIcons.leaderboard,
+                        height: 27,
+                        width: 27,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

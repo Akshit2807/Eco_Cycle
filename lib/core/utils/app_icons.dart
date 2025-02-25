@@ -25,4 +25,5 @@ class AppIcons {
   static String sf = "assets/icons/sf.png";
   static String setting = "assets/icons/setting.png";
   static String logout = "assets/icons/logout.png";
+  static String back = "assets/icons/back.png";
 }

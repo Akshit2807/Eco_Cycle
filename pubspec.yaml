@@ -24,6 +24,8 @@ dependencies:
   cloud_firestore: ^5.4.3
   page_transition: ^2.2.1
   animated_bottom_navigation_bar: ^1.4.0
+  image_picker: ^1.1.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

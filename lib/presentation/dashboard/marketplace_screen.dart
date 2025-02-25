@@ -73,7 +73,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
         children: [
           /// App Bar
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 0),
             child: customAppBar(
               isHome: false,
               title: "Marketplace",
@@ -94,7 +94,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
 
           /// Tab Bar
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 2),
+            margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
             // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -139,7 +139,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
           Expanded(
             child: GridView.builder(
               physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.only(right: 24, left: 24),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 1,
