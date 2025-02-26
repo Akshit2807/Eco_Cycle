@@ -1,9 +1,9 @@
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
-Padding buildSearchBar() {
+Padding buildSearchBar({required double padding}) {
   return Padding(
-    padding: const EdgeInsets.only(right: 24, left: 24),
+    padding: EdgeInsets.only(right: padding, left: padding),
     child: Container(
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.green),

@@ -27,29 +27,27 @@ class communityViews {
               fontSize: 12,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  icon: ImageIcon(AssetImage(AppIcons.up)),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: ImageIcon(AssetImage(AppIcons.comment)),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: ImageIcon(AssetImage(AppIcons.bookmark)),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: ImageIcon(AssetImage(AppIcons.share)),
-                  onPressed: () {},
-                ),
-              ],
-            ),
+          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                icon: ImageIcon(AssetImage(AppIcons.up)),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: ImageIcon(AssetImage(AppIcons.comment)),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: ImageIcon(AssetImage(AppIcons.bookmark)),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: ImageIcon(AssetImage(AppIcons.share)),
+                onPressed: () {},
+              ),
+            ],
           ),
         ],
       ),

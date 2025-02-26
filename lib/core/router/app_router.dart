@@ -1,5 +1,7 @@
 import 'package:e_waste/presentation/dashboard/home_screen.dart';
 import 'package:e_waste/presentation/dashboard/reward_components/leaderboard_screen.dart';
+import 'package:e_waste/presentation/dashboard/reward_components/point_history_screen.dart';
+import 'package:e_waste/presentation/dashboard/reward_components/reward_details_screen.dart';
 import 'package:e_waste/presentation/views/auth/auth_screen.dart';
 import 'package:e_waste/presentation/views/camera_screen.dart';
 import 'package:e_waste/presentation/views/navigation_screen.dart';
@@ -36,6 +38,8 @@ class RouteNavigation {
   static const String navScreenRoute = '/nav';
   static const String leaderboardScreenRoute = '/leaderboard';
   static const String cameraScreenRoute = '/cam';
+  static const String pointHistoryScreenRoute = '/pointHistory';
+  static const String rewardHistoryScreenRoute = '/rewardHistory';
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splashScreenRoute:
@@ -44,6 +48,10 @@ class RouteNavigation {
         return _customFadeRoute(child: const AuthScreen());
       case leaderboardScreenRoute:
         return _customFadeRoute(child: const LeaderboardScreen());
+      case pointHistoryScreenRoute:
+        return _customFadeRoute(child: const PointHistoryScreen());
+      case rewardHistoryScreenRoute:
+        return _customFadeRoute(child: const RewardDetailsScreen());
       case cameraScreenRoute:
         final args = settings.arguments as Map<String, dynamic>? ?? {};
         return _customFadeRoute(

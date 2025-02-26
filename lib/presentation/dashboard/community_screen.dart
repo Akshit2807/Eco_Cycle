@@ -62,7 +62,7 @@ class CommunityScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       /// Search Bar
-                      buildSearchBar(),
+                      buildSearchBar(padding: 24),
                       const SizedBox(
                         height: 24,
                       ),
