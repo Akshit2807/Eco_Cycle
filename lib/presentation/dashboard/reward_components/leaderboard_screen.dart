@@ -85,17 +85,22 @@ class LeaderboardScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                    margin: const EdgeInsets.only(top: 12, left: 12),
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(360),
-                        color: AppColors.white),
-                    child: ImageIcon(
-                      AssetImage(AppIcons.back),
-                      color: AppColors.green,
-                    )),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                      margin: const EdgeInsets.only(top: 12, left: 12),
+                      width: 56,
+                      height: 56,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(360),
+                          color: AppColors.white),
+                      child: ImageIcon(
+                        AssetImage(AppIcons.back),
+                        color: AppColors.green,
+                      )),
+                ),
                 const Padding(
                   padding: EdgeInsets.only(top: 12, left: 12),
                   child: CustomText(

@@ -106,9 +106,9 @@ class rewardView {
     );
   }
 
-  Padding buildRewardTile() {
+  Padding buildRewardTile({required double bottomPadding}) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: EdgeInsets.only(bottom: bottomPadding),
       child: Row(
         children: [
           Image.asset(AppIcons.gift),
@@ -139,19 +139,19 @@ class rewardView {
     );
   }
 
-  Padding buildPointHistoryTile() {
+  Padding buildPointHistoryTile({required String date, required int points}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
       child: Row(
         children: [
-          const CustomText(
-            textName: '04-01-2025',
+          CustomText(
+            textName: date,
             fontSize: 16,
             fontWeight: FontWeight.w400,
           ),
           const Spacer(),
           CustomText(
-            textName: '120',
+            textName: points.toString(),
             fontSize: 16,
             fontWeight: FontWeight.w400,
             textColor: AppColors.yellow,

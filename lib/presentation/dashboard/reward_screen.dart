@@ -1,4 +1,5 @@
 import 'package:e_waste/core/utils/custom_app_bar.dart';
+import 'package:e_waste/viewmodels/point_history_viewmodel.dart';
 import 'package:e_waste/viewmodels/rewards_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,18 @@ class RewardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<PointHistory> points = [
+      PointHistory(points: 10, date: "10 Jan 2023"),
+      PointHistory(points: 10, date: "10 Jan 2023"),
+      PointHistory(points: 10, date: "10 Jan 2023"),
+      PointHistory(points: 10, date: "10 Jan 2023"),
+      PointHistory(points: 10, date: "10 Jan 2023"),
+      PointHistory(points: 10, date: "10 Jan 2023"),
+      PointHistory(points: 10, date: "10 Jan 2023"),
+      PointHistory(points: 10, date: "10 Jan 2023"),
+      PointHistory(points: 10, date: "10 Jan 2023"),
+      PointHistory(points: 10, date: "10 Jan 2023"),
+    ];
     return SafeArea(
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -64,7 +77,9 @@ class RewardScreen extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(RouteNavigation.rewardHistoryScreenRoute);
+                        },
                         child: const CustomText(
                           textName: 'Reward History',
                           textColor: Color(0xff569FFF),
@@ -80,7 +95,7 @@ class RewardScreen extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: 4,
                     itemBuilder: (context, index) {
-                      return rewardView().buildRewardTile();
+                      return rewardView().buildRewardTile(bottomPadding: 12);
                     },
                   ),
                 ],
@@ -106,7 +121,9 @@ class RewardScreen extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(RouteNavigation.pointHistoryScreenRoute);
+                        },
                         child: const CustomText(
                           textName: 'View More',
                           textColor: Color(0xff569FFF),
@@ -122,7 +139,9 @@ class RewardScreen extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: 4,
                     itemBuilder: (context, index) {
-                      return rewardView().buildPointHistoryTile();
+                      return rewardView().buildPointHistoryTile(
+                          points: points.elementAt(index).points,
+                          date: points.elementAt(index).date);
                     },
                   ),
                 ],

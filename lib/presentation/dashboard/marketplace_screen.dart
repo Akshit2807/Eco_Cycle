@@ -90,7 +90,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
           ),
 
           /// Search Bar
-          buildSearchBar(),
+          buildSearchBar(padding: 24),
 
           /// Tab Bar
           Container(
