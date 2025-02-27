@@ -1,14 +1,11 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:e_waste/core/services/camera_service.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/app_icons.dart';
+import 'package:e_waste/viewmodels/auth_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../core/router/app_router.dart';
 import '../dashboard/community_screen.dart';
@@ -119,7 +116,14 @@ class NavigationScreen extends StatelessWidget {
                           buildDrawerTile(AppIcons.help, "Help", false),
                           buildDrawerTile(AppIcons.sf, "S&F", false),
                           buildDrawerTile(AppIcons.setting, "Settings", false),
-                          buildDrawerTile(AppIcons.logout, "Logout", false),
+                          buildDrawerTile(
+                            AppIcons.logout,
+                            "Logout",
+                            false,
+                            onTileTap: () {
+                              AuthViewModel().signOut(context);
+                            },
+                          ),
                           CustomText(
                             textName: " V 1.253.450",
                             fontWeight: FontWeight.w500,
@@ -176,25 +180,35 @@ class NavigationScreen extends StatelessWidget {
     );
   }
 
-  Widget buildDrawerTile(String icon, String title, bool selected) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        ImageIcon(
-          AssetImage(icon),
-          size: 24,
-          color: selected ? AppColors.green : AppColors.dark,
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        CustomText(
-          textName: title,
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-          textColor: selected ? AppColors.green : AppColors.dark,
-        )
-      ],
+  Widget buildDrawerTile(String icon, String title, bool selected,
+      {VoidCallback? onTileTap}) {
+    return GestureDetector(
+      onDoubleTap: () {
+        if (onTileTap != null) {
+          onTileTap();
+        } else {
+          print("No action");
+        }
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          ImageIcon(
+            AssetImage(icon),
+            size: 24,
+            color: selected ? AppColors.green : AppColors.dark,
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+          CustomText(
+            textName: title,
+            fontWeight: FontWeight.w500,
+            fontSize: 20,
+            textColor: selected ? AppColors.green : AppColors.dark,
+          )
+        ],
+      ),
     );
   }
 }

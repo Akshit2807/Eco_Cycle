@@ -61,6 +61,7 @@ class AuthViewModel extends ChangeNotifier {
     await _authService.signOut();
     _user = null;
     notifyListeners();
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
           content: Text("Logged out successfully!"),
