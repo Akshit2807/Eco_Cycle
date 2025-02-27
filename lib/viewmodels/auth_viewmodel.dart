@@ -1,5 +1,7 @@
+import 'package:e_waste/core/router/app_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../core/services/auth_service.dart';
 
@@ -62,6 +64,7 @@ class AuthViewModel extends ChangeNotifier {
     _user = null;
     notifyListeners();
 
+    Get.offAllNamed(RouteNavigation.authCheckerScreenRoute);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
           content: Text("Logged out successfully!"),

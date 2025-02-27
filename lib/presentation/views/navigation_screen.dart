@@ -183,9 +183,10 @@ class NavigationScreen extends StatelessWidget {
   Widget buildDrawerTile(String icon, String title, bool selected,
       {VoidCallback? onTileTap}) {
     return GestureDetector(
-      onDoubleTap: () {
+      onTap: () {
         if (onTileTap != null) {
           onTileTap();
+          selected = true;
         } else {
           print("No action");
         }

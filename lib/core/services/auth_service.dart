@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_waste/core/services/storage_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +18,12 @@ class AuthService {
           email: email, password: password);
 
       User? userDetails = result.user;
+      log('=============================================================ID Token============================================================='); // ignore: avoid_print
+      log("ID Token: ${await userDetails?.getIdToken()} \n");
+      IdTokenResult idTokenResult = await userDetails!.getIdTokenResult();
+      log("ID Token (JWT): ${idTokenResult.token}\n");
+      log("ID Token (JSON): ${idTokenResult.claims}");
+      log('=============================================================ID Token============================================================='); // ignore: avoid_print
       if (result != null) {
         DocumentSnapshot documentSnapshot =
             await userCollection.doc(userDetails!.uid).get();
