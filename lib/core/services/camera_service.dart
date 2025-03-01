@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:image/image.dart' as img;
 
 class CameraService {
   File? _image;
@@ -15,11 +16,26 @@ class CameraService {
 
     if (pickedFile != null) {
       File imageFile = File(pickedFile.path);
-      List<int> imageBytes = await imageFile.readAsBytes();
-      String base64String = base64Encode(imageBytes);
-      _image = imageFile;
-      _base64String = base64String;
-      return _base64String;
+
+      // Read image bytes
+      var imageBytes = await imageFile.readAsBytes();
+
+      // Decode image
+      img.Image? image = img.decodeImage(imageBytes);
+      if (image == null) return null;
+
+      // // Resize image (reduce dimensions)
+      // img.Image resizedImage =
+      //     img.copyResize(image, width: 600); // Adjust width as needed
+
+      // Encode resized image back to bytes
+      List<int> compressedBytes =
+          img.encodeJpg(image, quality: 70); // Adjust quality as needed
+
+      // Convert to Base64
+      String base64String = base64Encode(compressedBytes);
+
+      return base64String;
     }
     return null;
   }

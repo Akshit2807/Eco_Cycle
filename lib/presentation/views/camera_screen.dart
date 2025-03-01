@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:e_waste/core/services/camera_service.dart';
+import 'package:e_waste/core/utils/app_loader.dart';
 import 'package:flutter/material.dart';
 
 class CameraScreen extends StatefulWidget {
@@ -37,7 +38,7 @@ class _CameraScreenState extends State<CameraScreen> {
             );
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: AppLoader(),
             );
           }
         },
