@@ -1,11 +1,10 @@
-import 'package:e_waste/presentation/dashboard/home_screen.dart';
 import 'package:e_waste/presentation/dashboard/reward_components/leaderboard_screen.dart';
 import 'package:e_waste/presentation/dashboard/reward_components/point_history_screen.dart';
 import 'package:e_waste/presentation/dashboard/reward_components/reward_details_screen.dart';
 import 'package:e_waste/presentation/views/auth/auth_screen.dart';
+import 'package:e_waste/presentation/views/auth_checker.dart';
 import 'package:e_waste/presentation/views/camera_screen.dart';
 import 'package:e_waste/presentation/views/navigation_screen.dart';
-import 'package:e_waste/presentation/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
@@ -32,7 +31,7 @@ import 'package:page_transition/page_transition.dart';
 // }
 
 class RouteNavigation {
-  static const String splashScreenRoute = '/';
+  static const String authCheckerScreenRoute = '/';
   static const String homeScreenRoute = '/home';
   static const String authScreenRoute = '/auth';
   static const String navScreenRoute = '/nav';
@@ -42,8 +41,8 @@ class RouteNavigation {
   static const String rewardHistoryScreenRoute = '/rewardHistory';
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case splashScreenRoute:
-        return _customFadeRoute(child: const SplashScreen());
+      case authCheckerScreenRoute:
+        return _customFadeRoute(child: AuthChecker());
       case authScreenRoute:
         return _customFadeRoute(child: const AuthScreen());
       case leaderboardScreenRoute:

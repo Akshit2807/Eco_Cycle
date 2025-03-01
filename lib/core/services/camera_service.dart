@@ -1,9 +1,14 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
+
+import 'package:e_waste/data/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
+
+TokenService tokenService = TokenService();
 
 class CameraService {
   File? _image;
@@ -41,11 +46,14 @@ class CameraService {
   }
 
   static Future<String> getCategory({required String base64Image}) async {
+    String? token = await tokenService.getToken();
+    log('$token');
+
     const url =
         'https://geminiapiwrap.onrender.com/ai/categorize_ewaste_base64';
     Map<String, String> headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer RickiTikiPemboNosaChariBariPickPeriPembo',
+      'Authorization': 'Bearer $token',
     };
     Map<String, dynamic> body = {"image_base64": base64Image};
 

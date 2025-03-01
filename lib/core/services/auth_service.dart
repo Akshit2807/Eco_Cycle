@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_waste/core/services/storage_service.dart';
+import 'package:e_waste/data/secure_storage/secure_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -16,6 +19,15 @@ class AuthService {
           email: email, password: password);
 
       User? userDetails = result.user;
+      log('=============================================================ID Token=============================================================');
+      String? idToken = await userDetails!.getIdToken();
+      log("ID Token: ${idToken} \n");
+      IdTokenResult idTokenResult = await userDetails!.getIdTokenResult();
+      log("ID Token (JWT): ${idTokenResult.token}\n");
+      log("ID Token (JSON): ${idTokenResult.claims}");
+      log('=============================================================ID Token=============================================================');
+      TokenService().saveToken(idToken!);
+
       if (result != null) {
         DocumentSnapshot documentSnapshot =
             await userCollection.doc(userDetails!.uid).get();
