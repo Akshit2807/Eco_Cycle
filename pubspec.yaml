@@ -25,6 +25,9 @@ dependencies:
   page_transition: ^2.2.1
   animated_bottom_navigation_bar: ^1.4.0
   image_picker: ^1.1.2
+  flutter_secure_storage: ^9.2.4
+  firebase_storage: ^12.4.4
+  timeago: ^3.7.0
 
 dev_dependencies:
   flutter_test:

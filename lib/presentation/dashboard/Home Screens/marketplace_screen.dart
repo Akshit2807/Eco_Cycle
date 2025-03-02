@@ -1,10 +1,9 @@
+import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/custom_app_bar.dart';
 import 'package:e_waste/viewmodels/marketplace_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:e_waste/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/utils/app_colors.dart';
 
 class MarketplaceScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -66,6 +65,7 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
     'More',
     'More'
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -1,72 +1,66 @@
-import 'package:e_waste/core/utils/app_colors.dart';
-import 'package:e_waste/core/utils/app_icons.dart';
-import 'package:e_waste/widgets/custom_text.dart';
+/// **CommunityViewModel**
+/// Manages state for posts, likes, comments, and user interactions.
+
 import 'package:flutter/material.dart';
 
-class communityViews {
-  Container buildBlogCard() {
-    return Container(
-      height: 264,
-      margin: const EdgeInsets.only(bottom: 24),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(24)),
-      child: Column(
-        children: [
-          /// Image
-          Image.asset(
-            "assets/blog.png",
-            width: double.maxFinite,
-            fit: BoxFit.cover,
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),
-            child: CustomText(
-              textName:
-                  "Small e-waste often contains hazardous materials like lead, mercury, and cadmium, which can harm the environment if not disposed of properly Small e-waste often contains hazardous materials like lead, mercury",
-              fontWeight: FontWeight.w400,
-              fontSize: 12,
-            ),
-          ),
-          const Spacer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: ImageIcon(AssetImage(AppIcons.up)),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: ImageIcon(AssetImage(AppIcons.comment)),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: ImageIcon(AssetImage(AppIcons.bookmark)),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: ImageIcon(AssetImage(AppIcons.share)),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+import '../data/models/post_model.dart';
+import '../data/repositories/community_repository.dart';
+
+class CommunityViewModel extends ChangeNotifier {
+  final CommunityRepository _repository = CommunityRepository();
+
+  List<PostModel> _posts = [];
+  bool _isLoading = false;
+
+  List<PostModel> get posts => _posts;
+  bool get isLoading => _isLoading;
+
+  /// **1. Fetch Posts in Realtime**
+  void fetchPosts() {
+    _repository.fetchPosts().listen((postList) {
+      _posts = postList;
+      notifyListeners();
+    }, onError: (error) {
+      debugPrint("Error fetching posts: $error");
+    });
   }
 
-  Widget buildSidebarIcon(String icon, {bool isActive = false}) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: isActive ? Colors.grey.shade300 : Colors.transparent,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: ImageIcon(
-        AssetImage(icon),
-        color: isActive ? Colors.black : AppColors.placeHolder,
-        size: 24,
-      ),
-    );
+  /// **2. Create a Post**
+  Future<void> createPost(BuildContext context, PostModel post) async {
+    _isLoading = true;
+    notifyListeners();
+
+    await _repository.createPost(context, post);
+
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  /// **3. Like/Unlike a Post**
+  Future<void> toggleLike(
+      BuildContext context, String postId, String userId, bool isLiked) async {
+    await _repository.likePost(context, postId, userId, isLiked);
+    notifyListeners();
+  }
+
+  /// **4. Add a Comment**
+  Future<void> addComment(BuildContext context, String postId,
+      Map<String, dynamic> commentData) async {
+    await _repository.addComment(context, postId, commentData);
+    notifyListeners();
+  }
+
+  /// **5. Bookmark/Unbookmark a Post**
+  Future<void> toggleBookmark(BuildContext context, String postId,
+      String userId, bool isBookmarked) async {
+    await _repository.toggleBookmark(context, postId, userId, isBookmarked);
+    notifyListeners();
+  }
+
+  /// **6. Report a Post**
+  Future<void> reportPost(
+      BuildContext context, String postId, String userId) async {
+    await _repository.reportPost(context, postId, userId);
+    notifyListeners();
   }
 }

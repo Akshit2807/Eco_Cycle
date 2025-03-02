@@ -5,7 +5,7 @@ import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../core/router/app_router.dart';
+import '../../../core/router/app_router.dart';
 
 class RewardScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
