@@ -2,16 +2,16 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:e_waste/core/services/camera_service.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/app_icons.dart';
+import 'package:e_waste/presentation/dashboard/Home%20Screens/marketplace_screen.dart';
 import 'package:e_waste/viewmodels/auth_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../core/router/app_router.dart';
-import '../dashboard/community_screen.dart';
-import '../dashboard/home_screen.dart';
-import '../dashboard/marketplace_screen.dart';
-import '../dashboard/reward_screen.dart';
+import '../dashboard/Home Screens/community_screen.dart';
+import '../dashboard/Home Screens/home_screen.dart';
+import '../dashboard/Home Screens/reward_screen.dart';
 
 class NavigationController extends GetxController {
   RxInt selectedIndex = 0.obs;
@@ -26,6 +26,8 @@ class NavigationController extends GetxController {
 class NavigationScreen extends StatelessWidget {
   final NavigationController controller = Get.put(NavigationController());
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  NavigationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -236,8 +238,8 @@ class CustomBottomNavigation extends StatelessWidget {
         activeColor: Colors.green,
         inactiveColor: Colors.grey,
         onTap: (index) => controller.changePage(index),
-        leftCornerRadius: 30,
-        rightCornerRadius: 30,
+        leftCornerRadius: 0,
+        rightCornerRadius: 0,
       ),
     );
   }

@@ -22,9 +22,9 @@ class AuthService {
       log('=============================================================ID Token=============================================================');
       String? idToken = await userDetails!.getIdToken();
       log("ID Token: ${idToken} \n");
-      IdTokenResult idTokenResult = await userDetails!.getIdTokenResult();
-      log("ID Token (JWT): ${idTokenResult.token}\n");
-      log("ID Token (JSON): ${idTokenResult.claims}");
+      // IdTokenResult idTokenResult = await userDetails!.getIdTokenResult();
+      // log("ID Token (JWT): ${idTokenResult.token}\n");
+      // log("ID Token (JSON): ${idTokenResult.claims}");
       log('=============================================================ID Token=============================================================');
       TokenService().saveToken(idToken!);
 
