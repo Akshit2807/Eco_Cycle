@@ -15,3 +15,19 @@ class TokenService {
     await _storage.delete(key: 'idToken');
   }
 }
+
+class SecureStorageService {
+  static const _storage = FlutterSecureStorage();
+
+  Future<void> saveData({required String value, required String key}) async {
+    await _storage.write(key: key, value: value);
+  }
+
+  Future<String?> getData(String key) async {
+    return await _storage.read(key: key);
+  }
+
+  Future<void> deleteData(String key) async {
+    await _storage.delete(key: key);
+  }
+}

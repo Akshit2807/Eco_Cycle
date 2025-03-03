@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_waste/data/repositories/community_repository.dart';
 import 'package:e_waste/widgets/comment_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 /// A screen to display and add comments for a specific post.
@@ -21,19 +22,30 @@ class _CommentsScreenState extends State<CommentsScreen> {
   // Controller for the comment input field.
   final TextEditingController _commentController = TextEditingController();
 
-  // Dummy user details; in a real app, retrieve these from your auth service.
-  final String currentUserId = 'dummyUserId';
-  final String currentUsername = 'John Doe';
-  final String currentUserProfilePic = 'https://example.com/profile.jpg';
-
   /// Submits a new comment to Firestore.
   Future<void> _submitComment() async {
+    // Retrieve the current user from FirebaseAuth.
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("You must be logged in to comment.")),
+      );
+      return;
+    }
+
+    // Get user details from FirebaseAuth.
+    String currentUserId = user.uid;
+    String currentUsername = user.displayName ?? 'Anonymous';
+    String currentUserProfilePic = user.photoURL ??
+        'https://imgs.search.brave.com/prpbPTMAYp2IA5lapKLeVJlEtZBzWn_GGlcchFotrkU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQvbWluZWNyYWZ0/LW1lbWUtcGljdHVy/ZXMteW14d2U2dHk5/N2h2b2JrMC5qcGc';
+
     // Trim any extra whitespace.
     String commentText = _commentController.text.trim();
     if (commentText.isEmpty) {
       // Inform the user that an empty comment is not allowed.
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Comment cannot be empty.")));
+        const SnackBar(content: Text("Comment cannot be empty.")),
+      );
       return;
     }
 
@@ -56,7 +68,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
       // Print error and notify the user.
       print("Error submitting comment: $e");
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Failed to submit comment.")));
+        const SnackBar(content: Text("Failed to submit comment.")),
+      );
     }
   }
 
