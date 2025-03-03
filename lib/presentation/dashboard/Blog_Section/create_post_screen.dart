@@ -1,13 +1,12 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/data/models/post_model.dart';
+import 'package:e_waste/data/secure_storage/secure_storage.dart';
 import 'package:e_waste/viewmodels/community_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +22,7 @@ class CreatePostScreen extends StatefulWidget {
 class _CreatePostScreenState extends State<CreatePostScreen> {
   // Controller for the post content input field.
   final TextEditingController _contentController = TextEditingController();
+  final SecureStorageService secureStorageService = SecureStorageService();
 
   // Image file selected by the user.
   File? _selectedImage;
@@ -87,24 +87,30 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       }
     }
 
-    //TODO: Remove this block after making a separate file for it
-    ///Get the user's name from Firestore.
-    // String? uid = FirebaseAuth.instance.currentUser?.uid;
-    // String? name;
-    // DocumentSnapshot userDoc =
-    //     await FirebaseFirestore.instance.collection('users').doc(uid).get();
-    // name = userDoc['name'];
-    // print(name);
+    ///Geting the current user details from the secure storage
 
-    // Create a PostModel instance.
-    // Note: In a real-world app, replace dummy values with actual user data.
+    // Future<void> someFunction() async {
+    //   String? userName = await secureStorageService.getData('currentUserName');
+    //   print('ohh thats >>>>>>>> $userName'); // Now you have the actual string
+    // }
+    //
+    // someFunction();
+    //
+    // String userName =
+    //     await "${secureStorageService.getData('currentUserName')}";
+    // print(secureStorageService.getData('currentUserName'));
+
+    String? userName = FirebaseAuth.instance.currentUser?.displayName;
+    print('username in create post : $userName');
+
+    /// Create a new PostModel object.
     PostModel newPost = PostModel(
       postId: postId,
       authorId: currentUser.uid,
-      username: "Anonymous",
+      username: userName ?? "UserNameNull",
       //TODO add name like name ?? "Anonymous"
       userProfilePic: currentUser.photoURL ??
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7ZUH9hk_myu6ZPuSpjftGScE0fAnCQHq7ZmWxAqYnJXff5k18X08xv9My2poYpq-Tqsw",
+          "https://imgs.search.brave.com/prpbPTMAYp2IA5lapKLeVJlEtZBzWn_GGlcchFotrkU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQvbWluZWNyYWZ0/LW1lbWUtcGljdHVy/ZXMteW14d2U2dHk5/N2h2b2JrMC5qcGc",
       content: content,
       imageUrl: imageUrl,
       likes: const [],
@@ -130,7 +136,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Post created successfully!")),
     );
-    Get.offAllNamed(RouteNavigation.communityScreenRoute);
+    Navigator.of(context).pop();
     print("Post created with ID: $postId");
   }
 
