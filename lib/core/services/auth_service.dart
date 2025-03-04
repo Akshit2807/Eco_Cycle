@@ -11,6 +11,8 @@ class AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('User');
+  final SecureStorageService secureStorageService = SecureStorageService();
+  final TokenService tokenService = TokenService();
 
   Future<Map<String, dynamic>?> signIn(
       String email, String password, String userName) async {
@@ -22,11 +24,20 @@ class AuthService {
       log('=============================================================ID Token=============================================================');
       String? idToken = await userDetails!.getIdToken();
       log("ID Token: ${idToken} \n");
-      IdTokenResult idTokenResult = await userDetails!.getIdTokenResult();
-      log("ID Token (JWT): ${idTokenResult.token}\n");
-      log("ID Token (JSON): ${idTokenResult.claims}");
+      // IdTokenResult idTokenResult = await userDetails!.getIdTokenResult();
+      // log("ID Token (JWT): ${idTokenResult.token}\n");
+      // log("ID Token (JSON): ${idTokenResult.claims}");
       log('=============================================================ID Token=============================================================');
-      TokenService().saveToken(idToken!);
+      tokenService.saveToken(idToken!);
+      secureStorageService.saveData(value: userName, key: 'currentUserName');
+      secureStorageService.saveData(value: email, key: 'currentEmail');
+      //Printing user details
+      log("User Details: ${userDetails.toString()}");
+      print(
+          'user details >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+      print('username : ${userDetails.displayName}');
+      print(secureStorageService.getData('currentUserName'));
+      print(secureStorageService.getData('currentEmail'));
 
       if (result != null) {
         DocumentSnapshot documentSnapshot =
@@ -44,11 +55,18 @@ class AuthService {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+
+      // Update the display name for the user.
+      await result.user?.updateDisplayName(userName);
+
+      // Optional: Reload the user to ensure the update is applied immediately.
+      await result.user?.reload();
+
       User? userDetails = result.user;
       if (result != null) {
         Map<String, dynamic> userInfoMap = {
           "email": userDetails!.email,
-          "name": userName,
+          "displayName": userName,
           "id": userDetails.uid
         };
         await DatabaseMethods()
