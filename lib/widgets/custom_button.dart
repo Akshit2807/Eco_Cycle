@@ -7,6 +7,7 @@ class CustomButton extends StatelessWidget {
   final VoidCallback? onTap;
   final Color? color;
   final Widget child;
+  final BoxBorder? border;
   final List<BoxShadow>? boxShadow;
   const CustomButton(
       {super.key,
@@ -16,7 +17,8 @@ class CustomButton extends StatelessWidget {
       this.color,
       required this.child,
       this.boxShadow,
-      this.onTap});
+      this.onTap,
+      this.border});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class CustomButton extends StatelessWidget {
         height: height ?? 56,
         width: width ?? 376,
         decoration: BoxDecoration(
+          border: border,
           boxShadow: boxShadow ?? [],
           borderRadius: BorderRadius.circular(radius ?? 16),
           color: color ?? Colors.black,

@@ -156,17 +156,9 @@ class NavigationScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // Camera button action
-          String? base64 = await CameraService().imgToBase64();
-          if (base64 != null) {
-            Get.toNamed(RouteNavigation.cameraScreenRoute,
-                arguments: {"base64Image": base64});
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                  content: Text("Something Went Wrong"),
-                  backgroundColor: Colors.red),
-            );
-          }
+          Get.toNamed(
+            RouteNavigation.cameraScreenRoute,
+          );
         },
         backgroundColor: Colors.green,
         shape: const CircleBorder(),

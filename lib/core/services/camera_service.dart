@@ -1,12 +1,17 @@
-import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
-
+import 'package:e_waste/data/models/base_64_model.dart';
 import 'package:e_waste/data/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:image/image.dart' as img;
+import 'package:path_provider/path_provider.dart';
+
+import '../router/app_router.dart';
 
 TokenService tokenService = TokenService();
 
@@ -14,6 +19,7 @@ class CameraService {
   File? _image;
   String? _base64String;
   bool tapped = false;
+
   Future<String?> imgToBase64() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile =
@@ -23,30 +29,34 @@ class CameraService {
       File imageFile = File(pickedFile.path);
 
       // Read image bytes
-      var imageBytes = await imageFile.readAsBytes();
+      Uint8List imageBytes = await imageFile.readAsBytes();
 
-      // Decode image
-      img.Image? image = img.decodeImage(imageBytes);
-      if (image == null) return null;
+      // Decode image for processing
+      img.Image? originalImage = img.decodeImage(imageBytes);
+      if (originalImage == null) return null;
 
-      // // Resize image (reduce dimensions)
-      // img.Image resizedImage =
-      //     img.copyResize(image, width: 600); // Adjust width as needed
+      // Resize Image (Reduce size for fast response)
+      img.Image resizedImage =
+          img.copyResize(originalImage, width: 600); // Resize to 600px width
 
-      // Encode resized image back to bytes
-      List<int> compressedBytes =
-          img.encodeJpg(image, quality: 70); // Adjust quality as needed
+      // Compress Image to JPEG (Reduce file size)
+      Uint8List compressedBytes =
+          Uint8List.fromList(img.encodeJpg(resizedImage, quality: 70));
 
       // Convert to Base64
       String base64String = base64Encode(compressedBytes);
 
-      return base64String;
+      _image = imageFile;
+      _base64String = base64String;
+      SecureStorageService().saveData(pickedFile.path, "clickedImg");
+      return _base64String;
     }
     return null;
   }
 
-  static Future<String> getCategory({required String base64Image}) async {
+  static Future<Base64> getCategory() async {
     String? token = await tokenService.getToken();
+    String? base64 = await CameraService().imgToBase64();
     log('$token');
 
     const url =
@@ -55,17 +65,21 @@ class CameraService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    Map<String, dynamic> body = {"image_base64": base64Image};
+    Map<String, dynamic> body = {"image_base64": base64};
 
     final response = await http.post(Uri.parse(url),
         headers: headers, body: jsonEncode(body));
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       debugPrint('Response Code : ${response.statusCode}');
-
       final String responseBody = response.body;
-      return responseBody;
+      SecureStorageService().saveData(responseBody, "Base64Response");
+      final Base64 obj = base64FromJson(responseBody);
+      return obj;
     } else {
+      Get.toNamed(
+        RouteNavigation.navScreenRoute,
+      );
       debugPrint('Response Code : ${response.statusCode}');
       throw Exception('Failed to load data');
     }

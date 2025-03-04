@@ -26,18 +26,21 @@ class CustomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      textName,
-      textAlign: textAlign ?? TextAlign.start,
-      maxLines: maxLines,
-      softWrap: softWrap,
-      overflow: textOverflow,
-      style: GoogleFonts.montserrat(
-        fontSize: fontSize ?? 16,
-        color: textColor ?? Colors.black,
-        fontWeight: fontWeight ?? FontWeight.bold,
-        letterSpacing: letterSpacing ?? 1,
-        height: lineHeight ?? 1.0,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        textName,
+        textAlign: textAlign ?? TextAlign.start,
+        maxLines: maxLines,
+        softWrap: softWrap,
+        overflow: textOverflow,
+        style: GoogleFonts.montserrat(
+          fontSize: fontSize ?? 16,
+          color: textColor ?? Colors.black,
+          fontWeight: fontWeight ?? FontWeight.bold,
+          letterSpacing: letterSpacing ?? 1,
+          height: lineHeight ?? 1.0,
+        ),
       ),
     );
   }
