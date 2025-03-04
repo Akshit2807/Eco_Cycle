@@ -129,11 +129,14 @@ class _QuetionsScreenState extends State<QuetionsScreen> {
                           borderRadius: BorderRadius.circular(12)),
                       backgroundColor: AppColors.green,
                     ),
-                    child: CustomText(
-                      textName: "Continue",
-                      textColor: AppColors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: CustomText(
+                        textName: "Continue",
+                        textColor: AppColors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     )),
               ),
               const SizedBox(

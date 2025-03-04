@@ -27,7 +27,8 @@ class QuestionsService {
     if (response.statusCode == 200 || response.statusCode == 201) {
       debugPrint('Response Code : ${response.statusCode}');
       final String responseBody = response.body;
-      SecureStorageService().saveData(responseBody, "QuestionsFromAI");
+      SecureStorageService()
+          .saveData(value: responseBody, key: "QuestionsFromAI");
       final Quetions obj = quetionsFromJson(responseBody);
       return obj;
     } else {

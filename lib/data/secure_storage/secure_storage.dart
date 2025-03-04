@@ -19,13 +19,12 @@ class TokenService {
 class SecureStorageService {
   static const _storage = FlutterSecureStorage();
 
-  Future<void> saveData(String path, String key) async {
-    await _storage.write(key: key, value: path);
+  Future<void> saveData({required String value, required String key}) async {
+    await _storage.write(key: key, value: value);
   }
 
   Future<String?> getData(String key) async {
-    String? path = await _storage.read(key: key);
-    return path;
+    return await _storage.read(key: key);
   }
 
   Future<void> deleteData(String key) async {

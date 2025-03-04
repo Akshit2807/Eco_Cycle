@@ -34,7 +34,7 @@ class DecideService {
     if (response.statusCode == 200 || response.statusCode == 201) {
       debugPrint('Response Code : ${response.statusCode}');
       final String responseBody = response.body;
-      SecureStorageService().saveData(responseBody, "DecideAPI");
+      SecureStorageService().saveData(value: responseBody, key: "DecideAPI");
       return decisionFromJson(responseBody);
     } else {
       Get.toNamed(

@@ -17,7 +17,7 @@ Align messageTile(
       child: CustomText(
         textName: message,
         fontWeight: FontWeight.w500,
-        fontSize: 14,
+        fontSize: 16,
       ),
     ),
   );

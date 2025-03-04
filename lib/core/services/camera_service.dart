@@ -48,7 +48,8 @@ class CameraService {
 
       _image = imageFile;
       _base64String = base64String;
-      SecureStorageService().saveData(pickedFile.path, "clickedImg");
+      SecureStorageService()
+          .saveData(value: pickedFile.path, key: "clickedImg");
       return _base64String;
     }
     return null;
@@ -73,7 +74,8 @@ class CameraService {
     if (response.statusCode == 200 || response.statusCode == 201) {
       debugPrint('Response Code : ${response.statusCode}');
       final String responseBody = response.body;
-      SecureStorageService().saveData(responseBody, "Base64Response");
+      SecureStorageService()
+          .saveData(value: responseBody, key: "Base64Response");
       final Base64 obj = base64FromJson(responseBody);
       return obj;
     } else {
