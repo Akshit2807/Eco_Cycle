@@ -6,10 +6,34 @@ import 'package:e_waste/presentation/dashboard/reward_components/reward_details_
 import 'package:e_waste/presentation/views/auth/auth_screen.dart';
 import 'package:e_waste/presentation/views/auth_checker.dart';
 import 'package:e_waste/presentation/views/camera_screen.dart';
+import 'package:e_waste/presentation/views/decide_screen.dart';
 import 'package:e_waste/presentation/views/navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
+
+import '../../presentation/views/quetions_screen.dart';
+//
+// class AppRouter {
+//   static Route<dynamic> generateRoute(RouteSettings settings) {
+//     switch (settings.name) {
+//       case '/':
+//         return MaterialPageRoute(builder: (_) => const SplashScreen());
+//       case '/home':
+//         return MaterialPageRoute(builder: (_) => const HomeScreen());
+//       case '/auth':
+//         return MaterialPageRoute(builder: (_) => const AuthScreen());
+//       case '/nav':
+//         return MaterialPageRoute(builder: (_) => const NavigationScreen());
+//       default:
+//         return MaterialPageRoute(
+//             builder: (_) => Scaffold(
+//                   body: Center(
+//                       child: Text('No route defined for ${settings.name}')),
+//                 ));
+//     }
+//   }
+// }
 
 class RouteNavigation {
   static const String authCheckerScreenRoute = '/';
@@ -26,6 +50,8 @@ class RouteNavigation {
 
   /// **generateRoute**
   /// Returns the corresponding route based on the provided route settings.
+  static const String quetionsScreenRoute = '/quetions';
+  static const String decideScreenRoute = '/decide';
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case authCheckerScreenRoute:
@@ -40,12 +66,22 @@ class RouteNavigation {
         return _customFadeRoute(child: const PointHistoryScreen());
       case rewardHistoryScreenRoute:
         return _customFadeRoute(child: const RewardDetailsScreen());
-      case cameraScreenRoute:
+      case quetionsScreenRoute:
         final args = settings.arguments as Map<String, dynamic>? ?? {};
         return _customFadeRoute(
-            child: CameraScreen(
-          base64Image: args["base64Image"],
+            child: QuetionsScreen(
+          title: args["title"],
         ));
+      case decideScreenRoute:
+        final args = settings.arguments as Map<String, dynamic>? ?? {};
+        return _customFadeRoute(
+            child: DecideScreen(
+          qns: args["qns"],
+        ));
+      case cameraScreenRoute:
+        final args = settings.arguments as Map<String, dynamic>? ?? {};
+        return _customFadeRoute(child: const CameraScreen());
+
       // case homeScreenRoute:
       //   return _customFadeRoute(child: const HomeScreen());
 

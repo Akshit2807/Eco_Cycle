@@ -81,62 +81,70 @@ class PointHistoryScreen extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(24),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        buildSearchBar(padding: 0),
-                        PercentSizedBox.height(0.015),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          buildSearchBar(padding: 0),
+                          PercentSizedBox.height(0.015),
 
-                        /// Today
-                        const CustomText(
-                          textName: "Today",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 24,
-                        ),
-                        ListView.builder(
-                            itemCount: 4,
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.only(top: 16),
-                            itemBuilder: (BuildContext context, int index) {
-                              return rewardView().buildPointHistoryTile(
-                                  points: points.elementAt(index).points,
-                                  date: points.elementAt(index).date);
-                            }),
-                        PercentSizedBox.height(0.015),
-                        const CustomText(
-                          textName: "Past 7 days",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 24,
-                        ),
+                          /// Today
+                          const CustomText(
+                            textName: "Today",
+                            fontWeight: FontWeight.w600,
+                            fontSize: 24,
+                          ),
+                          ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: 4,
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.only(top: 16),
+                              itemBuilder: (BuildContext context, int index) {
+                                return rewardView().buildPointHistoryTile(
+                                    points: points.elementAt(index).points,
+                                    date: points.elementAt(index).date);
+                              }),
+                          PercentSizedBox.height(0.015),
+                          const CustomText(
+                            textName: "Past 7 days",
+                            fontWeight: FontWeight.w600,
+                            fontSize: 24,
+                          ),
 
-                        /// Past 7 Days
-                        ListView.builder(
-                            itemCount: 4,
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.only(top: 16),
-                            itemBuilder: (BuildContext context, int index) {
-                              return rewardView().buildPointHistoryTile(
-                                  points: points.elementAt(index).points,
-                                  date: points.elementAt(index).date);
-                            }),
-                        PercentSizedBox.height(0.015),
+                          /// Past 7 Days
+                          ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: 4,
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.only(top: 16),
+                              itemBuilder: (BuildContext context, int index) {
+                                return rewardView().buildPointHistoryTile(
+                                    points: points.elementAt(index).points,
+                                    date: points.elementAt(index).date);
+                              }),
+                          PercentSizedBox.height(0.015),
 
-                        /// Past 1 month
-                        const CustomText(
-                          textName: "Past 1 month",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 24,
-                        ),
-                        ListView.builder(
-                            itemCount: 4,
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.only(top: 16),
-                            itemBuilder: (BuildContext context, int index) {
-                              return rewardView().buildPointHistoryTile(
-                                  points: points.elementAt(index).points,
-                                  date: points.elementAt(index).date);
-                            }),
-                      ],
+                          /// Past 1 month
+                          const CustomText(
+                            textName: "Past 1 month",
+                            fontWeight: FontWeight.w600,
+                            fontSize: 24,
+                          ),
+                          ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: 4,
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.only(top: 16),
+                              itemBuilder: (BuildContext context, int index) {
+                                return rewardView().buildPointHistoryTile(
+                                    points: points.elementAt(index).points,
+                                    date: points.elementAt(index).date);
+                              }),
+                        ],
+                      ),
                     ),
                   ),
                 ),

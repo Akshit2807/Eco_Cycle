@@ -9,8 +9,8 @@ Row customAppBar({
   required String title,
   required String rank,
   required String points,
-  required Image prf,
-  required GlobalKey<ScaffoldState> scaffoldKey,
+  Widget? prf,
+  GlobalKey<ScaffoldState>? scaffoldKey,
 }) {
   double screenWidth = MediaQuery.of(context).size.width;
   double screenHeight = MediaQuery.of(context).size.height;
@@ -42,10 +42,11 @@ Row customAppBar({
       ],
       GestureDetector(
         onTap: () {
-          scaffoldKey.currentState?.openDrawer();
+          scaffoldKey?.currentState?.openDrawer();
         },
         child: CircleAvatar(
           radius: screenWidth * 0.07, // Dynamic size
+          backgroundColor: Colors.transparent,
           child: prf,
         ),
       ),

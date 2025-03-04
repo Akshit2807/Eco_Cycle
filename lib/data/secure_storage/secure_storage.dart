@@ -30,4 +30,10 @@ class SecureStorageService {
   Future<void> deleteData(String key) async {
     await _storage.delete(key: key);
   }
+
+  // Future<Base64> getData() async {
+  //   String? jsonString = await _storage.read(key: '64DataStorage');
+  //   final Base64 obj = base64FromJson(jsonString!);
+  //   return obj;
+  // }
 }
