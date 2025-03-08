@@ -1,7 +1,9 @@
 import 'package:e_waste/viewmodels/auth_viewmodel.dart';
+import 'package:e_waste/viewmodels/community_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+
 import 'core/router/app_router.dart';
 
 class MyApp extends StatelessWidget {
@@ -13,12 +15,18 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => CommunityViewModel()),
+        // TODO: Added CommunityViewModel.
       ],
-      child: const GetMaterialApp(
+      child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'E-Waste',
         initialRoute: '/',
-        onGenerateRoute: AppRouter.generateRoute,
+        onGenerateRoute: RouteNavigation.generateRoute,
+        color: Colors.white,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
       ),
     );
   }
