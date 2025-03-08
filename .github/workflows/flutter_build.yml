@@ -1,6 +1,5 @@
 # Jai Ganeshaye namah
 # Om namah shivay
-
 name: Flutter Builder
 
 on:
@@ -41,11 +40,14 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
+      - name: Rename APK with Version
+        run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/app-release.v${{ github.run_number }}.apk
+
       - name: Upload APK as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.v${{ github.run_number }}.apk
 
   release:
     name: Create GitHub Release
@@ -72,6 +74,6 @@ jobs:
           tag_name: "v1.${{ github.run_number }}-${{ env.CHANGES }}"
           name: "Release v1.${{ github.run_number }}-${{ env.CHANGES }}"
           body: "New release of the app with latest changes."
-          files: "build/app/outputs/flutter-apk/app-release.v${{ github.run_number }}.apk"
+          files: build/app/outputs/flutter-apk/app-release.v${{ github.run_number }}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
