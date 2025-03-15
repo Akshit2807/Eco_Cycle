@@ -1,5 +1,5 @@
 import 'package:e_waste/core/utils/app_colors.dart';
-import 'package:e_waste/core/utils/custom_app_bar.dart';
+import 'package:e_waste/presentation/components/custom_app_bar.dart';
 import 'package:e_waste/viewmodels/marketplace_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:e_waste/widgets/search_bar.dart';

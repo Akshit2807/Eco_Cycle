@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/core/services/quetions_service.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/app_loader.dart';
-import 'package:e_waste/core/utils/custom_app_bar.dart';
 import 'package:e_waste/data/models/quetions_model.dart';
+import 'package:e_waste/presentation/components/custom_app_bar.dart';
 import 'package:e_waste/viewmodels/questions_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';

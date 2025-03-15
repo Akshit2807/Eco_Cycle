@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_waste/core/services/storage_service.dart';
-import 'package:e_waste/data/secure_storage/secure_storage.dart';
+import 'package:e_waste/core/services/secure_storage_services/secure_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

@@ -1,7 +1,7 @@
 import 'package:e_waste/core/services/decide_service.dart';
 import 'package:e_waste/core/utils/app_loader.dart';
-import 'package:e_waste/core/utils/custom_app_bar.dart';
 import 'package:e_waste/data/models/decision_model.dart';
+import 'package:e_waste/presentation/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class DecideScreen extends StatefulWidget {

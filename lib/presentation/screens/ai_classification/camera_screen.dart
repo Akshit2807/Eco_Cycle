@@ -1,20 +1,17 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/core/services/camera_service.dart';
+import 'package:e_waste/core/services/secure_storage_services/secure_storage.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/app_loader.dart';
 import 'package:e_waste/data/models/base_64_model.dart';
-import 'package:e_waste/data/secure_storage/secure_storage.dart';
-import 'package:e_waste/widgets/custom_button.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
-import '../../core/utils/app_icons.dart';
-import '../../widgets/percentage_sized_box.dart';
+import '../../../core/utils/app_icons.dart';
+import '../../../widgets/percentage_sized_box.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -26,6 +23,7 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   late Future<Base64> _response;
   late String filePath;
+
   @override
   void initState() {
     _response = CameraService.getCategory();

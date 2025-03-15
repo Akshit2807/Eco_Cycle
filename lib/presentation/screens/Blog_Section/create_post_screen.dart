@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_waste/data/models/post_model.dart';
-import 'package:e_waste/data/secure_storage/secure_storage.dart';
+import 'package:e_waste/core/services/secure_storage_services/secure_storage.dart';
 import 'package:e_waste/viewmodels/community_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';

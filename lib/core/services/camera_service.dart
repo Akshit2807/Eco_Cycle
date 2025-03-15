@@ -1,15 +1,15 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:e_waste/core/services/secure_storage_services/secure_storage.dart';
 import 'package:e_waste/data/models/base_64_model.dart';
-import 'package:e_waste/data/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'dart:convert';
-import 'dart:typed_data';
 import 'package:image/image.dart' as img;
-import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../router/app_router.dart';
 

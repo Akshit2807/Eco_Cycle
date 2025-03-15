@@ -1,18 +1,19 @@
-import 'package:e_waste/presentation/dashboard/Blog_Section/comments_screen.dart';
-import 'package:e_waste/presentation/dashboard/Blog_Section/create_post_screen.dart';
-import 'package:e_waste/presentation/dashboard/reward_components/leaderboard_screen.dart';
-import 'package:e_waste/presentation/dashboard/reward_components/point_history_screen.dart';
-import 'package:e_waste/presentation/dashboard/reward_components/reward_details_screen.dart';
-import 'package:e_waste/presentation/views/auth/auth_screen.dart';
-import 'package:e_waste/presentation/views/auth_checker.dart';
-import 'package:e_waste/presentation/views/camera_screen.dart';
-import 'package:e_waste/presentation/views/decide_screen.dart';
-import 'package:e_waste/presentation/views/navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../presentation/views/quetions_screen.dart';
+import '../../presentation/auth_check_navigator.dart';
+import '../../presentation/components/reward_components/leaderboard_screen.dart';
+import '../../presentation/components/reward_components/point_history_screen.dart';
+import '../../presentation/components/reward_components/reward_details_screen.dart';
+import '../../presentation/screens/Blog_Section/comments_screen.dart';
+import '../../presentation/screens/Blog_Section/create_post_screen.dart';
+import '../../presentation/screens/ai_classification/camera_screen.dart';
+import '../../presentation/screens/ai_classification/decide_screen.dart';
+import '../../presentation/screens/ai_classification/quetions_screen.dart';
+import '../../presentation/screens/auth/auth_screen.dart';
+import '../../presentation/screens/navigation_screen.dart';
+
 //
 // class AppRouter {
 //   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -52,6 +53,7 @@ class RouteNavigation {
   /// Returns the corresponding route based on the provided route settings.
   static const String quetionsScreenRoute = '/quetions';
   static const String decideScreenRoute = '/decide';
+
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case authCheckerScreenRoute:

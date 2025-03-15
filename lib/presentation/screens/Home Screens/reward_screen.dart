@@ -1,4 +1,4 @@
-import 'package:e_waste/core/utils/custom_app_bar.dart';
+import 'package:e_waste/presentation/components/custom_app_bar.dart';
 import 'package:e_waste/viewmodels/point_history_viewmodel.dart';
 import 'package:e_waste/viewmodels/rewards_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';

@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_controller.dart';
-import 'package:e_waste/core/utils/custom_app_bar.dart';
+import 'package:e_waste/presentation/components/custom_app_bar.dart';
 import 'package:e_waste/widgets/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

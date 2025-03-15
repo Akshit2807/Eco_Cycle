@@ -1,7 +1,8 @@
-import 'package:e_waste/presentation/views/navigation_screen.dart';
-import 'package:e_waste/presentation/views/splash_screen.dart';
+import 'package:e_waste/presentation/screens/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'screens/navigation_screen.dart';
 
 class AuthChecker extends StatelessWidget {
   @override

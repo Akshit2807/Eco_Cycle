@@ -1,9 +1,10 @@
-import 'package:e_waste/core/utils/custom_app_bar.dart';
-import 'package:e_waste/presentation/dashboard/Blog_Section/blog_post_list.dart';
+import 'package:e_waste/presentation/components/custom_app_bar.dart';
 import 'package:e_waste/viewmodels/community_viewmodel.dart';
 import 'package:e_waste/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../Blog_Section/blog_post_list.dart';
 
 class CommunityScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
