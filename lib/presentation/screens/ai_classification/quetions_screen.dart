@@ -1,5 +1,6 @@
 import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/core/services/quetions_service.dart';
+import 'package:e_waste/core/services/secure_storage_services/secure_storage.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/app_loader.dart';
 import 'package:e_waste/data/models/quetions_model.dart';
@@ -8,6 +9,7 @@ import 'package:e_waste/viewmodels/questions_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:grouped_list/grouped_list.dart';
 
 class QuetionsScreen extends StatefulWidget {
   final String title;
@@ -87,8 +89,12 @@ class _QuetionsScreenState extends State<QuetionsScreen> {
               /// Back Button
               Expanded(
                 child: ElevatedButton(
-                    onPressed: () =>
-                        Get.toNamed(RouteNavigation.navScreenRoute),
+                    onPressed: () {
+                      SecureStorageService().deleteData("Base64Response");
+                      SecureStorageService().deleteData("clickedImg");
+                      SecureStorageService().deleteData("QuestionsFromAI");
+                      Get.toNamed(RouteNavigation.navScreenRoute);
+                    },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
                       fixedSize: const Size(double.maxFinite, 56),
@@ -115,10 +121,12 @@ class _QuetionsScreenState extends State<QuetionsScreen> {
               Expanded(
                 child: ElevatedButton(
                     onPressed: () {
-                      Get.toNamed(RouteNavigation.decideScreenRoute,
-                          arguments: {
-                            'qns': qns.join(";"),
-                          });
+                      Get.off(RouteNavigation.decideScreenRoute, arguments: {
+                        'qns': qns.join(";"),
+                      });
+                      SecureStorageService().deleteData("Base64Response");
+                      SecureStorageService().deleteData("clickedImg");
+                      SecureStorageService().deleteData("QuestionsFromAI");
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -245,18 +253,18 @@ class _QuetionsScreenState extends State<QuetionsScreen> {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    controller: scrollController, // Attach controller here
-                    itemCount: messages.length,
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return messages[index]; // Your message widget
-                    },
-                  ),
-                ),
+                    child: GroupedListView<dynamic, int>(
+                  reverse: true,
+                  order: GroupedListOrder.DESC,
+                  elements: messages,
+                  groupBy: (element) => messages.indexOf(element, 0),
+                  groupHeaderBuilder: (element) => const SizedBox(),
+                  itemBuilder: (context, element) {
+                    return element;
+                  },
+                )),
                 const SizedBox(
-                  height: 12,
+                  height: 80,
                 ),
               ],
             );

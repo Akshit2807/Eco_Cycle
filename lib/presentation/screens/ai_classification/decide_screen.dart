@@ -33,6 +33,7 @@ class _DecideScreenState extends State<DecideScreen> {
           if (snapshot.hasData &&
               snapshot.connectionState == ConnectionState.done) {
             return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
