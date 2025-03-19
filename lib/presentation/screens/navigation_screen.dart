@@ -2,29 +2,45 @@ import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../core/controller/Navigation/navigation_controller.dart';
 import '../../core/router/app_router.dart';
+import '../../data/models/user_model.dart';
+import '../../data/repositories/user_repository.dart';
+import '../components/Drawer/main_screen_drawer.dart';
 import '../components/bottom_navigation.dart';
-import '../components/main_screen_drawer.dart';
 import 'Home Screens/community_screen.dart';
 import 'Home Screens/home_screen.dart';
 import 'Home Screens/marketplace_screen.dart';
 import 'Home Screens/reward_screen.dart';
 
-class NavigationController extends GetxController {
-  RxInt selectedIndex = 0.obs;
-  final PageController pageController = PageController(initialPage: 0);
+class NavigationScreen extends StatefulWidget {
+  const NavigationScreen({super.key});
 
-  void changePage(int index) {
-    selectedIndex.value = index;
-    pageController.jumpToPage(index);
-  }
+  @override
+  State<NavigationScreen> createState() => _NavigationScreenState();
 }
 
-class NavigationScreen extends StatelessWidget {
+class _NavigationScreenState extends State<NavigationScreen> {
   final NavigationController controller = Get.put(NavigationController());
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  NavigationScreen({super.key});
+  String? username;
+  UserModel? user;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserData();
+  }
+
+  Future<void> fetchUserData() async {
+    user = await UserRepository().fetchUserDetails();
+    if (user != null) {
+      setState(() {
+        username = user?.username;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +62,9 @@ class NavigationScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       key: _scaffoldKey,
-      drawer: myDrawer(context),
+
+      /// Drawer
+      drawer: myDrawer(context, user),
 
       /// Navigation Screens
       body: Padding(

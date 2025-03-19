@@ -1,37 +1,55 @@
+import 'package:e_waste/widgets/percentage_sized_box.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../core/controller/Drawer/drawer_ctrl.dart';
 import '../core/utils/app_colors.dart';
 import 'custom_text.dart';
 
-Widget buildDrawerTile(String icon, String title, bool selected,
+Widget buildDrawerTile(
+    String icon, String title, int index, DrawerControllerX controller,
     {VoidCallback? onTileTap}) {
   return GestureDetector(
     onTap: () {
-      if (onTileTap != null) {
-        onTileTap();
-        selected = true;
-      } else {
-        print("No action");
-      }
+      controller.updateIndex(index); // Update selected index
+      if (onTileTap != null) onTileTap();
     },
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        ImageIcon(
-          AssetImage(icon),
-          size: 24,
-          color: selected ? AppColors.green : AppColors.dark,
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        CustomText(
-          textName: title,
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-          textColor: selected ? AppColors.green : AppColors.dark,
-        )
-      ],
-    ),
+    child: Obx(() => Container(
+          color: Colors.white30,
+          child: Column(
+            children: [
+              PercentSizedBox.height(0.015),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ImageIcon(
+                    AssetImage(icon),
+                    size: 24,
+                    color: controller.selectedIndex.value == index
+                        ? AppColors.green
+                        : AppColors.dark,
+                  ),
+                  // const SizedBox(width: 16),
+                  PercentSizedBox.width(0.05),
+                  CustomText(
+                    textName: title,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    textColor: controller.selectedIndex.value == index
+                        ? AppColors.green
+                        : AppColors.dark,
+                  ),
+                ],
+              ),
+              PercentSizedBox.height(0.015),
+              Divider(
+                color: AppColors.dark,
+                thickness: 0.5,
+                indent: 40,
+                endIndent: 16,
+              ),
+            ],
+          ),
+        )),
   );
 }

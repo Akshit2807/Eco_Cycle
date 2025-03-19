@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/core/services/camera_service.dart';
-import 'package:e_waste/core/services/secure_storage_services/secure_storage.dart';
+import 'package:e_waste/core/services/local_storage_service/secure_storage.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/app_loader.dart';
 import 'package:e_waste/data/models/base_64_model.dart';
