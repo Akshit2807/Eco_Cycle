@@ -2,7 +2,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../screens/navigation_screen.dart';
+import '../../core/controller/Navigation/navigation_controller.dart';
 
 class CustomBottomNavigation extends StatelessWidget {
   final NavigationController controller;
