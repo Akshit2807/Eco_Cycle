@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:e_waste/core/router/app_router.dart';
-import 'package:e_waste/core/services/secure_storage_services/secure_storage.dart';
+import 'package:e_waste/core/services/local_storage_service/secure_storage.dart';
 import 'package:e_waste/data/models/base_64_model.dart';
 import 'package:e_waste/data/models/decision_model.dart';
 import 'package:flutter/material.dart';

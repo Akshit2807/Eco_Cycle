@@ -182,8 +182,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                 const SizedBox(height: 10),
 
                                 TextButton(
-                                  onPressed: ctrl
-                                      .toggleAuthMode, // Switch between login and signup
+                                  onPressed: ctrl.toggleAuthMode,
+                                  // Switch between login and signup
                                   child: RichText(
                                     text: TextSpan(
                                       text: ctrl.isLogin

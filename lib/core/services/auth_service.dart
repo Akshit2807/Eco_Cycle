@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_waste/core/services/local_storage_service/secure_storage.dart';
 import 'package:e_waste/core/services/storage_service.dart';
-import 'package:e_waste/core/services/secure_storage_services/secure_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -33,11 +33,11 @@ class AuthService {
       secureStorageService.saveData(value: email, key: 'currentEmail');
       //Printing user details
       log("User Details: ${userDetails.toString()}");
-      print(
-          'user details >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+      log('=============================================================User Details=============================================================');
       print('username : ${userDetails.displayName}');
       print(secureStorageService.getData('currentUserName'));
       print(secureStorageService.getData('currentEmail'));
+      log('=============================================================User Details=============================================================');
 
       if (result != null) {
         DocumentSnapshot documentSnapshot =

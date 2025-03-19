@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:e_waste/core/services/secure_storage_services/secure_storage.dart';
+import 'package:e_waste/core/services/local_storage_service/secure_storage.dart';
 import 'package:e_waste/data/models/base_64_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
