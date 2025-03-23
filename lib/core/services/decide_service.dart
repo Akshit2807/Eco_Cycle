@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/core/services/local_storage_service/secure_storage.dart';
 import 'package:e_waste/data/models/base_64_model.dart';
@@ -12,7 +11,7 @@ import 'package:http/http.dart' as http;
 TokenService tokenService = TokenService();
 
 class DecideService {
-  static Future<Decision> getGuide(String qns) async {
+  static Future<Decision> getGuide(String qns, BuildContext context) async {
     String? token = await tokenService.getToken();
     log('$token');
 
@@ -21,11 +20,23 @@ class DecideService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    String? jsonString = await SecureStorageService().getData('Base64Response');
-    final Base64 obj = base64FromJson(jsonString!);
+
+    String? jsonString = await SecureStorageService().getData("Base64Response");
+    if (jsonString == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text("Something Went Wrong. Try Again"),
+            backgroundColor: Colors.red),
+      );
+      Get.toNamed(
+        RouteNavigation.navScreenRoute,
+      );
+      throw Exception("Base64Response is missing");
+    }
+    final Base64 obj = base64FromJson(jsonString);
     Map<String, dynamic> body = {
-      "title": obj.title,
-      "initial_prod_description": obj.desc,
+      "title": "tv",
+      "initial_prod_description": "tv",
       "qnas": qns
     };
 
@@ -38,6 +49,11 @@ class DecideService {
       SecureStorageService().saveData(value: responseBody, key: "DecideAPI");
       return decisionFromJson(responseBody);
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text("Something Went Wrong. Try Again"),
+            backgroundColor: Colors.red),
+      );
       Get.toNamed(
         RouteNavigation.navScreenRoute,
       );

@@ -17,7 +17,7 @@ class _DecideScreenState extends State<DecideScreen> {
 
   @override
   void initState() {
-    _response = DecideService.getGuide(widget.qns);
+    _response = DecideService.getGuide(widget.qns, context);
     super.initState();
   }
 
@@ -55,7 +55,7 @@ class _DecideScreenState extends State<DecideScreen> {
               ),
             );
           } else if (snapshot.hasError) {
-            return const Text("Something went wrong");
+            return const Center(child: Text("Something went wrong"));
           } else {
             return const Center(
               child: AppLoader(),

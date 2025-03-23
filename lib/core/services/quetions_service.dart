@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/core/services/local_storage_service/secure_storage.dart';
 import 'package:e_waste/data/models/quetions_model.dart';
@@ -11,7 +10,8 @@ import 'package:http/http.dart' as http;
 TokenService tokenService = TokenService();
 
 class QuestionsService {
-  static Future<Quetions> getQuetions(String title) async {
+  static Future<Quetions> getQuetions(
+      String title, BuildContext context) async {
     String? token = await tokenService.getToken();
     log('$token');
 
@@ -33,6 +33,11 @@ class QuestionsService {
       final Quetions obj = quetionsFromJson(responseBody);
       return obj;
     } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text("Something Went Wrong. Try Again"),
+            backgroundColor: Colors.red),
+      );
       Get.toNamed(
         RouteNavigation.navScreenRoute,
       );
