@@ -17,7 +17,7 @@ class _DecideScreenState extends State<DecideScreen> {
 
   @override
   void initState() {
-    _response = DecideService.getGuide(widget.qns);
+    _response = DecideService.getGuide(widget.qns, context);
     super.initState();
   }
 
@@ -33,6 +33,7 @@ class _DecideScreenState extends State<DecideScreen> {
           if (snapshot.hasData &&
               snapshot.connectionState == ConnectionState.done) {
             return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +55,7 @@ class _DecideScreenState extends State<DecideScreen> {
               ),
             );
           } else if (snapshot.hasError) {
-            return const Text("Something went wrong");
+            return const Center(child: Text("Something went wrong"));
           } else {
             return const Center(
               child: AppLoader(),

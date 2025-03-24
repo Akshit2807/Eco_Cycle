@@ -14,6 +14,22 @@ class AuthService {
   final SecureStorageService secureStorageService = SecureStorageService();
   final TokenService tokenService = TokenService();
 
+  Future<String?> refreshFirebaseToken() async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        String? idToken = await user.getIdToken(true); // Force token refresh
+        tokenService.saveToken(idToken!);
+        return idToken;
+      } else {
+        return null; // User not signed in
+      }
+    } catch (e) {
+      log("Error refreshing token: $e");
+      return null;
+    }
+  }
+
   Future<Map<String, dynamic>?> signIn(
       String email, String password, String userName) async {
     try {
@@ -33,11 +49,11 @@ class AuthService {
       secureStorageService.saveData(value: email, key: 'currentEmail');
       //Printing user details
       log("User Details: ${userDetails.toString()}");
-      log('=============================================================User Details=============================================================');
+      print(
+          'user details >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
       print('username : ${userDetails.displayName}');
       print(secureStorageService.getData('currentUserName'));
       print(secureStorageService.getData('currentEmail'));
-      log('=============================================================User Details=============================================================');
 
       if (result != null) {
         DocumentSnapshot documentSnapshot =
