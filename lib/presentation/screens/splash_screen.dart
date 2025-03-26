@@ -51,18 +51,16 @@ class _SplashScreenState extends State<SplashScreen> {
                       textName: "Eco Cycle",
                       fontWeight: FontWeight.bold,
                       textColor: Color(0xff232323),
-                      letterSpacing: 4,
+                      letterSpacing: 1,
                       textAlign: TextAlign.center,
                       fontSize: 32,
                     ),
 
                     /// App Logo
-                    Container(
-                      height: 80,
-                      width: 80,
-                      color: Colors.red,
-                      alignment: Alignment.center,
-                      child: const CustomText(textName: "Logo"),
+                    Image.asset(
+                      "assets/logo.png",
+                      height: 120,
+                      width: 120,
                     )
                   ],
                 ),
@@ -79,13 +77,16 @@ class _SplashScreenState extends State<SplashScreen> {
               Obx(() => Column(
                     children: [
                       /// Changing Text
-                      CustomText(
-                        textName: texts[currentIndex.ind.value],
-                        fontWeight: FontWeight.bold,
-                        textColor: const Color(0xff232323),
-                        letterSpacing: 2,
-                        textAlign: TextAlign.center,
-                        fontSize: 24,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        child: CustomText(
+                          textName: texts[currentIndex.ind.value],
+                          fontWeight: FontWeight.bold,
+                          textColor: const Color(0xff232323),
+                          letterSpacing: 1,
+                          textAlign: TextAlign.center,
+                          fontSize: 20,
+                        ),
                       ),
 
                       /// Spacing
@@ -98,8 +99,8 @@ class _SplashScreenState extends State<SplashScreen> {
                         curve: Curves.easeInOut,
                         duration: const Duration(milliseconds: 300),
                         effect: const WormEffect(
-                          dotHeight: 16,
-                          dotWidth: 16,
+                          dotHeight: 12,
+                          dotWidth: 12,
                           spacing: 16,
                           dotColor: Color(0xff232323),
                           activeDotColor: Color(0xff4CAF50),
@@ -109,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ],
                   )),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
+                height: MediaQuery.of(context).size.height * 0.03,
                 width: double.maxFinite,
               ),
 

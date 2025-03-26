@@ -31,6 +31,18 @@ class QuestionsService {
       SecureStorageService()
           .saveData(value: responseBody, key: "QuestionsFromAI");
       final Quetions obj = quetionsFromJson(responseBody);
+      if (obj.questions.elementAt(0) == "IGN") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text("Invalid Input. Try Again"),
+              backgroundColor: Colors.red),
+        );
+        Get.toNamed(
+          RouteNavigation.navScreenRoute,
+        );
+        debugPrint('Response Code : ${response.statusCode}');
+        throw Exception('Invalid Input');
+      }
       return obj;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

@@ -103,12 +103,14 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                           onTileTap: () {
                         AuthViewModel().signOut(context);
                       }),
+                      const Spacer(),
                       CustomText(
                         textName: " V 1.253.450",
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         textColor: AppColors.green,
                       ),
+                      const Spacer(),
                     ],
                   ),
                 ),

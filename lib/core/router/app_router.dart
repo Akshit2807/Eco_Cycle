@@ -1,3 +1,5 @@
+import 'package:e_waste/presentation/screens/ai_classification/recycle_screen.dart';
+import 'package:e_waste/presentation/screens/ai_classification/resell_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
@@ -54,6 +56,9 @@ class RouteNavigation {
   static const String quetionsScreenRoute = '/quetions';
   static const String decideScreenRoute = '/decide';
 
+  static const String recycleScreenRoute = "/recycle";
+  static const String resellScreenRoute = "/resell";
+
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case authCheckerScreenRoute:
@@ -62,6 +67,15 @@ class RouteNavigation {
         return _customFadeRoute(child: const AuthScreen());
       case communityScreenRoute:
         return _customFadeRoute(child: NavigationScreen());
+      case recycleScreenRoute:
+        final args = settings.arguments as Map<String, dynamic>? ?? {};
+        return _customFadeRoute(
+            child: RecycleScreen(snapshot: args['snapshot']));
+      case resellScreenRoute:
+        final args = settings.arguments as Map<String, dynamic>? ?? {};
+        return _customFadeRoute(
+            child: ResellScreen(snapshot: args['snapshot']));
+
       case leaderboardScreenRoute:
         return _customFadeRoute(child: const LeaderboardScreen());
       case pointHistoryScreenRoute:
@@ -80,6 +94,7 @@ class RouteNavigation {
             child: DecideScreen(
           qns: args["qns"],
         ));
+
       case cameraScreenRoute:
         final args = settings.arguments as Map<String, dynamic>? ?? {};
         return _customFadeRoute(child: const CameraScreen());
