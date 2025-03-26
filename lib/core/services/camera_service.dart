@@ -107,6 +107,18 @@ class CameraService {
           .saveData(value: responseBody, key: "Base64Response");
 
       final Base64 obj = base64FromJson(responseBody);
+      if (obj.title == "IGN" || obj.desc == "IGN") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text("Invalid Input. Try Again"),
+              backgroundColor: Colors.red),
+        );
+        Get.toNamed(
+          RouteNavigation.navScreenRoute,
+        );
+        debugPrint('Response Code : ${response.statusCode}');
+        throw Exception('Invalid Input');
+      }
       return obj;
     } else if (response.statusCode == 401 && !isRetrying) {
       debugPrint('Unauthorized (401), refreshing token...');

@@ -20,7 +20,7 @@ class DecideService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     };
-
+    log(qns);
     String? jsonString = await SecureStorageService().getData("Base64Response");
     if (jsonString == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -35,8 +35,8 @@ class DecideService {
     }
     final Base64 obj = base64FromJson(jsonString);
     Map<String, dynamic> body = {
-      "title": "tv",
-      "initial_prod_description": "tv",
+      "title": obj.title,
+      "initial_prod_description": obj.desc,
       "qnas": qns
     };
 
@@ -47,7 +47,21 @@ class DecideService {
       debugPrint('Response Code : ${response.statusCode}');
       final String responseBody = response.body;
       SecureStorageService().saveData(value: responseBody, key: "DecideAPI");
-      return decisionFromJson(responseBody);
+      SecureStorageService().saveData(value: responseBody, key: "DecideAPI");
+      Decision decision = Decision.fromRawJson(responseBody);
+      if (decision.decision == "IGN" || decision.guide.initials == "IGN") {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text("Invalid Input. Try Again"),
+              backgroundColor: Colors.red),
+        );
+        Get.toNamed(
+          RouteNavigation.navScreenRoute,
+        );
+        debugPrint('Response Code : ${response.statusCode}');
+        throw Exception('Invalid Input');
+      }
+      return decision;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

@@ -15,7 +15,7 @@ Widget buildDrawerTile(
       if (onTileTap != null) onTileTap();
     },
     child: Obx(() => Container(
-          color: Colors.white30,
+          color: Colors.transparent,
           child: Column(
             children: [
               PercentSizedBox.height(0.015),
