@@ -36,12 +36,12 @@ jobs:
 
       - name: Install Dependencies
         run: flutter pub get
-
-      - name: Build APK
-        run: flutter build apk --release
-
+        
       - name: Running Build Runner...
         run: flutter pub run build_runner build
+        
+      - name: Build APK
+        run: flutter build apk --release
 
       - name: Rename APK with Version
         run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/app-release.v${{ github.run_number }}.apk
