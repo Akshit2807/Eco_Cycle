@@ -45,12 +45,13 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
           children: [
             const SizedBox(height: 24),
             CircleAvatar(
-              radius: MediaQuery.of(context).size.width * 0.2,
-              child: const Image(
-                image: AssetImage("assets/prf.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
+                backgroundColor: Colors.white,
+                radius: MediaQuery.of(context).size.width * 0.2,
+                child: Icon(
+                  Icons.person,
+                  color: Colors.green,
+                  size: MediaQuery.of(context).size.width * 0.2,
+                )),
             const SizedBox(height: 12),
             Center(
               child: CustomText(
@@ -73,7 +74,7 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 24.0),
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //Home

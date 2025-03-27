@@ -59,11 +59,18 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   ];
   int _selectedTabIndex = 0;
   final List<String> _tabs = [
-    'All',
-    'Electronics',
-    'Electronics',
-    'More',
-    'More'
+    'Mobile Devices',
+    'Computers and Laptops',
+    'Computer Accessories',
+    'Networking Equipment',
+    'Audio and Video Devices',
+    'Storage Devices',
+    'Batteries and Power Supplies',
+    'Home Appliances',
+    'Gaming and Entertainment',
+    'Office Electronics',
+    'Industrial and Medical Equipment',
+    'Car Electronics'
   ];
 
   @override

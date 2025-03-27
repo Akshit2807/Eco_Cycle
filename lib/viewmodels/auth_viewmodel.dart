@@ -125,8 +125,12 @@ class AuthViewModel extends ChangeNotifier {
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
       _user = await _authService.signInWithGoogle();
-      notifyListeners();
 
+// ✅ Save user details locally after successful login as UserModel
+      final userModel =
+          UserModel(email: _user!.email!, username: _user!.displayName!);
+      await HiveService.saveUserModel(userModel);
+      notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Google Sign-In successful!"),

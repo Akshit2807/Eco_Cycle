@@ -111,7 +111,7 @@ class RouteNavigation {
       //       ));
 
       case navScreenRoute:
-        return _customFadeRoute(child: NavigationScreen());
+        return _customFadeRoute(child: const NavigationScreen());
 
       case createPostScreenRoute:
         return _customFadeRoute(child: const CreatePostScreen());
