@@ -87,7 +87,14 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
               rank: '12',
               points: '40',
               scaffoldKey: widget.scaffoldKey,
-              prf: const Image(image: AssetImage("assets/prf.png")),
+              prf: CircleAvatar(
+                  backgroundColor: AppColors.lightGreen.withValues(alpha: 0.5),
+                  radius: 28,
+                  child: const Icon(
+                    Icons.person,
+                    color: Colors.green,
+                    size: 24,
+                  )),
               context: context,
             ),
           ),
