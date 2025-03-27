@@ -7,10 +7,8 @@ import 'package:e_waste/presentation/components/custom_app_bar.dart';
 import 'package:e_waste/viewmodels/marketplace_viewmodel.dart';
 import 'package:e_waste/widgets/carousel_slider.dart';
 import 'package:e_waste/widgets/custom_text.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 
 class HomeScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -125,7 +123,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 rank: '12',
                 points: '40',
                 scaffoldKey: widget.scaffoldKey,
-                prf: const Image(image: AssetImage("assets/prf.png")),
+                prf: CircleAvatar(
+                    backgroundColor:
+                        AppColors.lightGreen.withValues(alpha: 0.5),
+                    radius: 28,
+                    child: const Icon(
+                      Icons.person,
+                      color: Colors.green,
+                      size: 24,
+                    )),
                 context: context,
               ),
             ),

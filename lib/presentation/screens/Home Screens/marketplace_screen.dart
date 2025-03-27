@@ -59,11 +59,18 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
   ];
   int _selectedTabIndex = 0;
   final List<String> _tabs = [
-    'All',
-    'Electronics',
-    'Electronics',
-    'More',
-    'More'
+    'Mobile Devices',
+    'Computers and Laptops',
+    'Computer Accessories',
+    'Networking Equipment',
+    'Audio and Video Devices',
+    'Storage Devices',
+    'Batteries and Power Supplies',
+    'Home Appliances',
+    'Gaming and Entertainment',
+    'Office Electronics',
+    'Industrial and Medical Equipment',
+    'Car Electronics'
   ];
 
   @override
@@ -80,7 +87,14 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
               rank: '12',
               points: '40',
               scaffoldKey: widget.scaffoldKey,
-              prf: const Image(image: AssetImage("assets/prf.png")),
+              prf: CircleAvatar(
+                  backgroundColor: AppColors.lightGreen.withValues(alpha: 0.5),
+                  radius: 28,
+                  child: const Icon(
+                    Icons.person,
+                    color: Colors.green,
+                    size: 24,
+                  )),
               context: context,
             ),
           ),
