@@ -110,7 +110,7 @@ class CameraService {
       if (obj.title == "IGN" || obj.desc == "IGN") {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text("Invalid Input. Try Again"),
+              content: Text("Invalid Image. Try Again"),
               backgroundColor: Colors.red),
         );
         Get.toNamed(
