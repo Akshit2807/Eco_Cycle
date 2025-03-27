@@ -52,12 +52,12 @@ class DecideService {
       if (decision.decision == "IGN" || decision.guide.initials == "IGN") {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-              content: Text("Invalid Input. Try Again"),
+              content: Text("Invalid Answers. Try Again"),
               backgroundColor: Colors.red),
         );
-        Get.toNamed(
-          RouteNavigation.navScreenRoute,
-        );
+        Get.offNamed(RouteNavigation.quetionsScreenRoute, arguments: {
+          'title': obj.title,
+        });
         debugPrint('Response Code : ${response.statusCode}');
         throw Exception('Invalid Input');
       }
