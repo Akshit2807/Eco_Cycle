@@ -1,4 +1,5 @@
 import 'package:e_waste/core/services/local_storage_service/hive_service.dart';
+import 'package:e_waste/core/utils/extensions.dart';
 import 'package:e_waste/data/repositories/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,7 +54,7 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
             const SizedBox(height: 12),
             Center(
               child: CustomText(
-                textName: user?.username ?? "Not fetched",
+                textName: user?.username.capitalizeFirstOfEach ?? "Not fetched",
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
               ),
@@ -103,12 +104,14 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                           onTileTap: () {
                         AuthViewModel().signOut(context);
                       }),
+                      const Spacer(),
                       CustomText(
                         textName: " V 1.253.450",
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         textColor: AppColors.green,
                       ),
+                      const Spacer(),
                     ],
                   ),
                 ),

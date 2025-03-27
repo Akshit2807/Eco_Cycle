@@ -1,8 +1,10 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TokenService {
-  static const _storage = FlutterSecureStorage();
-
+  static const _storage = FlutterSecureStorage(
+      aOptions: AndroidOptions(
+    encryptedSharedPreferences: true,
+  ));
   Future<void> saveToken(String token) async {
     await _storage.write(key: 'idToken', value: token);
   }
@@ -17,14 +19,17 @@ class TokenService {
 }
 
 class SecureStorageService {
-  static const _storage = FlutterSecureStorage();
-
+  static const _storage = FlutterSecureStorage(
+      aOptions: AndroidOptions(
+    encryptedSharedPreferences: true,
+  ));
   Future<void> saveData({required String value, required String key}) async {
     await _storage.write(key: key, value: value);
   }
 
   Future<String?> getData(String key) async {
-    return await _storage.read(key: key);
+    String? res = await _storage.read(key: key);
+    return res;
   }
 
   Future<void> deleteData(String key) async {

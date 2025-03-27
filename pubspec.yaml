@@ -19,6 +19,7 @@ dependencies:
   flutter_speed_dial: ^7.0.0
   firebase_core: ^3.10.1
   provider: ^6.1.2
+  fl_chart: ^0.70.2
   firebase_auth: ^5.4.2
   google_sign_in: ^6.2.2
   cloud_firestore: ^5.4.3

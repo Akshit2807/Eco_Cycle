@@ -26,7 +26,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void initState() {
-    _response = CameraService.getCategory();
+    _response = CameraService.getCategory(context: context);
     super.initState();
   }
 

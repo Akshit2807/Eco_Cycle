@@ -24,7 +24,7 @@ class _QuetionsScreenState extends State<QuetionsScreen> {
 
   @override
   void initState() {
-    _response = QuestionsService.getQuetions(widget.title);
+    _response = QuestionsService.getQuetions(widget.title, context);
     super.initState();
   }
 
@@ -121,12 +121,10 @@ class _QuetionsScreenState extends State<QuetionsScreen> {
               Expanded(
                 child: ElevatedButton(
                     onPressed: () {
-                      Get.off(RouteNavigation.decideScreenRoute, arguments: {
-                        'qns': qns.join(";"),
-                      });
-                      SecureStorageService().deleteData("Base64Response");
-                      SecureStorageService().deleteData("clickedImg");
-                      SecureStorageService().deleteData("QuestionsFromAI");
+                      Get.offNamed(RouteNavigation.decideScreenRoute,
+                          arguments: {
+                            'qns': qns.join(";"),
+                          });
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
