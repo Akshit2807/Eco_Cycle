@@ -33,6 +33,18 @@ jobs:
           key: flutter-deps-${{ hashFiles('pubspec.yaml') }}
           restore-keys: |
             flutter-deps-
+      
+      - name: Restore Keystore File
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: echo "$KEYSTORE_BASE64" | base64 --decode > android/app/keystore.jks
+
+      - name: Set Environment Variables
+        run: |
+          echo "KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
+          echo "KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> $GITHUB_ENV
+          echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> $GITHUB_ENV
+
 
       - name: Install Dependencies
         run: flutter pub get
