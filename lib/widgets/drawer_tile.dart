@@ -17,6 +17,7 @@ Widget buildDrawerTile(
     child: Obx(() => Container(
           color: Colors.transparent,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               PercentSizedBox.height(0.015),
               Row(
@@ -41,13 +42,13 @@ Widget buildDrawerTile(
                   ),
                 ],
               ),
-              PercentSizedBox.height(0.015),
               Divider(
                 color: AppColors.dark,
                 thickness: 0.5,
                 indent: 40,
                 endIndent: 16,
               ),
+              PercentSizedBox.height(0.015),
             ],
           ),
         )),

@@ -1,3 +1,4 @@
+import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/presentation/components/custom_app_bar.dart';
 import 'package:e_waste/viewmodels/community_viewmodel.dart';
 import 'package:e_waste/widgets/search_bar.dart';
@@ -40,7 +41,15 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 rank: '12',
                 points: '40',
                 scaffoldKey: widget.scaffoldKey,
-                prf: const Image(image: AssetImage("assets/prf.png")),
+                prf: CircleAvatar(
+                    backgroundColor:
+                        AppColors.lightGreen.withValues(alpha: 0.5),
+                    radius: 28,
+                    child: const Icon(
+                      Icons.person,
+                      color: Colors.green,
+                      size: 24,
+                    )),
                 context: context,
               ),
             ),

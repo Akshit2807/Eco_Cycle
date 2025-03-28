@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "131913164620",
+    "firebase_url": "https://e-waste-d44a8-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "e-waste-d44a8",
     "storage_bucket": "e-waste-d44a8.firebasestorage.app"
   },
@@ -10,6 +11,50 @@
         "mobilesdk_app_id": "1:131913164620:android:b4318f4597e7788b4b11e9",
         "android_client_info": {
           "package_name": "com.example.e_waste"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "131913164620-kf6ho2q0sk5up36t0tgch6dnn5u0q069.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.e_waste",
+            "certificate_hash": "6e5e4890bcc45be281fcc16d017244a64450c5fe"
+          }
+        },
+        {
+          "client_id": "131913164620-pkvtc6p96caojbln0q247u8n04kqrnc2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLY6XLifEJovvUjqthRrhtryJKFVLs2gQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "131913164620-pkvtc6p96caojbln0q247u8n04kqrnc2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "131913164620-1f77jk5nnk0tjkg2iurcf3c63ob1k6k9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eWaste"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:131913164620:android:b5379e753a9f259f4b11e9",
+        "android_client_info": {
+          "package_name": "com.hackthegap.ecocycle"
         }
       },
       "oauth_client": [
