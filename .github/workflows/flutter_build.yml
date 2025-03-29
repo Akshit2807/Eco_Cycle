@@ -50,13 +50,23 @@ jobs:
           ls -l android/app/
           cat android/app/keystore.jks | base64 | head -c 100
 
+      - name: Running Build Runner...
+        run: flutter pub run build_runner build
+      - name: Decode and Restore Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
+      
+      - name: Create key.properties
+        run: |
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+          echo "storeFile=keystore.jks" >> android/key.properties
 
       - name: Install Dependencies
         run: flutter pub get
         
-      - name: Running Build Runner...
-        run: flutter pub run build_runner build
-        
+
       - name: Build APK
         run: flutter build apk --release
 
