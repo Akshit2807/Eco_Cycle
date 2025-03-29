@@ -10,7 +10,8 @@ import '../data/models/user_model.dart';
 /// ViewModel handling user authentication and user state management
 class AuthViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
-  final AuthLoadingController loadingController = Get.find();
+  final AuthLoadingController loadingController =
+      Get.put(AuthLoadingController());
   User? _user;
   Map<String, dynamic>? userInfoMap;
 
@@ -49,8 +50,17 @@ class AuthViewModel extends ChangeNotifier {
     } catch (error) {
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.toString()), backgroundColor: Colors.red),
+        SnackBar(
+            margin: const EdgeInsets.only(
+              bottom: kBottomNavigationBarHeight + 16,
+              left: 16,
+              right: 16,
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: Text(error.toString()),
+            backgroundColor: Colors.red),
       );
+
       loadingController.change(false);
     }
   }
@@ -85,8 +95,17 @@ class AuthViewModel extends ChangeNotifier {
     } catch (error) {
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.toString()), backgroundColor: Colors.red),
+        SnackBar(
+            margin: const EdgeInsets.only(
+              bottom: kBottomNavigationBarHeight + 16,
+              left: 16,
+              right: 16,
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: Text(error.toString()),
+            backgroundColor: Colors.red),
       );
+
       loadingController.change(false);
     }
   }
@@ -106,6 +125,12 @@ class AuthViewModel extends ChangeNotifier {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
+        margin: EdgeInsets.only(
+          bottom: kBottomNavigationBarHeight + 16,
+          left: 16,
+          right: 16,
+        ),
+        behavior: SnackBarBehavior.floating,
         content: Text("Logged out successfully!"),
         backgroundColor: Colors.blue,
       ),
@@ -120,6 +145,12 @@ class AuthViewModel extends ChangeNotifier {
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
+          margin: EdgeInsets.only(
+            bottom: kBottomNavigationBarHeight + 16,
+            left: 16,
+            right: 16,
+          ),
+          behavior: SnackBarBehavior.floating,
           content: Text("Password Reset Email has been sent!"),
           backgroundColor: Colors.green,
         ),
@@ -128,7 +159,15 @@ class AuthViewModel extends ChangeNotifier {
       print(error.toString());
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.toString()), backgroundColor: Colors.red),
+        SnackBar(
+            margin: const EdgeInsets.only(
+              bottom: kBottomNavigationBarHeight + 16,
+              left: 16,
+              right: 16,
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: Text(error.toString()),
+            backgroundColor: Colors.red),
       );
     }
   }
@@ -147,6 +186,12 @@ class AuthViewModel extends ChangeNotifier {
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
+          margin: EdgeInsets.only(
+            bottom: kBottomNavigationBarHeight + 16,
+            left: 16,
+            right: 16,
+          ),
+          behavior: SnackBarBehavior.floating,
           content: Text("Google Sign-In successful!"),
           backgroundColor: Colors.green,
         ),
@@ -156,7 +201,15 @@ class AuthViewModel extends ChangeNotifier {
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       print(error.toString());
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.toString()), backgroundColor: Colors.red),
+        SnackBar(
+            margin: const EdgeInsets.only(
+              bottom: kBottomNavigationBarHeight + 16,
+              left: 16,
+              right: 16,
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: Text(error.toString()),
+            backgroundColor: Colors.red),
       );
       loadingController.change(false);
     }

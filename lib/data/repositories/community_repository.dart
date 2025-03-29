@@ -12,14 +12,28 @@ class CommunityRepository {
       await _firestore.collection('posts').doc(post.postId).set(post.toMap());
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("✅ Post created successfully!")),
+        const SnackBar(
+            margin: EdgeInsets.only(
+              bottom: kBottomNavigationBarHeight + 16,
+              left: 16,
+              right: 16,
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: Text("✅ Post created successfully!")),
       );
       print("Post created: ${post.postId}");
     } catch (e) {
       print("Error creating post: $e");
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("❌ Failed to create post!")),
+        const SnackBar(
+            margin: EdgeInsets.only(
+              bottom: kBottomNavigationBarHeight + 16,
+              left: 16,
+              right: 16,
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: Text("❌ Failed to create post!")),
       );
     }
   }
