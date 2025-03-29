@@ -42,9 +42,9 @@ class marketplaceView {
                   children: [
                     Container(
                       height: MediaQuery.of(context).size.height * 0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.4),
-                        borderRadius: const BorderRadius.only(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
                             bottomRight: Radius.circular(16),
                             bottomLeft: Radius.circular(16)),
                       ),
@@ -65,7 +65,7 @@ class marketplaceView {
                               maxLines: 1,
                               fontWeight: FontWeight.w700,
                               fontSize: 14,
-                              textColor: Colors.white,
+                              textColor: Colors.black,
                             ),
                           ),
                           const SizedBox(height: 6),
@@ -78,7 +78,7 @@ class marketplaceView {
                               maxLines: 1,
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
-                              textColor: Colors.white.withValues(alpha: 0.7),
+                              textColor: Colors.black.withValues(alpha: 0.7),
                             ),
                           ),
                         ],

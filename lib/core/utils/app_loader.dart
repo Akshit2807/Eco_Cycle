@@ -7,9 +7,12 @@ class AppLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Lottie.asset('assets/loader.json',
-          repeat: true, height: double.maxFinite, width: double.maxFinite),
+    return Material(
+      color: AppColors.white,
+      child: Center(
+        child: Lottie.asset('assets/loader.json',
+            repeat: true, height: double.maxFinite, width: double.maxFinite),
+      ),
     );
   }
 }
