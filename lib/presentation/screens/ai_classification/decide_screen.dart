@@ -50,160 +50,153 @@ class _DecideScreenState extends State<DecideScreen> {
             if (snapshot.data!.decision == "resell") {
               isRecycle = false;
             }
-            return isRecycle
-                ? SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    controller: controller,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24.0, vertical: 0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          /// App Bar
-                          customAppBar(
-                            isHome: false,
-                            title:
-                                snapshot.data!.decision.capitalizeFirstOfEach,
-                            rank: '12',
-                            points: '40',
-                            context: context,
-                          ),
-                          CustomText(
-                            textName: snapshot.data!.guide.initials,
-                            fontWeight: FontWeight.w500,
-                            textColor: const Color(0xff232323),
-                            letterSpacing: 1,
-                            lineHeight: 1.2,
-                            textAlign: TextAlign.left,
-                            fontSize: 18,
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: heading.length,
-                              physics: const BouncingScrollPhysics(),
-                              controller: controller,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(16),
-                                        border: Border.all(
-                                            color: AppColors.green, width: 2)),
-                                    margin: const EdgeInsets.only(bottom: 24),
-                                    padding: const EdgeInsets.all(12),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        CustomText(
-                                          textName: heading[index],
-                                          fontWeight: FontWeight.w600,
-                                          textAlign: TextAlign.left,
-                                          fontSize: 20,
-                                          textColor: AppColors.green,
-                                        ),
-                                        const SizedBox(
-                                          height: 12,
-                                        ),
-                                        CustomText(
-                                          textName: description[index],
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16,
-                                          lineHeight: 1.2,
-                                          textAlign: TextAlign.left,
-                                          textColor: const Color(0xff232323),
-                                        ),
-                                      ],
-                                    ));
-                              }),
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 24,
-                              ),
-
-                              /// Back Button
-                              Expanded(
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      SecureStorageService()
-                                          .deleteData("Base64Response");
-                                      SecureStorageService()
-                                          .deleteData("clickedImg");
-                                      SecureStorageService()
-                                          .deleteData("QuestionsFromAI");
-                                      Get.toNamed(
-                                          RouteNavigation.navScreenRoute);
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      elevation: 0,
-                                      fixedSize:
-                                          const Size(double.maxFinite, 56),
-                                      shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                            color: AppColors.green,
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      backgroundColor: Colors.transparent,
-                                    ),
-                                    child: CustomText(
-                                      textName: "Back",
-                                      textColor: AppColors.green,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    )),
-                              ),
-                              const SizedBox(
-                                width: 24,
-                              ),
-
-                              /// Continue Button
-                              Expanded(
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      Get.offNamed(
-                                          RouteNavigation.recycleScreenRoute,
-                                          arguments: {
-                                            'snapshot': snapshot,
-                                          });
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      elevation: 0,
-                                      fixedSize:
-                                          const Size(double.maxFinite, 56),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(12)),
-                                      backgroundColor: AppColors.green,
-                                    ),
-                                    child: FittedBox(
-                                      fit: BoxFit.fitWidth,
-                                      child: CustomText(
-                                        textName: "Continue",
-                                        textColor: AppColors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                      ),
-                                    )),
-                              ),
-                              const SizedBox(
-                                width: 24,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              controller: controller,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /// App Bar
+                    customAppBar(
+                      isHome: false,
+                      title: snapshot.data!.decision.capitalizeFirstOfEach,
+                      rank: '12',
+                      points: '40',
+                      context: context,
                     ),
-                  )
-                : ResellScreen(snapshot: snapshot);
+                    CustomText(
+                      textName: snapshot.data!.guide.initials,
+                      fontWeight: FontWeight.w500,
+                      textColor: const Color(0xff232323),
+                      letterSpacing: 1,
+                      lineHeight: 1.2,
+                      textAlign: TextAlign.left,
+                      fontSize: 18,
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: heading.length,
+                        physics: const BouncingScrollPhysics(),
+                        controller: controller,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                      color: AppColors.green, width: 2)),
+                              margin: const EdgeInsets.only(bottom: 24),
+                              padding: const EdgeInsets.all(12),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomText(
+                                    textName: heading[index],
+                                    fontWeight: FontWeight.w600,
+                                    textAlign: TextAlign.left,
+                                    fontSize: 20,
+                                    textColor: AppColors.green,
+                                  ),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                  CustomText(
+                                    textName: description[index],
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    lineHeight: 1.2,
+                                    textAlign: TextAlign.left,
+                                    textColor: const Color(0xff232323),
+                                  ),
+                                ],
+                              ));
+                        }),
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 24,
+                        ),
+
+                        /// Back Button
+                        Expanded(
+                          child: ElevatedButton(
+                              onPressed: () {
+                                SecureStorageService()
+                                    .deleteData("Base64Response");
+                                SecureStorageService().deleteData("clickedImg");
+                                SecureStorageService()
+                                    .deleteData("QuestionsFromAI");
+                                Get.toNamed(RouteNavigation.navScreenRoute);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                fixedSize: const Size(double.maxFinite, 56),
+                                shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      color: AppColors.green,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12)),
+                                backgroundColor: Colors.transparent,
+                              ),
+                              child: CustomText(
+                                textName: "Back",
+                                textColor: AppColors.green,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 24,
+                        ),
+
+                        /// Continue Button
+                        Expanded(
+                          child: ElevatedButton(
+                              onPressed: () {
+                                isRecycle
+                                    ? Get.offNamed(
+                                        RouteNavigation.recycleScreenRoute,
+                                        arguments: {
+                                            'snapshot': snapshot,
+                                          })
+                                    : Get.offNamed(
+                                        RouteNavigation.resellScreenRoute,
+                                        arguments: {'snapshot': snapshot});
+                              },
+                              style: ElevatedButton.styleFrom(
+                                elevation: 0,
+                                fixedSize: const Size(double.maxFinite, 56),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                                backgroundColor: AppColors.green,
+                              ),
+                              child: FittedBox(
+                                fit: BoxFit.fitWidth,
+                                child: CustomText(
+                                  textName: "Continue",
+                                  textColor: AppColors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 24,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
           } else if (snapshot.hasError) {
             return const Center(child: Text("Something went wrong"));
           } else {

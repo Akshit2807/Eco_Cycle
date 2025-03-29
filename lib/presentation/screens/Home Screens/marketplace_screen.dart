@@ -3,7 +3,9 @@ import 'package:e_waste/presentation/components/custom_app_bar.dart';
 import 'package:e_waste/viewmodels/marketplace_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:e_waste/widgets/search_bar.dart';
+import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class MarketplaceScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -72,102 +74,111 @@ class _MarketplaceScreenState extends State<MarketplaceScreen> {
     'Industrial and Medical Equipment',
     'Car Electronics'
   ];
-
+  ScrollController controller = ScrollController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        children: [
-          /// App Bar
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 0),
-            child: customAppBar(
-              isHome: false,
-              title: "Marketplace",
-              rank: '12',
-              points: '40',
-              scaffoldKey: widget.scaffoldKey,
-              prf: CircleAvatar(
-                  backgroundColor: AppColors.lightGreen.withValues(alpha: 0.5),
-                  radius: 28,
-                  child: const Icon(
-                    Icons.person,
-                    color: Colors.green,
-                    size: 24,
-                  )),
-              context: context,
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        controller: controller,
+        child: Column(
+          children: [
+            /// App Bar
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 0),
+              child: customAppBar(
+                isHome: false,
+                title: "Marketplace",
+                rank: '12',
+                points: '40',
+                scaffoldKey: widget.scaffoldKey,
+                prf: CircleAvatar(
+                    backgroundColor:
+                        AppColors.lightGreen.withValues(alpha: 0.5),
+                    radius: 28,
+                    child: const Icon(
+                      Icons.person,
+                      color: Colors.green,
+                      size: 24,
+                    )),
+                context: context,
+              ),
             ),
-          ),
 
-          const SizedBox(
-            height: 12,
-          ),
+            const SizedBox(
+              height: 12,
+            ),
 
-          /// Search Bar
-          buildSearchBar(padding: 24),
+            /// Search Bar
+            buildSearchBar(padding: 24),
 
-          /// Tab Bar
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
-            // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(
-                children: _tabs.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final tab = entry.value;
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: FilterChip(
-                      selected: _selectedTabIndex == index,
-                      label: CustomText(
-                        textName: tab,
-                        textColor: _selectedTabIndex == index
-                            ? Colors.white
-                            : AppColors.green,
-                      ),
-                      backgroundColor: Colors.white,
-                      selectedColor: Colors.green,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        side: BorderSide(
-                          color: _selectedTabIndex == index
-                              ? Colors.transparent
+            /// Tab Bar
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
+              // padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                child: Row(
+                  children: _tabs.asMap().entries.map((entry) {
+                    final index = entry.key;
+                    final tab = entry.value;
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: FilterChip(
+                        selected: _selectedTabIndex == index,
+                        label: CustomText(
+                          textName: tab,
+                          textColor: _selectedTabIndex == index
+                              ? Colors.white
                               : AppColors.green,
                         ),
+                        backgroundColor: Colors.white,
+                        selectedColor: Colors.green,
+                        checkmarkColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide(
+                            color: _selectedTabIndex == index
+                                ? Colors.transparent
+                                : AppColors.green,
+                          ),
+                        ),
+                        onSelected: (bool selected) {
+                          setState(() {
+                            _selectedTabIndex = index;
+                          });
+                        },
                       ),
-                      onSelected: (bool selected) {
-                        setState(() {
-                          _selectedTabIndex = index;
-                        });
-                      },
-                    ),
-                  );
-                }).toList(),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
-          ),
 
-          /// Product Grid
-          Expanded(
-            child: GridView.builder(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.only(right: 24, left: 24),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-              ),
-              itemCount: _products.length,
-              itemBuilder: (context, index) {
-                return marketplaceView()
-                    .buildProductCard(product: _products[index]);
-              },
-            ),
-          ),
-        ],
+            /// Product Grid
+            StaggeredGridView.countBuilder(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                itemCount: _products.length,
+                shrinkWrap: true,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                addRepaintBoundaries: true,
+                physics: const BouncingScrollPhysics(),
+                controller: controller,
+                staggeredTileBuilder: (index) =>
+                    const StaggeredTile.count(2, 3),
+                crossAxisCount: 4,
+                itemBuilder: (context, index) {
+                  return Entry.all(
+                    delay: const Duration(milliseconds: 20),
+                    child: marketplaceView()
+                        .card(product: _products[index], context: context),
+                  );
+                }),
+          ],
+        ),
       ),
     );
   }

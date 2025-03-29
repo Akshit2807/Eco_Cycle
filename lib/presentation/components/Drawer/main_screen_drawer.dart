@@ -52,7 +52,7 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                   color: Colors.green,
                   size: MediaQuery.of(context).size.width * 0.2,
                 )),
-            const SizedBox(height: 12),
+            const SizedBox(height: 24),
             Center(
               child: CustomText(
                 textName: user?.username.capitalizeFirstOfEach ?? "Not fetched",
@@ -60,7 +60,7 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                 fontSize: 24,
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -107,7 +107,7 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                       }),
                       const Spacer(),
                       CustomText(
-                        textName: " V 1.253.450",
+                        textName: " V 1.0.2",
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         textColor: AppColors.green,

@@ -10,6 +10,7 @@ import '../data/models/user_model.dart';
 /// ViewModel handling user authentication and user state management
 class AuthViewModel extends ChangeNotifier {
   final AuthService _authService = AuthService();
+  final AuthLoadingController loadingController = Get.find();
   User? _user;
   Map<String, dynamic>? userInfoMap;
 
@@ -22,6 +23,7 @@ class AuthViewModel extends ChangeNotifier {
   Future<void> signIn(BuildContext context, String email, String password,
       String userName) async {
     try {
+      loadingController.change(true);
       userInfoMap = await _authService.signIn(email, password, userName);
 
 // ✅ Save user details locally after successful login as UserModel
@@ -29,6 +31,7 @@ class AuthViewModel extends ChangeNotifier {
       await HiveService.saveUserModel(userModel);
       notifyListeners();
 
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           margin: EdgeInsets.only(
@@ -41,11 +44,14 @@ class AuthViewModel extends ChangeNotifier {
           backgroundColor: Colors.green,
         ),
       );
+      loadingController.change(false);
       print(userInfoMap!.putIfAbsent("name", () => userName));
     } catch (error) {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(error.toString()), backgroundColor: Colors.red),
       );
+      loadingController.change(false);
     }
   }
 
@@ -55,13 +61,14 @@ class AuthViewModel extends ChangeNotifier {
   Future<void> signUp(BuildContext context, String email, String password,
       String userName) async {
     try {
+      loadingController.change(true);
       _user = await _authService.signUp(email, password, userName);
 
 // ✅ Save user details locally after successful signup as UserModel
       final userModel = UserModel(email: email, username: userName);
       await HiveService.saveUserModel(userModel);
       notifyListeners();
-
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           margin: EdgeInsets.only(
@@ -74,10 +81,13 @@ class AuthViewModel extends ChangeNotifier {
           backgroundColor: Colors.green,
         ),
       );
+      loadingController.change(false);
     } catch (error) {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(error.toString()), backgroundColor: Colors.red),
       );
+      loadingController.change(false);
     }
   }
 
@@ -93,6 +103,7 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
 
     Get.offAllNamed(RouteNavigation.authCheckerScreenRoute);
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text("Logged out successfully!"),
@@ -106,7 +117,7 @@ class AuthViewModel extends ChangeNotifier {
     try {
       forgetStatus = await _authService.forgetPass(email);
       notifyListeners();
-
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Password Reset Email has been sent!"),
@@ -115,6 +126,7 @@ class AuthViewModel extends ChangeNotifier {
       );
     } catch (error) {
       print(error.toString());
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(error.toString()), backgroundColor: Colors.red),
       );
@@ -124,6 +136,7 @@ class AuthViewModel extends ChangeNotifier {
   /// Handles Google Sign-In authentication
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
+      loadingController.change(true);
       _user = await _authService.signInWithGoogle();
 
 // ✅ Save user details locally after successful login as UserModel
@@ -131,17 +144,21 @@ class AuthViewModel extends ChangeNotifier {
           UserModel(email: _user!.email!, username: _user!.displayName!);
       await HiveService.saveUserModel(userModel);
       notifyListeners();
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Google Sign-In successful!"),
           backgroundColor: Colors.green,
         ),
       );
+      loadingController.change(false);
     } catch (error) {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       print(error.toString());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(error.toString()), backgroundColor: Colors.red),
       );
+      loadingController.change(false);
     }
   }
 
@@ -149,5 +166,12 @@ class AuthViewModel extends ChangeNotifier {
   /// Useful for auto-login or showing user info offline
   Future<UserModel?> getUserFromHive() async {
     return await HiveService.getUserModel();
+  }
+}
+
+class AuthLoadingController extends GetxController {
+  var loadingValue = false.obs;
+  change(bool isLoading) {
+    loadingValue.value = isLoading;
   }
 }

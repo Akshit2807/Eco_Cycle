@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/core/services/local_storage_service/secure_storage.dart';
 import 'package:e_waste/core/services/quetions_service.dart';
@@ -33,6 +34,7 @@ class _QuetionsScreenState extends State<QuetionsScreen> {
   int queIndex = 0;
   List<String> qns = [];
   bool visibility = true;
+  final player = AudioPlayer();
   ScrollController scrollController = ScrollController();
   TextEditingController msgText = TextEditingController();
   void addItem() {
@@ -45,13 +47,16 @@ class _QuetionsScreenState extends State<QuetionsScreen> {
           qns.add(
               "qns: \"${que.elementAt(queIndex)}\", ans: \"${msgText.text}\"");
         }
+        player.play(AssetSource('msg_sound.mp3'));
         messages.add(
           messageTile(
               message: msgText.text,
               isMe: true,
               width: MediaQuery.of(context).size.width * 0.72),
         );
+
         if (queIndex < que.length) {
+          player.play(AssetSource('msg_sound.mp3'));
           messages.add(
             messageTile(
                 message: que.elementAt(queIndex),

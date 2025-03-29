@@ -18,13 +18,15 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   LoginController loginController = Get.put(LoginController());
-
+  final AuthLoadingController loadingController =
+      Get.put(AuthLoadingController());
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: const Color(0xffF1F1F1),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return GetBuilder(
@@ -162,12 +164,20 @@ class _AuthScreenState extends State<AuthScreen> {
                                       padding: EdgeInsets.symmetric(
                                           vertical: size.height * 0.015),
                                     ),
-                                    child: Text(
-                                      ctrl.isLogin ? 'Login' : 'Sign Up',
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
+                                    child: Obx(
+                                      () => loadingController.loadingValue.value
+                                          ? const CircularProgressIndicator(
+                                              color: Colors.white,
+                                            )
+                                          : Text(
+                                              ctrl.isLogin
+                                                  ? 'Login'
+                                                  : 'Sign Up',
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                     ),
                                   ),
                                 ),

@@ -10,12 +10,14 @@ class CommunityRepository {
   Future<void> createPost(BuildContext context, PostModel post) async {
     try {
       await _firestore.collection('posts').doc(post.postId).set(post.toMap());
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("✅ Post created successfully!")),
       );
       print("Post created: ${post.postId}");
     } catch (e) {
       print("Error creating post: $e");
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("❌ Failed to create post!")),
       );
@@ -47,6 +49,7 @@ class CommunityRepository {
               {'likes': isLiked ? currentLikes + 1 : currentLikes - 1});
         }
       });
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text(isLiked ? "❤️ Liked post!" : "💔 Unliked post!")),
@@ -54,6 +57,7 @@ class CommunityRepository {
       print("Post $postId ${isLiked ? 'liked' : 'unliked'} by $userId");
     } catch (e) {
       print("Error liking post: $e");
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("❌ Failed to like post!")),
       );
@@ -69,13 +73,14 @@ class CommunityRepository {
 
       await commentsRef.add(commentData);
       await postRef.update({'commentsCount': FieldValue.increment(1)});
-
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("💬 Comment added!")),
       );
       print("Comment added to post $postId: ${commentData['content']}");
     } catch (e) {
       print("Error adding comment: $e");
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("❌ Failed to add comment!")),
       );
@@ -106,7 +111,7 @@ class CommunityRepository {
             ? FieldValue.arrayUnion([userId])
             : FieldValue.arrayRemove([userId])
       });
-
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text(
@@ -116,6 +121,7 @@ class CommunityRepository {
           "Post $postId ${isBookmarked ? 'bookmarked' : 'unbookmarked'} by $userId");
     } catch (e) {
       print("Error updating bookmark: $e");
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("❌ Failed to update bookmark!")),
       );
@@ -130,13 +136,14 @@ class CommunityRepository {
       await postRef.update({
         'reports': FieldValue.arrayUnion([userId])
       });
-
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("⚠️ Post reported as spam!")),
       );
       print("Post $postId reported by $userId");
     } catch (e) {
       print("Error reporting post: $e");
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("❌ Failed to report post!")),
       );

@@ -31,7 +31,8 @@ class _AppCarouselSliderState extends State<AppCarouselSlider> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(
-                  fit: BoxFit.cover, image: AssetImage(widget.imgList[index]))),
+                  fit: BoxFit.fitWidth,
+                  image: AssetImage(widget.imgList[index]))),
         );
       },
       options: CarouselOptions(

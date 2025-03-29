@@ -1,4 +1,5 @@
 import 'package:e_waste/core/utils/app_colors.dart';
+import 'package:e_waste/core/utils/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -58,7 +59,58 @@ class _NavigationScreenState extends State<NavigationScreen> {
         scaffoldKey: _scaffoldKey,
       )
     ];
-
+    final List<FloatingActionButton> actionButtons = [
+      FloatingActionButton(
+        onPressed: () async {
+          // Camera button action
+          Get.toNamed(
+            RouteNavigation.cameraScreenRoute,
+          );
+        },
+        backgroundColor: AppColors.green,
+        shape: const CircleBorder(),
+        elevation: 5,
+        child: const Icon(Icons.camera_alt, size: 30, color: Colors.white),
+      ),
+      FloatingActionButton(
+        onPressed: () {
+          Get.toNamed(RouteNavigation.createPostScreenRoute);
+        },
+        tooltip: 'Create a Post',
+        backgroundColor: AppColors.green,
+        shape: const CircleBorder(),
+        child: const Icon(
+          Icons.edit,
+          color: Colors.white,
+        ), // Pencil icon.
+      ),
+      FloatingActionButton(
+        onPressed: () {
+          // Get.offAllNamed(RouteNavigation.createPostScreenRoute);
+          // Navigator.pushNamed(context, '/createPost');
+        },
+        tooltip: 'Sell Product',
+        backgroundColor: AppColors.green,
+        shape: const CircleBorder(),
+        child: const Icon(
+          Icons.sell_outlined,
+          color: Colors.white,
+        ), // Pencil icon.
+      ),
+      FloatingActionButton(
+        onPressed: () {
+          Get.toNamed(RouteNavigation.leaderboardScreenRoute);
+        },
+        tooltip: 'Leaderboard',
+        backgroundColor: AppColors.green,
+        shape: const CircleBorder(),
+        child: Image.asset(
+          AppIcons.leaderboard,
+          height: 27,
+          width: 27,
+        ), // Pencil icon.
+      ),
+    ];
     return Scaffold(
       backgroundColor: AppColors.white,
       key: _scaffoldKey,
@@ -78,18 +130,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
       ),
 
       /// Floating Camera Button
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // Camera button action
-          Get.toNamed(
-            RouteNavigation.cameraScreenRoute,
-          );
-        },
-        backgroundColor: Colors.green,
-        shape: const CircleBorder(),
-        elevation: 5,
-        child: const Icon(Icons.camera_alt, size: 30, color: Colors.white),
-      ),
+      floatingActionButton:
+          Obx(() => actionButtons[controller.selectedIndex.value]),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
       /// Bottom Navigation Bar
