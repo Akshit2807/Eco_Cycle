@@ -1,6 +1,7 @@
 import 'package:e_waste/data/models/post_model.dart';
 import 'package:e_waste/viewmodels/community_viewmodel.dart';
 import 'package:e_waste/widgets/post_card.dart';
+import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,9 +27,12 @@ class BlogPostListWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           final post = posts[index];
           // TODO: Replace "dummyUserId" with the actual current user ID from your authentication service.
-          return PostCard(
-            post: post,
-            currentUserId: "dummyUserId",
+          return Entry.all(
+            delay: const Duration(milliseconds: 20),
+            child: PostCard(
+              post: post,
+              currentUserId: "dummyUserId",
+            ),
           );
         },
       );

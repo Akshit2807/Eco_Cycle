@@ -110,14 +110,14 @@ class _SplashScreenState extends State<SplashScreen> {
                     ],
                   )),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
+                height: MediaQuery.of(context).size.height * 0.04,
                 width: double.maxFinite,
               ),
 
               /// Sign Up Button
               CustomButton(
                   onTap: () {
-                    Get.offAllNamed(RouteNavigation.authScreenRoute);
+                    Get.toNamed(RouteNavigation.authScreenRoute);
                   },
                   color: const Color(0xff4CAF50),
                   child: const CustomText(

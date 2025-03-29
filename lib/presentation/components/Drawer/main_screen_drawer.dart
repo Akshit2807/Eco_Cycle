@@ -52,7 +52,7 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                   color: Colors.green,
                   size: MediaQuery.of(context).size.width * 0.2,
                 )),
-            const SizedBox(height: 12),
+            const SizedBox(height: 24),
             Center(
               child: CustomText(
                 textName: user?.username.capitalizeFirstOfEach ?? "Not fetched",
@@ -60,7 +60,7 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                 fontSize: 24,
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
             Expanded(
               child: Container(
                 width: double.infinity,
@@ -77,6 +77,9 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(
+                        height: 12,
+                      ),
                       //Home
                       buildDrawerTile(AppIcons.home, "Home", 0, controller,
                           onTileTap: () {
@@ -89,14 +92,19 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                       buildDrawerTile(
                           AppIcons.bookmark2, "Bookmarks", 2, controller),
                       //FAQ
-                      buildDrawerTile(AppIcons.faq, "FAQ", 3, controller),
+                      buildDrawerTile(AppIcons.faq, "FAQ", 3, controller,
+                          onTileTap: () {
+                        Get.toNamed("/faq");
+                      }),
                       //Billing & Address
                       buildDrawerTile(
                           AppIcons.bill, "Billing & Address", 4, controller),
                       //Help
-                      buildDrawerTile(AppIcons.help, "Help", 5, controller),
-                      //S&F
-                      buildDrawerTile(AppIcons.sf, "S&F", 6, controller),
+                      buildDrawerTile(
+                          AppIcons.help, "Help & Support", 5, controller,
+                          onTileTap: () {
+                        Get.toNamed("/help");
+                      }),
                       //Settings
                       buildDrawerTile(
                           AppIcons.setting, "Settings", 7, controller),
@@ -107,7 +115,7 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                       }),
                       const Spacer(),
                       CustomText(
-                        textName: " V 1.253.450",
+                        textName: " V 1.0.2",
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         textColor: AppColors.green,
