@@ -77,6 +77,9 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(
+                        height: 12,
+                      ),
                       //Home
                       buildDrawerTile(AppIcons.home, "Home", 0, controller,
                           onTileTap: () {
@@ -89,14 +92,19 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                       buildDrawerTile(
                           AppIcons.bookmark2, "Bookmarks", 2, controller),
                       //FAQ
-                      buildDrawerTile(AppIcons.faq, "FAQ", 3, controller),
+                      buildDrawerTile(AppIcons.faq, "FAQ", 3, controller,
+                          onTileTap: () {
+                        Get.toNamed("/faq");
+                      }),
                       //Billing & Address
                       buildDrawerTile(
                           AppIcons.bill, "Billing & Address", 4, controller),
                       //Help
-                      buildDrawerTile(AppIcons.help, "Help", 5, controller),
-                      //S&F
-                      buildDrawerTile(AppIcons.sf, "S&F", 6, controller),
+                      buildDrawerTile(
+                          AppIcons.help, "Help & Support", 5, controller,
+                          onTileTap: () {
+                        Get.toNamed("/help");
+                      }),
                       //Settings
                       buildDrawerTile(
                           AppIcons.setting, "Settings", 7, controller),

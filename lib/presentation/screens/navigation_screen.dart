@@ -93,7 +93,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
         backgroundColor: AppColors.green,
         shape: const CircleBorder(),
         child: const Icon(
-          Icons.sell_outlined,
+          Icons.add,
           color: Colors.white,
         ), // Pencil icon.
       ),
