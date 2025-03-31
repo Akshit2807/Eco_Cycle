@@ -149,15 +149,32 @@ class _AuthScreenState extends State<AuthScreen> {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      ctrl.isLogin
-                                          ? loginButtonAction(
-                                              authViewModel: authViewModel,
-                                              context: context,
-                                            )
-                                          : signUpButtonAction(
-                                              authViewModel: authViewModel,
-                                              context: context,
-                                            );
+                                      if (ctrl.isLogin) {
+                                        if (ctrl.emailController.text.isNotEmpty && ctrl.passwordController.text.isNotEmpty) {
+                                          loginButtonAction(
+                                            authViewModel: authViewModel,
+                                            context: context,
+                                          );
+                                        } else {
+                                          // Show an error message or handle the case where fields are empty
+                                          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                                          Get.snackbar('Login in error', 'Please fill in all fields');
+                                        }
+                                      } else {
+                                        if (ctrl.nameController.text.isNotEmpty &&
+                                            ctrl.emailController.text.isNotEmpty &&
+                                            ctrl.passwordController.text.isNotEmpty &&
+                                            ctrl.confirmPasswordController.text.isNotEmpty) {
+                                          signUpButtonAction(
+                                            authViewModel: authViewModel,
+                                            context: context,
+                                          );
+                                        } else {
+                                          // Show an error message or handle the case where fields are empty
+                                          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                                          Get.snackbar('Sign Up error', 'Please fill in all fields');
+                                        }
+                                      }
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.green,
@@ -279,10 +296,24 @@ class _AuthScreenState extends State<AuthScreen> {
         validator: validator,
         controller: controller,
         obscureText: isObscure,
+        // Cursor color
+        cursorColor: Colors.green,
         decoration: InputDecoration(
           labelText: label,
+          labelStyle: const TextStyle(color: Colors.green),
           prefixIcon: Icon(icon),
+          // Border styling
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+          // Enabled border
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            borderSide: const BorderSide(color: Colors.green, width: 1.0),
+          ),
+          // Focused border
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            borderSide: const BorderSide(color: Colors.green, width: 2.0),
+          ),
         ),
       ),
     );

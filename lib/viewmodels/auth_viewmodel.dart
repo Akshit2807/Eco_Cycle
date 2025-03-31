@@ -52,7 +52,7 @@ class AuthViewModel extends ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             margin: const EdgeInsets.only(
-              bottom: kBottomNavigationBarHeight + 16,
+              bottom: kBottomNavigationBarHeight ,
               left: 16,
               right: 16,
             ),

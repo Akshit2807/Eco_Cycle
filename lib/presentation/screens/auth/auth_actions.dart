@@ -5,45 +5,104 @@ import 'package:e_waste/viewmodels/auth_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-LoginController ctrl = Get.put(LoginController());
+final LoginController ctrl = Get.put(LoginController());
 
 void loginButtonAction({
   required AuthViewModel authViewModel,
   required BuildContext context,
 }) async {
-  await authViewModel.signIn(context, ctrl.emailController.text,
-      ctrl.passwordController.text, ctrl.nameController.text);
-  if (authViewModel.userInfoMap != null) {
-    Get.offAllNamed(RouteNavigation.navScreenRoute);
+  try {
+    debugPrint("Attempting to login with email: ${ctrl.emailController.text}");
+    await authViewModel.signIn(
+      context,
+      ctrl.emailController.text,
+      ctrl.passwordController.text,
+      ctrl.nameController.text,
+    );
+
+    // Clear all text fields after login
+    ctrl.clearControllers();
+
+    if (authViewModel.userInfoMap != null) {
+      debugPrint("Login successful! Navigating to home screen.");
+      Get.offAllNamed(RouteNavigation.navScreenRoute);
+    } else {
+      debugPrint("Login failed: userInfoMap is null");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Login failed. Please check your credentials."),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  } catch (e, stacktrace) {
+    debugPrint("Error during login: $e\nStacktrace: $stacktrace");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("An error occurred: $e"),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 }
 
-// SignUp Button Action
 void signUpButtonAction({
   required AuthViewModel authViewModel,
   required BuildContext context,
 }) async {
-  if (ctrl.passwordController.text != ctrl.confirmPasswordController.text) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+  try {
+    if (ctrl.passwordController.text != ctrl.confirmPasswordController.text) {
+      debugPrint("Sign-up failed: passwords do not match");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
           content: Text("Confirm password does not match"),
-          backgroundColor: Colors.red),
-    );
-  } else {
-    await authViewModel.signUp(context, ctrl.emailController.text,
-        ctrl.passwordController.text, ctrl.nameController.text);
-    if (authViewModel.user != null) {
-      Get.offAllNamed(RouteNavigation.navScreenRoute);
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
     }
+
+    debugPrint("Attempting to sign up with email: ${ctrl.emailController.text}");
+    await authViewModel.signUp(
+      context,
+      ctrl.emailController.text,
+      ctrl.passwordController.text,
+      ctrl.nameController.text,
+    );
+
+    // Check if the user is successfully signed up
+    if (authViewModel.user != null) {
+      // Clear all text fields after sign-up
+      ctrl.clearControllers();
+      debugPrint("Sign-up successful! Navigating to home screen.");
+      Get.offAllNamed(RouteNavigation.navScreenRoute);
+    } else {
+      debugPrint("Sign-up failed: user is null");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Sign-up failed. Please try again."),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  } catch (e, stacktrace) {
+    debugPrint("Error during sign-up: $e\nStacktrace: $stacktrace");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("An error occurred: $e"),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 }
+
 
 // Forget Pass Button Action
 void forgetButtonAction({
   required AuthViewModel authViewModel,
   required BuildContext context,
 }) async {
-  if (ctrl.emailController.text == null || ctrl.emailController.text.isEmpty) {
+  if (ctrl.emailController.text.isEmpty || ctrl.emailController.text.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
           content: Text("Enter Valid Email"), backgroundColor: Colors.red),

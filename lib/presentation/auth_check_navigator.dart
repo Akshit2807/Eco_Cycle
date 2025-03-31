@@ -14,10 +14,19 @@ class AuthChecker extends StatelessWidget {
           return const Center(
               child: CircularProgressIndicator()); // Loading state
         }
-        if (snapshot.hasData) {
-          return NavigationScreen(); // User is logged in
+        if (snapshot.hasError) {
+          return const Center(
+              child: Text('An error occurred. Please try again.')); // Error state
         } else {
-          return const SplashScreen(); // User is not logged in
+          // Check if the user is logged in
+          if (snapshot.hasData) {
+            if (snapshot.data!.emailVerified == false) {
+              return const SplashScreen(); // User is not verified
+            }
+            return const NavigationScreen(); // User is logged in
+          } else {
+            return const SplashScreen(); // User is not logged in
+          }
         }
       },
     );
