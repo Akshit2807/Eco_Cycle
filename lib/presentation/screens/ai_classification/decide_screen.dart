@@ -87,37 +87,58 @@ class _DecideScreenState extends State<DecideScreen> {
                         controller: controller,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
-                              decoration: BoxDecoration(
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            child: ExpansionTile(
+                              title: CustomText(
+                                textName: heading[index],
+                                fontWeight: FontWeight.w600,
+                                textAlign: TextAlign.left,
+                                fontSize: 18,
+                                textColor: AppColors.green,
+                              ),
+                              shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
-                                  border: Border.all(
+                                  side: BorderSide(
                                       color: AppColors.green, width: 2)),
-                              margin: const EdgeInsets.only(bottom: 24),
-                              padding: const EdgeInsets.all(12),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    textName: heading[index],
-                                    fontWeight: FontWeight.w600,
-                                    textAlign: TextAlign.left,
-                                    fontSize: 20,
-                                    textColor: AppColors.green,
-                                  ),
-                                  const SizedBox(
-                                    height: 12,
-                                  ),
-                                  CustomText(
-                                    textName: description[index],
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    lineHeight: 1.2,
-                                    textAlign: TextAlign.left,
-                                    textColor: const Color(0xff232323),
-                                  ),
-                                ],
-                              ));
+                              collapsedShape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                  side: BorderSide(
+                                      color: AppColors.green, width: 2)),
+                              childrenPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              children: [
+                                CustomText(
+                                  textName: description[index],
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  lineHeight: 1.2,
+                                  textAlign: TextAlign.left,
+                                  textColor: const Color(0xff232323),
+                                ),
+                              ],
+                            ),
+                          );
+                          // Container(
+                          //     decoration: BoxDecoration(
+                          //         borderRadius:
+                          //
+                          //     margin: const EdgeInsets.only(bottom: 24),
+                          //     padding: const EdgeInsets.all(12),
+                          //     child: Column(
+                          //       mainAxisAlignment: MainAxisAlignment.start,
+                          //       crossAxisAlignment: CrossAxisAlignment.start,
+                          //       children: [
+                          //
+                          //         const SizedBox(
+                          //           height: 12,
+                          //         ),
+                          //
+                          //       ],
+                          //     )),
                         }),
+                    const SizedBox(
+                      height: 24,
+                    ),
                     Row(
                       children: [
                         const SizedBox(

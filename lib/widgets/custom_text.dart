@@ -32,7 +32,7 @@ class CustomText extends StatelessWidget {
       maxLines: maxLines,
       softWrap: softWrap,
       overflow: textOverflow,
-      style: GoogleFonts.montserrat(
+      style: GoogleFonts.manrope(
         fontSize: fontSize ?? 16,
         color: textColor ?? Colors.black,
         fontWeight: fontWeight ?? FontWeight.bold,

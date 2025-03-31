@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_waste/core/services/local_storage_service/secure_storage.dart';
+import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/data/models/post_model.dart';
 import 'package:e_waste/viewmodels/community_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
@@ -151,7 +152,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF1F1F1),
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: const Color(0xffF1F1F1),
         title: const CustomText(

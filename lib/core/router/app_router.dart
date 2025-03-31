@@ -95,6 +95,7 @@ class RouteNavigation {
         return _customFadeRoute(
             child: QuetionsScreen(
           title: args["title"],
+          des: args['des'],
         ));
       case decideScreenRoute:
         final args = settings.arguments as Map<String, dynamic>? ?? {};

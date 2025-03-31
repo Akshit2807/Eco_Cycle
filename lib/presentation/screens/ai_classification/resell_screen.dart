@@ -46,6 +46,7 @@ class _ResellScreenState extends State<ResellScreen> {
           return Material(
             color: AppColors.white,
             child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,7 +177,7 @@ class _ResellScreenState extends State<ResellScreen> {
                       ],
                     ),
                   ),
-                  PercentSizedBox.height(0.06),
+                  PercentSizedBox.height(0.02),
 
                   /// Description
                   Padding(
@@ -209,7 +210,7 @@ class _ResellScreenState extends State<ResellScreen> {
                       ],
                     ),
                   ),
-                  PercentSizedBox.height(0.06),
+                  PercentSizedBox.height(0.02),
 
                   /// Buttons
                   Row(

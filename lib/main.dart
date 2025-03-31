@@ -11,6 +11,15 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(UserModelAdapter());
   await Firebase.initializeApp();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      /// transparent status bar
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
+/*
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+*/
   runApp(const MyApp());
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/data/repositories/community_repository.dart';
 import 'package:e_waste/widgets/comment_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -84,6 +85,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
   Widget build(BuildContext context) {
     print("Building CommentsScreen for postId: ${widget.postId}");
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         title: const Text("Comments"),
       ),

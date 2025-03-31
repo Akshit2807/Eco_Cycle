@@ -26,7 +26,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF1F1F1),
+      backgroundColor: Colors.transparent,
       // SafeArea ensures content is visible in various devices.
       body: SafeArea(
         child: Column(
