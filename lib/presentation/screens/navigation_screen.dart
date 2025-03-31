@@ -112,8 +112,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
       ),
     ];
     return Scaffold(
-      backgroundColor: AppColors.white,
       key: _scaffoldKey,
+      backgroundColor: AppColors.white,
 
       /// Drawer
       drawer: myDrawer(context, user),

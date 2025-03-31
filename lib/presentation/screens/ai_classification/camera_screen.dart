@@ -220,6 +220,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                 Get.toNamed(RouteNavigation.quetionsScreenRoute,
                                     arguments: {
                                       'title': snapshot.data!.title,
+                                      'des': snapshot.data!.desc,
                                     });
                               },
                               style: ElevatedButton.styleFrom(

@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_waste/core/router/app_router.dart';
+import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/widgets/carousel_slider.dart';
 import 'package:e_waste/widgets/custom_button.dart';
 import 'package:e_waste/widgets/custom_text.dart';
@@ -33,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF1F1F1),
+      backgroundColor: AppColors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 35),
         child: SingleChildScrollView(
