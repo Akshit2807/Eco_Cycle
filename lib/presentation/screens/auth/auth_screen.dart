@@ -150,29 +150,40 @@ class _AuthScreenState extends State<AuthScreen> {
                                   child: ElevatedButton(
                                     onPressed: () {
                                       if (ctrl.isLogin) {
-                                        if (ctrl.emailController.text.isNotEmpty && ctrl.passwordController.text.isNotEmpty) {
+                                        if (ctrl.emailController.text
+                                                .isNotEmpty &&
+                                            ctrl.passwordController.text
+                                                .isNotEmpty) {
                                           loginButtonAction(
                                             authViewModel: authViewModel,
                                             context: context,
                                           );
                                         } else {
                                           // Show an error message or handle the case where fields are empty
-                                          ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                                          Get.snackbar('Login in error', 'Please fill in all fields');
+                                          ScaffoldMessenger.of(context)
+                                              .removeCurrentSnackBar();
+                                          Get.snackbar('Login in error',
+                                              'Please fill in all fields');
                                         }
                                       } else {
-                                        if (ctrl.nameController.text.isNotEmpty &&
-                                            ctrl.emailController.text.isNotEmpty &&
-                                            ctrl.passwordController.text.isNotEmpty &&
-                                            ctrl.confirmPasswordController.text.isNotEmpty) {
+                                        if (ctrl.nameController.text
+                                                .isNotEmpty &&
+                                            ctrl.emailController.text
+                                                .isNotEmpty &&
+                                            ctrl.passwordController.text
+                                                .isNotEmpty &&
+                                            ctrl.confirmPasswordController.text
+                                                .isNotEmpty) {
                                           signUpButtonAction(
                                             authViewModel: authViewModel,
                                             context: context,
                                           );
                                         } else {
                                           // Show an error message or handle the case where fields are empty
-                                          ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                                          Get.snackbar('Sign Up error', 'Please fill in all fields');
+                                          ScaffoldMessenger.of(context)
+                                              .removeCurrentSnackBar();
+                                          Get.snackbar('Sign Up error',
+                                              'Please fill in all fields');
                                         }
                                       }
                                     },
@@ -183,8 +194,12 @@ class _AuthScreenState extends State<AuthScreen> {
                                     ),
                                     child: Obx(
                                       () => loadingController.loadingValue.value
-                                          ? const CircularProgressIndicator(
-                                              color: Colors.white,
+                                          ? const SizedBox(
+                                              height: 28,
+                                              width: 28,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                              ),
                                             )
                                           : Text(
                                               ctrl.isLogin

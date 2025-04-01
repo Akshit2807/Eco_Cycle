@@ -116,6 +116,7 @@ class _QuetionsScreenState extends State<QuetionsScreen> with RouteAware {
           // Play sound for incoming message
           player.play(AssetSource('msg_sound.mp3'));
 
+          Future.delayed(const Duration(milliseconds: 50000));
           // Add the message to the chat with animation
           _addMessage(MessageItem(
             text: message.toString(),
@@ -168,7 +169,7 @@ class _QuetionsScreenState extends State<QuetionsScreen> with RouteAware {
       _messages.insert(0, message); // Insert at the beginning for reverse list
       _listKey.currentState?.insertItem(
         0,
-        duration: const Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 300),
       );
       if (message.isMe) {
         qns.add("ans: \"${message.text}\"");

@@ -106,7 +106,10 @@ class RouteNavigation {
 
       case cameraScreenRoute:
         final args = settings.arguments as Map<String, dynamic>? ?? {};
-        return _customFadeRoute(child: const CameraScreen());
+        return _customFadeRoute(
+            child: CameraScreen(
+          base64: args['base64'],
+        ));
 
       // case homeScreenRoute:
       //   return _customFadeRoute(child: const HomeScreen());
