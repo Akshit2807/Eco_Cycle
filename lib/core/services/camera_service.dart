@@ -107,7 +107,7 @@ class CameraService {
               content: Text("Invalid Image. Try Again"),
               backgroundColor: Colors.red),
         );
-        Get.toNamed(
+        Get.offAllNamed(
           RouteNavigation.navScreenRoute,
         );
         debugPrint('Response Code : ${response.statusCode}');
@@ -130,7 +130,7 @@ class CameraService {
               content: Text("Something Went Wrong. Try Again"),
               backgroundColor: Colors.red),
         );
-        Get.toNamed(
+        Get.offAllNamed(
           RouteNavigation.navScreenRoute,
         );
         debugPrint('Response Code : ${response.statusCode}');

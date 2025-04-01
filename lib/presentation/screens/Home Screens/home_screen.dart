@@ -14,10 +14,11 @@ import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
-
+  final UserModel? user;
   const HomeScreen({
     super.key,
     required this.scaffoldKey,
+    required this.user,
   });
 
   @override
@@ -25,15 +26,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String? username;
-
-  UserModel? user;
-  @override
-  void initState() {
-    super.initState();
-    fetchUserData();
-  }
-
   String getGreeting() {
     var hour = DateTime.now().hour;
 
@@ -46,48 +38,49 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> fetchUserData() async {
-    user = await UserRepository().fetchUserDetails();
-    if (user != null) {
-      setState(() {
-        username = user?.username;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final ScrollController controller = ScrollController();
     final List<ProductItem> _products = [
       ProductItem(
-        imageUrl: 'https://i.imgur.com/vf2NbUQ.png',
-        price: 250,
-        title: 'Old Mobile Phones',
+        imageUrl: 'https://i.imgur.com/msoCP2s.jpg',
+        price: 5000,
+        title: 'Apple Airpods',
       ),
       ProductItem(
-        imageUrl: 'https://i.imgur.com/dVlbWoc.png',
-        price: 800,
-        title: 'Electronic Parts',
+        imageUrl: 'https://i.imgur.com/OW5KuV9.jpg',
+        price: 1200,
+        title: 'Logitech Mouse',
       ),
       ProductItem(
-        imageUrl: 'https://i.imgur.com/V3i9hGV.png',
-        price: 600,
-        title: 'CRT Monitors',
+        imageUrl: 'https://i.imgur.com/pGGI22r.jpg',
+        price: 35000,
+        title: 'Sony Camera',
       ),
       ProductItem(
-        imageUrl: 'https://i.imgur.com/EfIgN8f.png',
-        price: 1000,
-        title: 'AC Unit',
+        imageUrl: 'https://i.imgur.com/LzcXm2g.jpg',
+        price: 41000,
+        title: 'Iphone 14 Pro',
       ),
       ProductItem(
-        imageUrl: 'https://i.imgur.com/vf2NbUQ.png',
-        price: 250,
-        title: 'Old Mobile Phones',
+        imageUrl: 'https://i.imgur.com/1ohSHK6.jpg',
+        price: 3490,
+        title: 'Wireless Controller',
       ),
       ProductItem(
-        imageUrl: 'https://i.imgur.com/dVlbWoc.png',
-        price: 800,
-        title: 'Electronic Parts',
+        imageUrl: 'https://i.imgur.com/ThxaZ14.jpg',
+        price: 34890,
+        title: 'Film Camera',
+      ),
+      ProductItem(
+        imageUrl: 'https://i.imgur.com/VAyYluz.jpg',
+        price: 3300,
+        title: 'Wireless Keyboard',
+      ),
+      ProductItem(
+        imageUrl: 'https://i.imgur.com/Pioz7qm.jpg',
+        price: 450,
+        title: 'TV Remote',
       ),
     ];
     List<String> imgList = [
@@ -157,7 +150,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: CustomText(
-                    textName: username!.capitalizeFirstOfEach,
+                    textName:
+                        widget.user?.username.capitalizeFirstOfEach ?? "Not",
                     fontWeight: FontWeight.w700,
                     textColor: const Color(0xff232323),
                     maxLines: 10,

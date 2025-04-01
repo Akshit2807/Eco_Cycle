@@ -19,44 +19,64 @@ class MarketplaceScreen extends StatefulWidget {
 class _MarketplaceScreenState extends State<MarketplaceScreen> {
   final List<ProductItem> _products = [
     ProductItem(
-      imageUrl: 'https://i.imgur.com/vf2NbUQ.png',
-      price: 250,
-      title: 'Old Mobile Phones',
+      imageUrl: 'https://i.imgur.com/MOHhjzA.jpg',
+      price: 1250,
+      title: 'Home Speakers',
     ),
     ProductItem(
-      imageUrl: 'https://i.imgur.com/dVlbWoc.png',
+      imageUrl: 'https://i.imgur.com/Q23M2MP.jpg',
       price: 800,
-      title: 'Electronic Parts',
+      title: 'Gaming Mouse',
     ),
     ProductItem(
-      imageUrl: 'https://i.imgur.com/V3i9hGV.png',
-      price: 600,
-      title: 'CRT Monitors',
+      imageUrl: 'https://i.imgur.com/CbUU4Q7.jpg',
+      price: 560,
+      title: 'Wireless Headphones',
     ),
     ProductItem(
-      imageUrl: 'https://i.imgur.com/EfIgN8f.png',
-      price: 1000,
-      title: 'AC Unit',
+      imageUrl: 'https://i.imgur.com/bUodnyS.jpg',
+      price: 25000,
+      title: 'Iphone 11',
     ),
     ProductItem(
-      imageUrl: 'https://i.imgur.com/vf2NbUQ.png',
-      price: 250,
-      title: 'Old Mobile Phones',
+      imageUrl: 'https://i.imgur.com/msoCP2s.jpg',
+      price: 5000,
+      title: 'Apple Airpods',
     ),
     ProductItem(
-      imageUrl: 'https://i.imgur.com/dVlbWoc.png',
-      price: 800,
-      title: 'Electronic Parts',
+      imageUrl: 'https://i.imgur.com/OW5KuV9.jpg',
+      price: 1200,
+      title: 'Logitech Mouse',
     ),
     ProductItem(
-      imageUrl: 'https://i.imgur.com/V3i9hGV.png',
-      price: 600,
-      title: 'CRT Monitors',
+      imageUrl: 'https://i.imgur.com/pGGI22r.jpg',
+      price: 35000,
+      title: 'Sony Camera',
     ),
     ProductItem(
-      imageUrl: 'https://i.imgur.com/EfIgN8f.png',
-      price: 1000,
-      title: 'AC Unit',
+      imageUrl: 'https://i.imgur.com/LzcXm2g.jpg',
+      price: 41000,
+      title: 'Iphone 14 Pro',
+    ),
+    ProductItem(
+      imageUrl: 'https://i.imgur.com/1ohSHK6.jpg',
+      price: 3490,
+      title: 'Wireless Controller',
+    ),
+    ProductItem(
+      imageUrl: 'https://i.imgur.com/ThxaZ14.jpg',
+      price: 34890,
+      title: 'Film Camera',
+    ),
+    ProductItem(
+      imageUrl: 'https://i.imgur.com/VAyYluz.jpg',
+      price: 3300,
+      title: 'Wireless Keyboard',
+    ),
+    ProductItem(
+      imageUrl: 'https://i.imgur.com/Pioz7qm.jpg',
+      price: 450,
+      title: 'TV Remote',
     ),
   ];
   int _selectedTabIndex = 0;
