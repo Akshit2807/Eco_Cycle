@@ -28,7 +28,7 @@ class DecideService {
             content: Text("Something Went Wrong. Try Again"),
             backgroundColor: Colors.red),
       );
-      Get.toNamed(
+      Get.offAllNamed(
         RouteNavigation.navScreenRoute,
       );
       throw Exception("Base64Response is missing");
@@ -68,7 +68,7 @@ class DecideService {
             content: Text("Something Went Wrong. Try Again"),
             backgroundColor: Colors.red),
       );
-      Get.toNamed(
+      Get.offAllNamed(
         RouteNavigation.navScreenRoute,
       );
       debugPrint('Response Code : ${response.statusCode}');

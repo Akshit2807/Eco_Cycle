@@ -48,6 +48,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
     final List<Widget> pages = [
       HomeScreen(
         scaffoldKey: _scaffoldKey,
+        user: user,
       ),
       CommunityScreen(
         scaffoldKey: _scaffoldKey,
@@ -62,6 +63,12 @@ class _NavigationScreenState extends State<NavigationScreen> {
     final List<FloatingActionButton> actionButtons = [
       FloatingActionButton(
         onPressed: () async {
+          // TODO:
+          /// take img
+
+          // error - snack-bar
+
+          // success
           // Camera button action
           Get.toNamed(
             RouteNavigation.cameraScreenRoute,

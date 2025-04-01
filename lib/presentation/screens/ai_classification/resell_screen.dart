@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/core/services/local_storage_service/secure_storage.dart';
 import 'package:e_waste/core/services/recycle_resell_service.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
@@ -12,6 +13,8 @@ import 'package:e_waste/presentation/components/custom_app_bar.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:e_waste/widgets/percentage_sized_box.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class ResellScreen extends StatefulWidget {
   final AsyncSnapshot<Decision> snapshot;
@@ -228,7 +231,9 @@ class _ResellScreenState extends State<ResellScreen> {
                               SecureStorageService().deleteData("clickedImg");
                               SecureStorageService()
                                   .deleteData("QuestionsFromAI");
-                              Navigator.pop(context);
+                              Get.offAllNamed(
+                                RouteNavigation.navScreenRoute,
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               elevation: 0,
