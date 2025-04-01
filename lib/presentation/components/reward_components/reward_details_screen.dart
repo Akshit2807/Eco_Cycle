@@ -10,6 +10,20 @@ class RewardDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> rewardTitles = [
+      "Discount on Next Pickup",
+      "Eco-Friendly Tote Bag",
+      "Plant a Tree in Your Name",
+      "Reusable Water Bottle",
+      "Amazon Gift Card ₹50",
+      "Sustainable T-Shirt",
+      "Electricity Bill Discount",
+      "Amazon Gift Card ₹100",
+      "Smart LED Bulb",
+      "Exclusive App Badge",
+      "Eco-Warrior Certificate",
+    ];
+
     return SafeArea(
         child: Scaffold(
       backgroundColor: AppColors.white,
@@ -60,7 +74,7 @@ class RewardDetailsScreen extends StatelessWidget {
               PercentSizedBox.height(0.02),
               Expanded(
                 child: ListView.builder(
-                    itemCount: 15,
+                    itemCount: rewardTitles.length,
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     physics: const BouncingScrollPhysics(),
@@ -77,10 +91,15 @@ class RewardDetailsScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
                                 color: AppColors.lightGreen, width: 2)),
-                        child: rewardView().buildRewardTile(bottomPadding: 0),
+                        child: rewardView().buildRewardTile(
+                            bottomPadding: 0,
+                            title: rewardTitles.elementAt(index)),
                       );
                     }),
               ),
+              const SizedBox(
+                height: 20,
+              )
             ],
           )
         ],

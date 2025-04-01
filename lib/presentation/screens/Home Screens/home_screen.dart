@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/extensions.dart';
@@ -25,7 +27,52 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _progressAnimation;
+  late Animation<int> _percentageAnimation;
+
+  final double targetPercentage = 86.0; // The target percentage to animate to
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Create animation controller with 2 second duration
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+
+    // Create animation for the progress arc (0.0 to targetPercentage/100)
+    _progressAnimation = Tween<double>(
+      begin: 0.0,
+      end: targetPercentage / 100,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    ));
+
+    // Create animation for the percentage text (0 to targetPercentage)
+    _percentageAnimation = IntTween(
+      begin: 0,
+      end: targetPercentage.round(),
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    ));
+
+    // Start the animation when the widget is built
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   String getGreeting() {
     var hour = DateTime.now().hour;
 
@@ -150,8 +197,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: CustomText(
-                    textName:
-                        widget.user?.username.capitalizeFirstOfEach ?? "Not",
+                    textName: widget.user?.username.capitalizeFirstOfEach ??
+                        "Not Fetched",
                     fontWeight: FontWeight.w700,
                     textColor: const Color(0xff232323),
                     maxLines: 10,
@@ -211,24 +258,52 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(
                       width: 10,
                     ),
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        const Text(
-                          "85%",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.2,
-                          height: MediaQuery.of(context).size.width * 0.2,
-                          child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(AppColors.green),
-                            strokeWidth: 10,
-                            value: 0.85,
+                    AnimatedBuilder(
+                      animation: _animationController,
+                      builder: (context, child) => Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          /// Progress indicator
+                          CustomPaint(
+                            size: Size(
+                              MediaQuery.of(context).size.width * 0.2,
+                              MediaQuery.of(context).size.width * 0.2,
+                            ),
+                            painter: CircularProgressPainter(
+                              progress: _progressAnimation.value,
+                              color: AppColors.green,
+                              strokeWidth: 9,
+                            ),
                           ),
-                        ),
-                      ],
+
+                          /// Percentage text
+                          Text(
+                            '${_percentageAnimation.value}%',
+                            style: TextStyle(
+                              color: AppColors.green,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          // SizedBox(
+                          //   width: MediaQuery.of(context).size.width * 0.2,
+                          //   height: MediaQuery.of(context).size.width * 0.2,
+                          //   child: TweenAnimationBuilder<double>(
+                          //     tween: Tween<double>(
+                          //         begin: 0.0, end: 0.85), // 85% = 0.85
+                          //     duration: const Duration(
+                          //         seconds: 1), // Animation duration
+                          //     builder: (context, value, child) {
+                          //       return CircularProgressIndicator(
+                          //         value: value,
+                          //         valueColor: AlwaysStoppedAnimation<Color>(
+                          //             AppColors.green),
+                          //       );
+                          //     },
+                          //   ),
+                          // ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -277,5 +352,50 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+}
+
+class CircularProgressPainter extends CustomPainter {
+  final double progress;
+  final Color color;
+  final double strokeWidth;
+
+  CircularProgressPainter({
+    required this.progress,
+    required this.color,
+    required this.strokeWidth,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Calculate center of the canvas
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = (size.width - strokeWidth) / 2;
+
+    // Create paint for arc
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = strokeWidth
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    // Draw the arc from top center position
+    const startAngle = -pi / 2; // Start from top (270 degrees)
+    final sweepAngle = 2 * pi * progress; // Draw based on progress
+
+    canvas.drawArc(
+      Rect.fromCircle(center: center, radius: radius),
+      startAngle,
+      sweepAngle,
+      false,
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(CircularProgressPainter oldDelegate) {
+    return oldDelegate.progress != progress ||
+        oldDelegate.color != color ||
+        oldDelegate.strokeWidth != strokeWidth;
   }
 }

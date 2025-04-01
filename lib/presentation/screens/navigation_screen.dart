@@ -58,7 +58,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
         scaffoldKey: _scaffoldKey,
       ),
       RewardScreen(
-        scaffoldKey: _scaffoldKey,
+        scaffoldKey: _scaffoldKey, user: user,
       )
     ];
     final List<FloatingActionButton> actionButtons = [
