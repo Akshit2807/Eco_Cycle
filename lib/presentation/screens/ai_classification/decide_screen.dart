@@ -44,9 +44,9 @@ class _DecideScreenState extends State<DecideScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData &&
               snapshot.connectionState == ConnectionState.done) {
-            List<String> heading = snapshot.data!.guide.pointers.headings;
+            List<String> heading = snapshot.data!.guide!.pointers!.headings!;
             List<String> description =
-                snapshot.data!.guide.pointers.description;
+                snapshot.data!.guide!.pointers!.description!;
             if (snapshot.data!.decision == "resell") {
               isRecycle = false;
             }
@@ -69,7 +69,7 @@ class _DecideScreenState extends State<DecideScreen> {
                       context: context,
                     ),
                     CustomText(
-                      textName: snapshot.data!.guide.initials,
+                      textName: snapshot.data!.guide!.initials,
                       fontWeight: FontWeight.w500,
                       textColor: const Color(0xff232323),
                       letterSpacing: 1,
@@ -219,7 +219,8 @@ class _DecideScreenState extends State<DecideScreen> {
               ),
             );
           } else if (snapshot.hasError) {
-            return const Center(child: Text("Something went wrong"));
+            return const Center(
+                child: Text("Something went wrong while making decision"));
           } else {
             return const Center(
               child: AppLoader(),

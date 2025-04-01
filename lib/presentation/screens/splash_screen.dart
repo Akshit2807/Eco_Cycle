@@ -122,7 +122,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   },
                   color: const Color(0xff4CAF50),
                   child: const CustomText(
-                    textName: "Create an account",
+                    textName: "Continue to Login",
                     textColor: Color(0xff232323),
                   )),
 
@@ -130,35 +130,6 @@ class _SplashScreenState extends State<SplashScreen> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
-              //
-              // //TODO: after routing page is still on signup page
-              // /// Sign In Route
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     const CustomText(
-              //       textName: "Already have an account? ",
-              //       textColor: Color(0xff232323),
-              //       fontWeight: FontWeight.normal,
-              //       letterSpacing: 2,
-              //       textAlign: TextAlign.center,
-              //       fontSize: 14,
-              //     ),
-              //     GestureDetector(
-              //       onTap: () {
-              //         Get.offAllNamed(RouteNavigation.navScreenRoute);
-              //       },
-              //       child: const CustomText(
-              //         textName: "Sign in",
-              //         fontWeight: FontWeight.normal,
-              //         letterSpacing: 2,
-              //         textColor: Color(0xff4CAF50),
-              //         textAlign: TextAlign.center,
-              //         fontSize: 14,
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         ),

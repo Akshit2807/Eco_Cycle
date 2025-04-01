@@ -1,3 +1,4 @@
+import 'package:e_waste/core/services/camera_service.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/app_icons.dart';
 import 'package:flutter/material.dart';
@@ -63,16 +64,25 @@ class _NavigationScreenState extends State<NavigationScreen> {
     final List<FloatingActionButton> actionButtons = [
       FloatingActionButton(
         onPressed: () async {
-          // TODO:
-          /// take img
-
-          // error - snack-bar
-
-          // success
-          // Camera button action
-          Get.toNamed(
-            RouteNavigation.cameraScreenRoute,
-          );
+          try {
+            String? base64 = await CameraService().imgToBase64();
+            if (base64 == null) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                    content: Text("Unable to take image. Try Again"),
+                    backgroundColor: Colors.red),
+              );
+            } else {
+              Get.toNamed(RouteNavigation.cameraScreenRoute,
+                  arguments: {'base64': base64});
+            }
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content: Text("Unable to take image. Try Again"),
+                  backgroundColor: Colors.red),
+            );
+          }
         },
         backgroundColor: AppColors.green,
         shape: const CircleBorder(),

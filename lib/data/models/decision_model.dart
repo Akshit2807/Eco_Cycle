@@ -2,11 +2,11 @@ import 'dart:convert';
 
 class Decision {
   final String decision;
-  final Guide guide;
+  final Guide? guide;
 
   Decision({
     required this.decision,
-    required this.guide,
+    this.guide,
   });
 
   factory Decision.fromRawJson(String str) =>
@@ -21,17 +21,17 @@ class Decision {
 
   Map<String, dynamic> toJson() => {
         "decision": decision,
-        "guide": guide.toJson(),
+        "guide": guide!.toJson(),
       };
 }
 
 class Guide {
   final String initials;
-  final Pointers pointers;
+  final Pointers? pointers;
 
   Guide({
     required this.initials,
-    required this.pointers,
+    this.pointers,
   });
 
   factory Guide.fromRawJson(String str) => Guide.fromJson(json.decode(str));
@@ -45,17 +45,17 @@ class Guide {
 
   Map<String, dynamic> toJson() => {
         "initials": initials,
-        "pointers": pointers.toJson(),
+        "pointers": pointers!.toJson(),
       };
 }
 
 class Pointers {
-  final List<String> headings;
-  final List<String> description;
+  final List<String>? headings;
+  final List<String>? description;
 
   Pointers({
-    required this.headings,
-    required this.description,
+    this.headings,
+    this.description,
   });
 
   factory Pointers.fromRawJson(String str) =>
@@ -69,7 +69,7 @@ class Pointers {
       );
 
   Map<String, dynamic> toJson() => {
-        "headings": List<dynamic>.from(headings.map((x) => x)),
-        "description": List<dynamic>.from(description.map((x) => x)),
+        "headings": List<dynamic>.from(headings!.map((x) => x)),
+        "description": List<dynamic>.from(description!.map((x) => x)),
       };
 }
