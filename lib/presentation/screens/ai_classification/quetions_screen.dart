@@ -135,7 +135,7 @@ class _QuetionsScreenState extends State<QuetionsScreen> with RouteAware {
             _isWaitingForResponse = false;
           });
 
-          Get.toNamed(RouteNavigation.decideScreenRoute,
+          Get.offNamed(RouteNavigation.decideScreenRoute,
               arguments: {'qns': qns.toString()});
 
           log('WebSocket disconnected');

@@ -154,7 +154,7 @@ class _DecideScreenState extends State<DecideScreen> {
                                 SecureStorageService().deleteData("clickedImg");
                                 SecureStorageService()
                                     .deleteData("QuestionsFromAI");
-                                Get.toNamed(RouteNavigation.navScreenRoute);
+                                Get.offAllNamed(RouteNavigation.navScreenRoute);
                               },
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,

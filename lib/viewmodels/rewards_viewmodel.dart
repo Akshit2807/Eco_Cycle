@@ -59,6 +59,7 @@ class rewardView {
             Row(children: [
               CircleAvatar(
                   radius: 16,
+                  backgroundColor: Colors.transparent,
                   child: Image(
                     image: prf,
                   )),
@@ -106,17 +107,23 @@ class rewardView {
     );
   }
 
-  Padding buildRewardTile({required double bottomPadding}) {
+  Padding buildRewardTile(
+      {required double bottomPadding, required String title}) {
     return Padding(
       padding: EdgeInsets.only(bottom: bottomPadding),
       child: Row(
         children: [
           Image.asset(AppIcons.gift),
           const SizedBox(width: 12),
-          const CustomText(
-            textName: 'Recycled E-Waste',
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: CustomText(
+              textName: title,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              textOverflow: TextOverflow.ellipsis,
+              softWrap: true,
+            ),
           ),
           const Spacer(),
           GestureDetector(

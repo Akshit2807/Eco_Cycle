@@ -13,16 +13,18 @@ class PointHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<PointHistory> points = [
-      PointHistory(points: 10, date: "10 Jan 2023"),
-      PointHistory(points: 10, date: "10 Jan 2023"),
-      PointHistory(points: 10, date: "10 Jan 2023"),
-      PointHistory(points: 10, date: "10 Jan 2023"),
-      PointHistory(points: 10, date: "10 Jan 2023"),
-      PointHistory(points: 10, date: "10 Jan 2023"),
-      PointHistory(points: 10, date: "10 Jan 2023"),
-      PointHistory(points: 10, date: "10 Jan 2023"),
-      PointHistory(points: 10, date: "10 Jan 2023"),
-      PointHistory(points: 10, date: "10 Jan 2023"),
+      PointHistory(points: 29, date: "03 Oct 2025"),
+      PointHistory(points: 14, date: "03 Oct 2025"),
+      PointHistory(points: 32, date: "03 Oct 2025"),
+      PointHistory(points: 36, date: "03 Oct 2025"),
+      PointHistory(points: 18, date: "02 Oct 2025"),
+      PointHistory(points: 36, date: "02 Oct 2025"),
+      PointHistory(points: 42, date: "01 Oct 2025"),
+      PointHistory(points: 46, date: "30 Sept 2025"),
+      PointHistory(points: 19, date: "20 Sept 2025"),
+      PointHistory(points: 15, date: "16 Sept 2025"),
+      PointHistory(points: 19, date: "12 Sept 2025"),
+      PointHistory(points: 15, date: "04 Sept 2025"),
     ];
     return SafeArea(
       child: Scaffold(
@@ -121,8 +123,8 @@ class PointHistoryScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 16),
                               itemBuilder: (BuildContext context, int index) {
                                 return rewardView().buildPointHistoryTile(
-                                    points: points.elementAt(index).points,
-                                    date: points.elementAt(index).date);
+                                    points: points.elementAt(index + 4).points,
+                                    date: points.elementAt(index + 4).date);
                               }),
                           PercentSizedBox.height(0.015),
 
@@ -140,8 +142,8 @@ class PointHistoryScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(top: 16),
                               itemBuilder: (BuildContext context, int index) {
                                 return rewardView().buildPointHistoryTile(
-                                    points: points.elementAt(index).points,
-                                    date: points.elementAt(index).date);
+                                    points: points.elementAt(index + 8).points,
+                                    date: points.elementAt(index + 8).date);
                               }),
                         ],
                       ),
