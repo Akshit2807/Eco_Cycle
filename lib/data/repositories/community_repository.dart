@@ -65,7 +65,8 @@ class CommunityRepository {
             currentLikes.remove(userId);
           }
           transaction.update(postRef, {'likes': currentLikes});
-          print("Transaction successful: ${isLiked ? 'Liked' : 'Unliked'} post $postId");
+          print(
+              "Transaction successful: ${isLiked ? 'Liked' : 'Unliked'} post $postId");
         } else {
           print("Post $postId does not exist");
         }
@@ -73,6 +74,7 @@ class CommunityRepository {
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+            behavior: SnackBarBehavior.floating,
             content: Text(isLiked ? "❤️ Liked post!" : "💔 Unliked post!")),
       );
       print("Post $postId ${isLiked ? 'liked' : 'unliked'} by $userId");
@@ -96,14 +98,20 @@ class CommunityRepository {
       await postRef.update({'commentsCount': FieldValue.increment(1)});
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("💬 Comment added!")),
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text("💬 Comment added!"),
+        ),
       );
       print("Comment added to post $postId: ${commentData['content']}");
     } catch (e) {
       print("Error adding comment: $e");
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("❌ Failed to add comment!")),
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text("❌ Failed to add comment!"),
+        ),
       );
     }
   }
@@ -135,8 +143,10 @@ class CommunityRepository {
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text(
-                isBookmarked ? "🔖 Post bookmarked!" : "📌 Bookmark removed!")),
+          behavior: SnackBarBehavior.floating,
+          content: Text(
+              isBookmarked ? "🔖 Post bookmarked!" : "📌 Bookmark removed!"),
+        ),
       );
       print(
           "Post $postId ${isBookmarked ? 'bookmarked' : 'unbookmarked'} by $userId");
