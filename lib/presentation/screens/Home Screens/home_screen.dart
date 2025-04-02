@@ -179,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen>
                   child: CustomText(
                     textName: "${getGreeting()},",
                     fontWeight: FontWeight.w700,
-                    textColor: const Color(0xff232323),
+                    textColor: AppColors.green,
                     maxLines: 10,
                     textAlign: TextAlign.right,
                     fontSize: 20,
@@ -200,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen>
                     textName: widget.user?.username.capitalizeFirstOfEach ??
                         "Not Fetched",
                     fontWeight: FontWeight.w700,
-                    textColor: const Color(0xff232323),
+                    textColor: AppColors.green.withValues(alpha: 0.8),
                     maxLines: 10,
                     textAlign: TextAlign.right,
                     fontSize: 20,
@@ -209,7 +209,21 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 12,
+            ),
+            const Entry.all(
+              delay: Duration(milliseconds: 20),
+              child: Padding(
+                padding: EdgeInsets.only(left: 24.0, top: 12, bottom: 16),
+                child: CustomText(
+                  textName: "A New Eco Tip Just for You!",
+                  fontWeight: FontWeight.w700,
+                  textColor: Color(0xff232323),
+                  maxLines: 10,
+                  textAlign: TextAlign.right,
+                  fontSize: 20,
+                ),
+              ),
             ),
 
             /// Top Image carousel
@@ -230,13 +244,26 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
             ),
+            const Entry.all(
+              delay: Duration(milliseconds: 20),
+              child: Padding(
+                padding: EdgeInsets.only(left: 24.0, top: 16),
+                child: CustomText(
+                  textName: "Almost There! Keep Recycling",
+                  fontWeight: FontWeight.w700,
+                  textColor: Color(0xff232323),
+                  maxLines: 10,
+                  textAlign: TextAlign.right,
+                  fontSize: 20,
+                ),
+              ),
+            ),
             Entry.all(
               delay: const Duration(milliseconds: 20),
               child: Container(
                 margin:
-                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 height: MediaQuery.of(context).size.width * 0.4,
                 decoration: BoxDecoration(
                     color: Colors.white,

@@ -113,30 +113,32 @@ class _QuetionsScreenState extends State<QuetionsScreen> with RouteAware {
 
       _channel!.stream.listen(
         (message) {
-          // Play sound for incoming message
-          player.play(AssetSource('msg_sound.mp3'));
+          if (message.toString().startsWith("<meraDecision>")) {
+            Get.offNamed(RouteNavigation.decideScreenRoute,
+                arguments: {'qns': qns.toString()});
+          } else {
+            // Play sound for incoming message
+            player.play(AssetSource('msg_sound.mp3'));
 
-          Future.delayed(const Duration(milliseconds: 50000));
-          // Add the message to the chat with animation
-          _addMessage(MessageItem(
-            text: message.toString(),
-            isMe: false,
-          ));
+            Future.delayed(const Duration(milliseconds: 50000));
+            // Add the message to the chat with animation
+            _addMessage(MessageItem(
+              text: message.toString(),
+              isMe: false,
+            ));
 
-          setState(() {
-            _isWaitingForResponse = false;
-          });
+            setState(() {
+              _isWaitingForResponse = false;
+            });
 
-          _scrollToBottom();
+            _scrollToBottom();
+          }
         },
         onDone: () {
           setState(() {
             _isConnected = false;
             _isWaitingForResponse = false;
           });
-
-          Get.offNamed(RouteNavigation.decideScreenRoute,
-              arguments: {'qns': qns.toString()});
 
           log('WebSocket disconnected');
         },
@@ -314,7 +316,7 @@ class _QuetionsScreenState extends State<QuetionsScreen> with RouteAware {
                   size: 16,
                   color: _isConnected && !_isWaitingForResponse
                       ? AppColors.green
-                      : AppColors.green.withOpacity(0.5),
+                      : AppColors.green.withValues(alpha: 0.5),
                 ),
               ),
             ],
@@ -475,12 +477,15 @@ Widget messageTile({
             vertical: 10.0,
           ),
           decoration: BoxDecoration(
-            color: isMe ? AppColors.green : AppColors.green.withOpacity(0.1),
+            color: isMe
+                ? AppColors.green
+                : AppColors.green.withValues(alpha: 0.25),
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: CustomText(
             textName: message,
-            textColor: isMe ? Colors.white : AppColors.green,
+            textColor:
+                isMe ? AppColors.white : AppColors.dark.withValues(alpha: 0.8),
           ),
         ),
       ],

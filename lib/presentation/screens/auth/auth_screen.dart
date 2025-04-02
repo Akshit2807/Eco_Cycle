@@ -308,15 +308,20 @@ class _AuthScreenState extends State<AuthScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        maxLength: 32,
         validator: validator,
         controller: controller,
         obscureText: isObscure,
         // Cursor color
         cursorColor: Colors.green,
         decoration: InputDecoration(
+          counterText: "",
           labelText: label,
           labelStyle: const TextStyle(color: Colors.green),
-          prefixIcon: Icon(icon),
+          prefixIcon: Icon(
+            icon,
+            color: AppColors.green.withValues(alpha: 0.7),
+          ),
           // Border styling
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
           // Enabled border
