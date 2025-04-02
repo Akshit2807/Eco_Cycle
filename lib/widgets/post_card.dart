@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:e_waste/core/utils/extensions.dart';
+import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
+import '../core/utils/app_colors.dart';
 import '../data/models/post_model.dart';
 import '../viewmodels/community_viewmodel.dart';
 
@@ -43,9 +49,10 @@ class PostCard extends StatelessWidget {
     final postedTime = _formatTimestamp(post.timestamp);
 
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 2,
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         child: Column(
@@ -53,7 +60,7 @@ class PostCard extends StatelessWidget {
           children: [
             /// **Header Row**: Profile picture, username + timestamp, overflow menu
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 /// Profile Picture
                 CircleAvatar(
@@ -63,59 +70,54 @@ class PostCard extends StatelessWidget {
                 const SizedBox(width: 10),
 
                 /// Username & Timestamp
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// Row for (username) and (3-dot menu)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              post.username,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-
-                          /// e.g., "2h"
-                          Text(
-                            postedTime,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 13,
-                            ),
-                          ),
-
-                          /// **3-dot (overflow) menu** for "Report" etc.
-                          PopupMenuButton<String>(
-                            onSelected: (value) {
-                              if (value == 'report') {
-                                communityVM.reportPost(
-                                  context,
-                                  post.postId,
-                                  currentUserId,
-                                );
-                              }
-                            },
-                            itemBuilder: (BuildContext context) {
-                              return [
-                                const PopupMenuItem<String>(
-                                  value: 'report',
-                                  child: Center(child: Text('Report')),
-                                ),
-                              ];
-                            },
-                            icon: const Icon(Icons.more_vert, size: 20),
-                          ),
-                        ],
-                      ),
-                    ],
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: CustomText(
+                    textName: post.username.capitalizeFirstOfEach,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    textOverflow: TextOverflow.ellipsis,
                   ),
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+
+                /// e.g., "2h"
+                CustomText(
+                  textName: postedTime,
+                  textColor: AppColors.placeHolder,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13,
+                ),
+                const Spacer(),
+
+                /// **3-dot (overflow) menu** for "Report" etc.
+                PopupMenuButton<String>(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  onSelected: (value) {
+                    if (value == 'report') {
+                      communityVM.reportPost(
+                        context,
+                        post.postId,
+                        currentUserId,
+                      );
+                    }
+                  },
+                  itemBuilder: (BuildContext context) {
+                    return [
+                      const PopupMenuItem<String>(
+                        value: 'report',
+                        child: Center(
+                            child: CustomText(
+                          textName: 'Report',
+                          fontWeight: FontWeight.w400,
+                        )),
+                      ),
+                    ];
+                  },
+                  icon: const Icon(Icons.more_vert, size: 20),
                 ),
               ],
             ),
@@ -124,24 +126,61 @@ class PostCard extends StatelessWidget {
             const SizedBox(height: 8),
 
             /// **Post Text Content**
-            Text(
-              post.content,
-              style: const TextStyle(fontSize: 14),
+            CustomText(
+              textName: post.content,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
             ),
 
-            /// If there's an image, display it below the text.
-            if (post.imageUrl != null && post.imageUrl!.isNotEmpty)
+            /// If there's an image (either URL or base64), display it below the text.
+            if ((post.imageUrl != null && post.imageUrl!.isNotEmpty) ||
+                (post.base64Image != null && post.base64Image!.isNotEmpty))
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
+                  child: post.base64Image != null && post.base64Image!.isNotEmpty
+                      ? Image.memory(
+                    base64Decode(post.base64Image!),
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      print("Error displaying base64 image: $error");
+                      return Container(
+                        height: 200,
+                        color: Colors.grey[300],
+                        child: const Center(child: Text("Failed to load image")),
+                      );
+                    },
+                  )
+                      : Image.network(
                     post.imageUrl!,
                     fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Container(
+                        height: 200,
+                        width: double.infinity,
+                        color: Colors.grey[200],
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 200,
+                        color: Colors.grey[300],
+                        child: const Center(child: Text("Failed to load image")),
+                      );
+                    },
                   ),
                 ),
               ),
-
             /// Spacing before the action row
             const SizedBox(height: 8),
 
@@ -157,12 +196,17 @@ class PostCard extends StatelessWidget {
                   },
                   child: Row(
                     children: [
-                      Icon(Icons.mode_comment_outlined,
-                          size: 18, color: Colors.grey[700]),
-                      const SizedBox(width: 4),
+                      Icon(
+                        Iconsax.message_text,
+                        size: 18,
+                        color: AppColors.placeHolder,
+                      ),
+                      const SizedBox(width: 6),
                       Text(
                         "${post.commentsCount}",
-                        style: TextStyle(color: Colors.grey[700]),
+                        style: TextStyle(
+                          color: AppColors.placeHolder,
+                        ),
                       ),
                     ],
                   ),
@@ -179,14 +223,16 @@ class PostCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(
-                        isLiked ? Icons.favorite : Icons.favorite_border,
+                        isLiked ? Iconsax.heart5 : Iconsax.heart,
                         size: 18,
-                        color: isLiked ? Colors.red : Colors.grey[700],
+                        color: isLiked ? Colors.red : AppColors.placeHolder,
                       ),
-                      const SizedBox(width: 4),
+                      const SizedBox(width: 6),
                       Text(
                         "${post.likes.length}",
-                        style: TextStyle(color: Colors.grey[700]),
+                        style: TextStyle(
+                          color: AppColors.placeHolder,
+                        ),
                       ),
                     ],
                   ),
@@ -200,8 +246,11 @@ class PostCard extends StatelessWidget {
                     // Implement your sharing logic here
                     print("Sharing: $shareText");
                   },
-                  child: Icon(Icons.share_outlined,
-                      size: 18, color: Colors.grey[700]),
+                  child: Icon(
+                    Iconsax.export_1,
+                    size: 18,
+                    color: AppColors.placeHolder,
+                  ),
                 ),
 
                 /// Bookmark button + optional count
@@ -215,9 +264,13 @@ class PostCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Icon(
-                        isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                        isBookmarked
+                            ? Iconsax.archive_tick
+                            : Iconsax.archive_add,
                         size: 18,
-                        color: isBookmarked ? Colors.orange : Colors.grey[700],
+                        color: isBookmarked
+                            ? Colors.orange
+                            : AppColors.placeHolder,
                       ),
                       const SizedBox(width: 4),
                       // If you store a bookmark count, you can display it here.

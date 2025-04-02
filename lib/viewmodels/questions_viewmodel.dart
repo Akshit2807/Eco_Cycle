@@ -1,4 +1,5 @@
 import 'package:e_waste/widgets/custom_text.dart';
+import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import '../core/utils/app_colors.dart';
 

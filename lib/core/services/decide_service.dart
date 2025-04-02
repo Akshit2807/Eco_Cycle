@@ -4,6 +4,7 @@ import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/core/services/local_storage_service/secure_storage.dart';
 import 'package:e_waste/data/models/base_64_model.dart';
 import 'package:e_waste/data/models/decision_model.dart';
+import 'package:e_waste/presentation/screens/ai_classification/quetions_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -28,7 +29,7 @@ class DecideService {
             content: Text("Something Went Wrong. Try Again"),
             backgroundColor: Colors.red),
       );
-      Get.toNamed(
+      Get.offAllNamed(
         RouteNavigation.navScreenRoute,
       );
       throw Exception("Base64Response is missing");
@@ -49,17 +50,17 @@ class DecideService {
       SecureStorageService().saveData(value: responseBody, key: "DecideAPI");
       SecureStorageService().saveData(value: responseBody, key: "DecideAPI");
       Decision decision = Decision.fromRawJson(responseBody);
-      if (decision.decision == "IGN" || decision.guide.initials == "IGN") {
+      if (decision.decision == "IGN" || decision.guide!.initials == "IGN") {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    QuetionsScreen(title: obj.title, des: obj.desc)));
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
               content: Text("Invalid Answers. Try Again"),
               backgroundColor: Colors.red),
         );
-        Get.offNamed(RouteNavigation.quetionsScreenRoute, arguments: {
-          'title': obj.title,
-        });
-        debugPrint('Response Code : ${response.statusCode}');
-        throw Exception('Invalid Input');
       }
       return decision;
     } else {
@@ -68,7 +69,7 @@ class DecideService {
             content: Text("Something Went Wrong. Try Again"),
             backgroundColor: Colors.red),
       );
-      Get.toNamed(
+      Get.offAllNamed(
         RouteNavigation.navScreenRoute,
       );
       debugPrint('Response Code : ${response.statusCode}');

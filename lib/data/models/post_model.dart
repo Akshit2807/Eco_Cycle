@@ -25,6 +25,9 @@ class PostModel {
   /// Optional URL of an image attached to the post.
   final String? imageUrl;
 
+  /// Optional base64 encoded image data.
+  final String? base64Image;
+
   /// List of user IDs who have liked the post.
   final List<String> likes;
 
@@ -51,6 +54,7 @@ class PostModel {
     required this.userProfilePic,
     required this.content,
     this.imageUrl,
+    this.base64Image,
     this.likes = const [],
     this.commentsCount = 0,
     this.shares = 0,
@@ -68,6 +72,7 @@ class PostModel {
       userProfilePic: map['userProfilePic'] ?? '',
       content: map['content'] ?? '',
       imageUrl: map['imageUrl'] as String?,
+      base64Image: map['base64Image'] as String?,
       likes: List<String>.from(map['likes'] ?? []),
       commentsCount: map['commentsCount'] ?? 0,
       shares: map['shares'] ?? 0,
@@ -86,6 +91,7 @@ class PostModel {
       'userProfilePic': userProfilePic,
       'content': content,
       'imageUrl': imageUrl,
+      'base64Image': base64Image,
       'likes': likes,
       'commentsCount': commentsCount,
       'shares': shares,

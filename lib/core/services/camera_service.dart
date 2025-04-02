@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:e_waste/core/services/auth_service.dart';
 import 'package:e_waste/core/services/local_storage_service/secure_storage.dart';
 import 'package:e_waste/data/models/base_64_model.dart';
@@ -10,12 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'dart:convert';
-import 'dart:typed_data';
 import 'package:image/image.dart' as img;
-import 'package:path_provider/path_provider.dart';
-
 import '../router/app_router.dart';
 
 TokenService tokenService = TokenService();
@@ -61,31 +55,10 @@ class CameraService {
   }
 
   static Future<Base64> getCategory(
-      {bool isRetrying = false, required BuildContext context}) async {
+      {bool isRetrying = false,
+      required BuildContext context,
+      required String base64}) async {
     String? token = await tokenService.getToken();
-    String? newBase64;
-    if (!isRetrying) {
-      newBase64 = await CameraService().imgToBase64();
-    } else {
-      String? path = await SecureStorageService().getData("clickedImg");
-      File imageFile = File(path!);
-      // Read image bytes
-      Uint8List imageBytes = await imageFile.readAsBytes();
-
-      // Decode image for processing
-      img.Image? originalImage = img.decodeImage(imageBytes);
-
-      // Resize Image (Reduce size for fast response)
-      img.Image resizedImage =
-          img.copyResize(originalImage!, width: 600); // Resize to 600px width
-
-      // Compress Image to JPEG (Reduce file size)
-      Uint8List compressedBytes =
-          Uint8List.fromList(img.encodeJpg(resizedImage, quality: 70));
-
-      // Convert to Base64
-      newBase64 = base64Encode(compressedBytes);
-    }
 
     log('Token: $token');
 
@@ -95,7 +68,7 @@ class CameraService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    Map<String, dynamic> body = {"image_base64": newBase64};
+    Map<String, dynamic> body = {"image_base64": base64};
 
     final response = await http.post(Uri.parse(url),
         headers: headers, body: jsonEncode(body));
@@ -113,7 +86,7 @@ class CameraService {
               content: Text("Invalid Image. Try Again"),
               backgroundColor: Colors.red),
         );
-        Get.toNamed(
+        Get.offAllNamed(
           RouteNavigation.navScreenRoute,
         );
         debugPrint('Response Code : ${response.statusCode}');
@@ -129,14 +102,15 @@ class CameraService {
       if (newToken != null) {
         return getCategory(
             isRetrying: true,
-            context: context); // Retry API call with new token
+            context: context,
+            base64: base64); // Retry API call with new token
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
               content: Text("Something Went Wrong. Try Again"),
               backgroundColor: Colors.red),
         );
-        Get.toNamed(
+        Get.offAllNamed(
           RouteNavigation.navScreenRoute,
         );
         debugPrint('Response Code : ${response.statusCode}');

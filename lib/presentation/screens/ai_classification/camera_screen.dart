@@ -14,7 +14,8 @@ import '../../../core/utils/app_icons.dart';
 import '../../../widgets/percentage_sized_box.dart';
 
 class CameraScreen extends StatefulWidget {
-  const CameraScreen({super.key});
+  final String base64;
+  const CameraScreen({super.key, required this.base64});
 
   @override
   State<CameraScreen> createState() => _CameraScreenState();
@@ -26,7 +27,8 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void initState() {
-    _response = CameraService.getCategory(context: context);
+    _response =
+        CameraService.getCategory(context: context, base64: widget.base64);
     super.initState();
   }
 
@@ -220,6 +222,7 @@ class _CameraScreenState extends State<CameraScreen> {
                                 Get.toNamed(RouteNavigation.quetionsScreenRoute,
                                     arguments: {
                                       'title': snapshot.data!.title,
+                                      'des': snapshot.data!.desc,
                                     });
                               },
                               style: ElevatedButton.styleFrom(

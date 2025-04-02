@@ -37,7 +37,7 @@ class QuestionsService {
               content: Text("Invalid Input. Try Again"),
               backgroundColor: Colors.red),
         );
-        Get.toNamed(
+        Get.offAllNamed(
           RouteNavigation.navScreenRoute,
         );
         debugPrint('Response Code : ${response.statusCode}');
@@ -50,7 +50,7 @@ class QuestionsService {
             content: Text("Something Went Wrong. Try Again"),
             backgroundColor: Colors.red),
       );
-      Get.toNamed(
+      Get.offAllNamed(
         RouteNavigation.navScreenRoute,
       );
       debugPrint('Response Code : ${response.statusCode}');

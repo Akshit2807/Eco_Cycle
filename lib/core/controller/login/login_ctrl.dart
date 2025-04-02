@@ -14,4 +14,12 @@ class LoginController extends GetxController {
     isLogin = !isLogin;
     update();
   }
+
+  // Clears all text controllers
+  void clearControllers() {
+    emailController.clear();
+    passwordController.clear();
+    nameController.clear();
+    confirmPasswordController.clear();
+  }
 }

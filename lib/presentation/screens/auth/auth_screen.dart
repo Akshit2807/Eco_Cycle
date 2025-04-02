@@ -18,13 +18,15 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   LoginController loginController = Get.put(LoginController());
-
+  final AuthLoadingController loadingController =
+      Get.put(AuthLoadingController());
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: const Color(0xffF1F1F1),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return GetBuilder(
@@ -147,27 +149,67 @@ class _AuthScreenState extends State<AuthScreen> {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      ctrl.isLogin
-                                          ? loginButtonAction(
-                                              authViewModel: authViewModel,
-                                              context: context,
-                                            )
-                                          : signUpButtonAction(
-                                              authViewModel: authViewModel,
-                                              context: context,
-                                            );
+                                      if (ctrl.isLogin) {
+                                        if (ctrl.emailController.text
+                                                .isNotEmpty &&
+                                            ctrl.passwordController.text
+                                                .isNotEmpty) {
+                                          loginButtonAction(
+                                            authViewModel: authViewModel,
+                                            context: context,
+                                          );
+                                        } else {
+                                          // Show an error message or handle the case where fields are empty
+                                          ScaffoldMessenger.of(context)
+                                              .removeCurrentSnackBar();
+                                          Get.snackbar('Login in error',
+                                              'Please fill in all fields');
+                                        }
+                                      } else {
+                                        if (ctrl.nameController.text
+                                                .isNotEmpty &&
+                                            ctrl.emailController.text
+                                                .isNotEmpty &&
+                                            ctrl.passwordController.text
+                                                .isNotEmpty &&
+                                            ctrl.confirmPasswordController.text
+                                                .isNotEmpty) {
+                                          signUpButtonAction(
+                                            authViewModel: authViewModel,
+                                            context: context,
+                                          );
+                                        } else {
+                                          // Show an error message or handle the case where fields are empty
+                                          ScaffoldMessenger.of(context)
+                                              .removeCurrentSnackBar();
+                                          Get.snackbar('Sign Up error',
+                                              'Please fill in all fields');
+                                        }
+                                      }
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.green,
                                       padding: EdgeInsets.symmetric(
                                           vertical: size.height * 0.015),
                                     ),
-                                    child: Text(
-                                      ctrl.isLogin ? 'Login' : 'Sign Up',
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
+                                    child: Obx(
+                                      () => loadingController.loadingValue.value
+                                          ? const SizedBox(
+                                              height: 28,
+                                              width: 28,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                          : Text(
+                                              ctrl.isLogin
+                                                  ? 'Login'
+                                                  : 'Sign Up',
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                     ),
                                   ),
                                 ),
@@ -266,13 +308,32 @@ class _AuthScreenState extends State<AuthScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        maxLength: 32,
         validator: validator,
         controller: controller,
         obscureText: isObscure,
+        // Cursor color
+        cursorColor: Colors.green,
         decoration: InputDecoration(
+          counterText: "",
           labelText: label,
-          prefixIcon: Icon(icon),
+          labelStyle: const TextStyle(color: Colors.green),
+          prefixIcon: Icon(
+            icon,
+            color: AppColors.green.withValues(alpha: 0.7),
+          ),
+          // Border styling
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+          // Enabled border
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            borderSide: const BorderSide(color: Colors.green, width: 1.0),
+          ),
+          // Focused border
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            borderSide: const BorderSide(color: Colors.green, width: 2.0),
+          ),
         ),
       ),
     );

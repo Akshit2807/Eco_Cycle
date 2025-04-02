@@ -26,7 +26,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white30,
+      backgroundColor: Colors.transparent,
       // SafeArea ensures content is visible in various devices.
       body: SafeArea(
         child: Column(
@@ -56,10 +56,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
             const SizedBox(height: 12),
 
             /// Search Bar
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: buildSearchBar(padding: 10),
-            ),
+            buildSearchBar(padding: 24),
             const SizedBox(height: 24),
 
             /// Blogs List
@@ -68,21 +65,6 @@ class _CommunityScreenState extends State<CommunityScreen> {
             ),
           ],
         ),
-      ),
-
-      /// Floating Action Button for creating a new post.
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Get.offAllNamed(RouteNavigation.createPostScreenRoute);
-          Navigator.pushNamed(context, '/createPost');
-        },
-        tooltip: 'Create a Post',
-        backgroundColor: Colors.black,
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.edit,
-          color: Colors.white,
-        ), // Pencil icon.
       ),
     );
   }
