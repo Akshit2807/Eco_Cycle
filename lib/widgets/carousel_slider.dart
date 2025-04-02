@@ -41,7 +41,7 @@ class _AppCarouselSliderState extends State<AppCarouselSlider> {
           autoPlayAnimationDuration: const Duration(milliseconds: 500),
           viewportFraction: 1,
           initialPage: 0,
-          enableInfiniteScroll: false,
+          enableInfiniteScroll: true,
           pageSnapping: true,
           height: widget.height,
           scrollPhysics: const BouncingScrollPhysics(),

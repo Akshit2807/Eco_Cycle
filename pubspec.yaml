@@ -41,7 +41,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   audioplayers: ^6.4.0
-
+  web_socket_channel: ^3.0.2
 
 dev_dependencies:
   flutter_test:
