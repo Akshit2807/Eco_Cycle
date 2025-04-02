@@ -58,9 +58,16 @@ class CommunityRepository {
       await _firestore.runTransaction((transaction) async {
         DocumentSnapshot snapshot = await transaction.get(postRef);
         if (snapshot.exists) {
-          int currentLikes = snapshot['likes'] ?? 0;
-          transaction.update(postRef,
-              {'likes': isLiked ? currentLikes + 1 : currentLikes - 1});
+          List<dynamic> currentLikes = snapshot['likes'] ?? [];
+          if (isLiked) {
+            currentLikes.add(userId);
+          } else {
+            currentLikes.remove(userId);
+          }
+          transaction.update(postRef, {'likes': currentLikes});
+          print("Transaction successful: ${isLiked ? 'Liked' : 'Unliked'} post $postId");
+        } else {
+          print("Post $postId does not exist");
         }
       });
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
