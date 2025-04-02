@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:e_waste/core/utils/extensions.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -130,19 +132,55 @@ class PostCard extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
 
-            /// If there's an image, display it below the text.
-            if (post.imageUrl != null && post.imageUrl!.isNotEmpty)
+            /// If there's an image (either URL or base64), display it below the text.
+            if ((post.imageUrl != null && post.imageUrl!.isNotEmpty) ||
+                (post.base64Image != null && post.base64Image!.isNotEmpty))
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
+                  child: post.base64Image != null && post.base64Image!.isNotEmpty
+                      ? Image.memory(
+                    base64Decode(post.base64Image!),
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      print("Error displaying base64 image: $error");
+                      return Container(
+                        height: 200,
+                        color: Colors.grey[300],
+                        child: const Center(child: Text("Failed to load image")),
+                      );
+                    },
+                  )
+                      : Image.network(
                     post.imageUrl!,
                     fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Container(
+                        height: 200,
+                        width: double.infinity,
+                        color: Colors.grey[200],
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 200,
+                        color: Colors.grey[300],
+                        child: const Center(child: Text("Failed to load image")),
+                      );
+                    },
                   ),
                 ),
               ),
-
             /// Spacing before the action row
             const SizedBox(height: 8),
 
