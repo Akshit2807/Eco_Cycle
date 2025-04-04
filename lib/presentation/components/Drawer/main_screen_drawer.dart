@@ -96,9 +96,6 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                           onTileTap: () {
                         Get.toNamed("/faq");
                       }),
-                      //Billing & Address
-                      buildDrawerTile(
-                          AppIcons.bill, "Billing & Address", 4, controller),
                       //Help
                       buildDrawerTile(
                           AppIcons.help, "Help & Support", 5, controller,

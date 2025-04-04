@@ -54,6 +54,7 @@ class RouteNavigation {
   static const String commentsScreenRoute = '/comments';
   static const String faqScreenRoute = "/faq";
   static const String helpScreenRoute = "/help";
+  static const String postBlogScreenRoute = "/postBlog";
 
   /// **generateRoute**
   /// Returns the corresponding route based on the provided route settings.
@@ -65,6 +66,8 @@ class RouteNavigation {
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case homeScreenRoute:
+        return _customFadeRoute(child: const NavigationScreen());
       case authCheckerScreenRoute:
         return _customFadeRoute(child: AuthChecker());
       case authScreenRoute:
@@ -90,6 +93,13 @@ class RouteNavigation {
         return _customFadeRoute(child: const PointHistoryScreen());
       case rewardHistoryScreenRoute:
         return _customFadeRoute(child: const RewardDetailsScreen());
+      case postBlogScreenRoute:
+        final args = settings.arguments as Map<String, dynamic>? ?? {};
+        return _customFadeRoute(
+            child: CreatePostScreen(
+          passedImagePath: args["path"],
+          passedImage: args['img'],
+        ));
       case quetionsScreenRoute:
         final args = settings.arguments as Map<String, dynamic>? ?? {};
         return _customFadeRoute(
@@ -126,7 +136,7 @@ class RouteNavigation {
         return _customFadeRoute(child: const NavigationScreen());
 
       case createPostScreenRoute:
-        return _customFadeRoute(child: const CreatePostScreen());
+        return _customFadeRoute(child: CreatePostScreen());
       case commentsScreenRoute:
         final postId = settings.arguments as String;
         return _customFadeRoute(child: CommentsScreen(postId: postId));

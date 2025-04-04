@@ -308,7 +308,6 @@ class _AuthScreenState extends State<AuthScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
-        maxLength: 32,
         validator: validator,
         controller: controller,
         obscureText: isObscure,

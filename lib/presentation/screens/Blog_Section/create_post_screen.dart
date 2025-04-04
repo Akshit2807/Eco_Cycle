@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/core/services/local_storage_service/secure_storage.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/data/models/post_model.dart';
@@ -9,6 +10,7 @@ import 'package:e_waste/viewmodels/community_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +18,9 @@ import 'package:provider/provider.dart';
 /// A screen for creating a new blog post.
 /// Users can write text, pick an image, and submit the post.
 class CreatePostScreen extends StatefulWidget {
-  const CreatePostScreen({Key? key}) : super(key: key);
+  File? passedImage;
+  String? passedImagePath;
+  CreatePostScreen({super.key, this.passedImage, this.passedImagePath});
 
   @override
   _CreatePostScreenState createState() => _CreatePostScreenState();
@@ -52,7 +56,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         _selectedImage = File(pickedFile.path);
         _base64Image = base64Image;
       });
-      print("Image selected and converted to base64 (${base64Image.length} characters)");
+      print(
+          "Image selected and converted to base64 (${base64Image.length} characters)");
     } else {
       print("No image selected.");
     }
@@ -124,7 +129,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Post created successfully!")),
       );
-      Navigator.of(context).pop();
+      Get.offAllNamed(RouteNavigation.homeScreenRoute);
       print("Post created with ID: $postId");
     } catch (e) {
       print("Error creating post: $e");
@@ -132,6 +137,21 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         SnackBar(content: Text("Failed to create post: $e")),
       );
     }
+  }
+
+  Future<void> initPassedData() async {
+    final bytes = await File(widget.passedImagePath!).readAsBytes();
+    String base64Image = base64Encode(bytes);
+    setState(() {
+      _selectedImage = widget.passedImage;
+      _base64Image = base64Image;
+    });
+  }
+
+  @override
+  void initState() {
+    widget.passedImage != null ? initPassedData() : null;
+    super.initState();
   }
 
   @override
@@ -168,15 +188,15 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             // Display the selected image if available.
             _selectedImage != null
                 ? ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.file(_selectedImage!,
-                  height: 200, fit: BoxFit.cover),
-            )
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.file(_selectedImage!,
+                        height: 200, fit: BoxFit.cover),
+                  )
                 : Container(
-              height: 200,
-              color: Colors.grey[200],
-              child: const Center(child: Text("No image selected")),
-            ),
+                    height: 200,
+                    color: Colors.grey[200],
+                    child: const Center(child: Text("No image selected")),
+                  ),
             const SizedBox(height: 16),
             // Row with buttons to pick an image and submit the post.
             Row(
