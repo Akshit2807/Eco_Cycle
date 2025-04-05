@@ -1,6 +1,10 @@
+import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/app_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:lottie/lottie.dart';
 
 import '../widgets/custom_text.dart';
 
@@ -58,10 +62,12 @@ class rewardView {
             const Spacer(),
             Row(children: [
               CircleAvatar(
+                  backgroundColor: AppColors.lightGreen.withValues(alpha: 0.5),
                   radius: 16,
-                  backgroundColor: Colors.transparent,
-                  child: Image(
-                    image: prf,
+                  child: const Icon(
+                    Icons.person,
+                    color: Colors.green,
+                    size: 18,
                   )),
               const SizedBox(
                 width: 6,
@@ -108,7 +114,9 @@ class rewardView {
   }
 
   Padding buildRewardTile(
-      {required double bottomPadding, required String title}) {
+      {required double bottomPadding,
+      required String title,
+      required BuildContext context}) {
     return Padding(
       padding: EdgeInsets.only(bottom: bottomPadding),
       child: Row(
@@ -127,7 +135,15 @@ class rewardView {
           ),
           const Spacer(),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              showOverlay(
+                context,
+                AppColors.white,
+                AppColors.green,
+                "Reward Details",
+                "Reward Claimed",
+              );
+            },
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -169,4 +185,85 @@ class rewardView {
       ),
     );
   }
+}
+
+void showOverlay(BuildContext context, Color bg, Color accent, String title,
+    String subtitle) {
+  final GlobalKey previewContainer = GlobalKey();
+
+  var dialog = AlertDialog(
+    backgroundColor: bg,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(25.0),
+      ),
+    ),
+    content: IntrinsicHeight(
+      child: Column(
+        children: [
+          RepaintBoundary(
+            key: previewContainer,
+            child: Column(
+              children: [
+                const SizedBox(height: 12),
+                Center(
+                  child: CustomText(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 24,
+                    maxLines: 10,
+                    textColor: AppColors.dark,
+                    textName: title,
+                  ),
+                ),
+                Lottie.asset(
+                  'assets/gift.json',
+                  repeat: true,
+                  height: MediaQuery.of(context).size.width * 0.4,
+                  width: double.maxFinite,
+                ),
+                const SizedBox(height: 12),
+                Center(
+                  child: CustomText(
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    maxLines: 10,
+                    textColor: accent,
+                    textName: subtitle,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 18),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                fixedSize: const Size(double.maxFinite, 56),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                backgroundColor: AppColors.lightGreen,
+              ),
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: CustomText(
+                  textName: "Okay",
+                  textColor: AppColors.dark,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+
+  showDialog(context: context, builder: (BuildContext context) => dialog);
 }

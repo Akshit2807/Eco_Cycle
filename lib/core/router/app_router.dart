@@ -91,7 +91,11 @@ class RouteNavigation {
             child: ResellScreen(snapshot: args['snapshot']));
 
       case leaderboardScreenRoute:
-        return _customFadeRoute(child: const LeaderboardScreen());
+        final args = settings.arguments as Map<String, dynamic>? ?? {};
+        return _customFadeRoute(
+            child: LeaderboardScreen(
+          userName: args['username'],
+        ));
       case pointHistoryScreenRoute:
         return _customFadeRoute(child: const PointHistoryScreen());
       case rewardHistoryScreenRoute:

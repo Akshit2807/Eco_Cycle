@@ -1,6 +1,7 @@
 import 'package:e_waste/core/services/camera_service.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/app_icons.dart';
+import 'package:e_waste/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -58,7 +59,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
         scaffoldKey: _scaffoldKey,
       ),
       RewardScreen(
-        scaffoldKey: _scaffoldKey, user: user,
+        scaffoldKey: _scaffoldKey,
+        user: user,
       )
     ];
     final List<FloatingActionButton> actionButtons = [
@@ -116,7 +118,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
       ),
       FloatingActionButton(
         onPressed: () {
-          Get.toNamed(RouteNavigation.leaderboardScreenRoute);
+          Get.toNamed(RouteNavigation.leaderboardScreenRoute, arguments: {
+            'username': user?.username.capitalizeFirstOfEach ?? "Not Fetched",
+          });
         },
         tooltip: 'Leaderboard',
         backgroundColor: AppColors.green,

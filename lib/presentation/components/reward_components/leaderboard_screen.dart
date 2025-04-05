@@ -6,7 +6,8 @@ import 'package:e_waste/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class LeaderboardScreen extends StatelessWidget {
-  const LeaderboardScreen({super.key});
+  final String? userName;
+  const LeaderboardScreen({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
@@ -216,10 +217,20 @@ class LeaderboardScreen extends StatelessWidget {
                                   textColor: Colors.white,
                                   textName: ranks.elementAt(0).rank.toString()),
                             ),
-                            CustomText(
-                              textName: ranks.elementAt(0).name,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 6.0),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: CustomText(
+                                  textName: userName != null
+                                      ? userName!
+                                      : "Not Fetched",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
                             ),
                             const SizedBox(
                               height: 12,
