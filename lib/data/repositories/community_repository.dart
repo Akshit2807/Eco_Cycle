@@ -58,14 +58,23 @@ class CommunityRepository {
       await _firestore.runTransaction((transaction) async {
         DocumentSnapshot snapshot = await transaction.get(postRef);
         if (snapshot.exists) {
-          int currentLikes = snapshot['likes'] ?? 0;
-          transaction.update(postRef,
-              {'likes': isLiked ? currentLikes + 1 : currentLikes - 1});
+          List<dynamic> currentLikes = snapshot['likes'] ?? [];
+          if (isLiked) {
+            currentLikes.add(userId);
+          } else {
+            currentLikes.remove(userId);
+          }
+          transaction.update(postRef, {'likes': currentLikes});
+          print(
+              "Transaction successful: ${isLiked ? 'Liked' : 'Unliked'} post $postId");
+        } else {
+          print("Post $postId does not exist");
         }
       });
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+            behavior: SnackBarBehavior.floating,
             content: Text(isLiked ? "❤️ Liked post!" : "💔 Unliked post!")),
       );
       print("Post $postId ${isLiked ? 'liked' : 'unliked'} by $userId");
@@ -89,14 +98,20 @@ class CommunityRepository {
       await postRef.update({'commentsCount': FieldValue.increment(1)});
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("💬 Comment added!")),
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text("💬 Comment added!"),
+        ),
       );
       print("Comment added to post $postId: ${commentData['content']}");
     } catch (e) {
       print("Error adding comment: $e");
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("❌ Failed to add comment!")),
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text("❌ Failed to add comment!"),
+        ),
       );
     }
   }
@@ -128,8 +143,10 @@ class CommunityRepository {
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text(
-                isBookmarked ? "🔖 Post bookmarked!" : "📌 Bookmark removed!")),
+          behavior: SnackBarBehavior.floating,
+          content: Text(
+              isBookmarked ? "🔖 Post bookmarked!" : "📌 Bookmark removed!"),
+        ),
       );
       print(
           "Post $postId ${isBookmarked ? 'bookmarked' : 'unbookmarked'} by $userId");
