@@ -45,6 +45,8 @@ dependencies:
   rename: ^3.0.2
   bottom_picker: ^2.11.2
   scroll_screenshot: ^0.0.4
+  flutter_cache_manager: ^3.4.1
+  url_launcher: ^6.3.1
 
 
 

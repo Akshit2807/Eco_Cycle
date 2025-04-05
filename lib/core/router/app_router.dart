@@ -2,6 +2,7 @@ import 'package:e_waste/presentation/screens/ai_classification/recycle_screen.da
 import 'package:e_waste/presentation/screens/ai_classification/resell_screen.dart';
 import 'package:e_waste/presentation/screens/drawer_screen/faq_screen.dart';
 import 'package:e_waste/presentation/screens/drawer_screen/help.dart';
+import 'package:e_waste/presentation/screens/drawer_screen/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
@@ -63,7 +64,7 @@ class RouteNavigation {
 
   static const String recycleScreenRoute = "/recycle";
   static const String resellScreenRoute = "/resell";
-
+  static const String settingsScreenRoute = "/settings";
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case homeScreenRoute:
@@ -78,6 +79,8 @@ class RouteNavigation {
         return _customFadeRoute(child: const FAQScreen());
       case helpScreenRoute:
         return _customFadeRoute(child: const HelpScreen());
+      case settingsScreenRoute:
+        return _customFadeRoute(child: const SettingsScreen());
       case recycleScreenRoute:
         final args = settings.arguments as Map<String, dynamic>? ?? {};
         return _customFadeRoute(
