@@ -113,21 +113,29 @@ class _RecycleScreenState extends State<RecycleScreen> {
                                 padding: const EdgeInsets.only(bottom: 12.0),
                                 child: GestureDetector(
                                   onTap: () async {
-                                    final String? selectedDate =
-                                        await pickDateTime(context);
+                                    final bool? confirmed =
+                                        await showDateTimeConfirmationDialog(
+                                      context,
+                                      !ctrl.isLogin,
+                                    );
 
-                                    if (selectedDate != null) {
-                                      showOverlay(
-                                        context,
-                                        AppColors.white,
-                                        AppColors.green,
-                                        !ctrl.isLogin
-                                            ? "Pickup Scheduled"
-                                            : "Appointment Booked",
-                                        !ctrl.isLogin
-                                            ? "Your Pickup is scheduled on the date - $selectedDate"
-                                            : "Your appointment is booked on the date - $selectedDate",
-                                      );
+                                    if (confirmed == true) {
+                                      final String? selectedDate =
+                                          await pickDateTime(context);
+
+                                      if (selectedDate != null) {
+                                        showOverlay(
+                                          context,
+                                          AppColors.white,
+                                          AppColors.green,
+                                          !ctrl.isLogin
+                                              ? "Pickup Scheduled"
+                                              : "Appointment Booked",
+                                          !ctrl.isLogin
+                                              ? "Your Pickup is scheduled on the date - $selectedDate"
+                                              : "Your appointment is booked on the date - $selectedDate",
+                                        );
+                                      }
                                     }
                                   },
                                   child: ListTile(
@@ -204,6 +212,41 @@ class _RecycleScreenState extends State<RecycleScreen> {
       ),
     );
   }
+}
+
+Future<bool?> showDateTimeConfirmationDialog(
+    BuildContext context, bool isPickup) async {
+  return showDialog<bool>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: CustomText(
+            textName: isPickup ? "Schedule Pickup" : "Book Appointment"),
+        content: CustomText(
+          fontWeight: FontWeight.w500,
+          textName:
+              "Do you want to select a date and time for ${isPickup ? "pickup" : "appointment"}?",
+        ),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.placeHolder,
+            ),
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.green,
+            ),
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text("Continue"),
+          ),
+        ],
+      );
+    },
+  );
 }
 
 class TabController extends GetxController {

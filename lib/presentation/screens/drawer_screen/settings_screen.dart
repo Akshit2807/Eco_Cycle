@@ -157,7 +157,10 @@ class SettingsScreen extends StatelessWidget {
               imageCache.clearLiveImages();
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Cache cleared successfully')),
+                const SnackBar(
+                  content: Text('Cache cleared successfully'),
+                  behavior: SnackBarBehavior.floating,
+                ),
               );
             },
             child: const Text('CLEAR'),
@@ -176,7 +179,10 @@ class SettingsScreen extends StatelessWidget {
       await launch(uri);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("No email client found")),
+        const SnackBar(
+          content: Text("No email client found"),
+          behavior: SnackBarBehavior.floating,
+        ),
       );
     }
   }
@@ -191,8 +197,12 @@ class SettingsScreen extends StatelessWidget {
       await launch(uri);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No email client found')),
+        const SnackBar(
+          content: Text('No email client found'),
+          behavior: SnackBarBehavior.floating,
+        ),
       );
+
       print("No email client found");
     }
   }
@@ -221,8 +231,12 @@ class SettingsScreen extends StatelessWidget {
             onPressed: () {
               // TODO: Implement account deletion logic
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Coming Soon')),
+                const SnackBar(
+                  content: Text('Coming Soon'),
+                  behavior: SnackBarBehavior.floating,
+                ),
               );
+
               Navigator.pop(context);
               // After successful deletion, navigate back to login screen
             },
