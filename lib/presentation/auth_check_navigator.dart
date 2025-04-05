@@ -20,7 +20,7 @@ class AuthChecker extends StatelessWidget {
         } else {
           // Check if the user is logged in
           if (snapshot.hasData) {
-            if (snapshot.data!.emailVerified == false) {
+            if (snapshot.data!.email == null) {
               return const SplashScreen(); // User is not verified
             }
             return const NavigationScreen(); // User is logged in
