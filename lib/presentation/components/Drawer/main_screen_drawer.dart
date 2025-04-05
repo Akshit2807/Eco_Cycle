@@ -96,9 +96,6 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                           onTileTap: () {
                         Get.toNamed("/faq");
                       }),
-                      //Billing & Address
-                      buildDrawerTile(
-                          AppIcons.bill, "Billing & Address", 4, controller),
                       //Help
                       buildDrawerTile(
                           AppIcons.help, "Help & Support", 5, controller,
@@ -107,7 +104,10 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                       }),
                       //Settings
                       buildDrawerTile(
-                          AppIcons.setting, "Settings", 7, controller),
+                          AppIcons.setting, "Settings", 7, controller,
+                          onTileTap: () {
+                        Get.toNamed("/settings");
+                      }),
                       //Logout
                       buildDrawerTile(AppIcons.logout, "Logout", 8, controller,
                           onTileTap: () {
@@ -115,7 +115,7 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
                       }),
                       const Spacer(),
                       CustomText(
-                        textName: " V 1.0.2",
+                        textName: " V 1.0.5",
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         textColor: AppColors.green,

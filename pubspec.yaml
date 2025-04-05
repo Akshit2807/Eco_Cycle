@@ -2,7 +2,7 @@ name: e_waste
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.2+3
+version: 1.0.5+5
 
 environment:
   sdk: ^3.5.4
@@ -43,6 +43,10 @@ dependencies:
   audioplayers: ^6.4.0
   web_socket_channel: ^3.0.2
   rename: ^3.0.2
+  scroll_screenshot: ^0.0.4
+  flutter_cache_manager: ^3.4.1
+  url_launcher: ^6.3.1
+
 
 dev_dependencies:
   flutter_test:

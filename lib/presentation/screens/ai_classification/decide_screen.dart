@@ -32,6 +32,8 @@ class _DecideScreenState extends State<DecideScreen> {
     super.initState();
   }
 
+  int? expandedTileIndex; // Track the currently expanded tile
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -89,12 +91,24 @@ class _DecideScreenState extends State<DecideScreen> {
                           return Container(
                             margin: const EdgeInsets.symmetric(vertical: 8),
                             child: ExpansionTile(
+                              key: Key(index
+                                  .toString()), // Ensure unique key for each tile
+                              initiallyExpanded: expandedTileIndex == index,
+                              onExpansionChanged: (bool expanded) {
+                                setState(() {
+                                  if (expanded) {
+                                    expandedTileIndex = index;
+                                  } else if (expandedTileIndex == index) {
+                                    expandedTileIndex = null;
+                                  }
+                                });
+                              },
                               title: CustomText(
                                 textName: heading[index],
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w800,
                                 textAlign: TextAlign.left,
                                 fontSize: 18,
-                                textColor: AppColors.green,
+                                textColor: AppColors.dark,
                               ),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
