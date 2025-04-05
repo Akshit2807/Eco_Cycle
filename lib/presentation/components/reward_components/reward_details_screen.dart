@@ -93,7 +93,8 @@ class RewardDetailsScreen extends StatelessWidget {
                                 color: AppColors.lightGreen, width: 2)),
                         child: rewardView().buildRewardTile(
                             bottomPadding: 0,
-                            title: rewardTitles.elementAt(index)),
+                            title: rewardTitles.elementAt(index),
+                            context: context),
                       );
                     }),
               ),

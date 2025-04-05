@@ -8,6 +8,7 @@ import 'package:e_waste/widgets/custom_text.dart';
 import 'package:entry/entry.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../core/router/app_router.dart';
 
@@ -85,7 +86,11 @@ class RewardScreen extends StatelessWidget {
                   points: "40",
                   prf: const AssetImage("assets/person.png"),
                   onTap: () {
-                    Get.toNamed(RouteNavigation.leaderboardScreenRoute);
+                    Get.toNamed(RouteNavigation.leaderboardScreenRoute,
+                        arguments: {
+                          'user': user?.username.capitalizeFirstOfEach ??
+                              "Not Fetched",
+                        });
                   }),
             ),
             const SizedBox(height: 32),
@@ -132,7 +137,8 @@ class RewardScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return rewardView().buildRewardTile(
                             bottomPadding: 12,
-                            title: rewardTitles.elementAt(index));
+                            title: rewardTitles.elementAt(index),
+                            context: context);
                       },
                     ),
                   ],
