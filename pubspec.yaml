@@ -44,9 +44,8 @@ dependencies:
   web_socket_channel: ^3.0.2
   rename: ^3.0.2
   bottom_picker: ^2.11.2
-  intl: ^0.19.0
-  screenshot: ^3.0.0
   scroll_screenshot: ^0.0.4
+
 
 
 

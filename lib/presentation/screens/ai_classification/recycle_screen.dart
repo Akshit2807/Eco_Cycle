@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:e_waste/core/router/app_router.dart';
 import 'package:e_waste/core/utils/app_colors.dart';
+import 'package:e_waste/core/utils/date_picker.dart';
 import 'package:e_waste/core/utils/extensions.dart';
 import 'package:e_waste/data/models/decision_model.dart';
 import 'package:e_waste/presentation/components/custom_app_bar.dart';
@@ -14,7 +15,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:scroll_screenshot/scroll_screenshot.dart';
 
 class RecycleScreen extends StatefulWidget {
@@ -29,199 +29,144 @@ class _RecycleScreenState extends State<RecycleScreen> {
   bool tappedPickup = false;
   ScrollController controller = ScrollController();
   final TabController tabController = Get.put(TabController());
-  ScreenshotController screenshotController = ScreenshotController();
   final GlobalKey globalKey = GlobalKey();
 
   bool tappedBook = false;
   @override
   Widget build(BuildContext context) {
-    return Screenshot(
-      controller: screenshotController,
-      child: Scaffold(
-          backgroundColor: Colors.white,
-          body: LayoutBuilder(builder: (context, constraints) {
-            return GetBuilder(
-                init: tabController,
-                builder: (ctrl) {
-                  Map<String, String> locations = ctrl.isLogin
-                      ? {
-                          "Surya Roshni Ltd": "4.2 km",
-                          "Unique Eco Recycle": "7.8 km",
-                          "Prometheus Recycling": "12.3 km",
-                          "Moonstar Enterprises": "9.1 km",
-                          "Excellent Services": "8.0 km",
-                          "Gayatri Incorporation": "3.7 km",
-                          "Satguru Systems": "6.9 km",
-                          "Smart Services": "10.4 km",
-                        }
-                      : {
-                          "Satguru Systems": "6.9 km",
-                          "Smart Services": "10.4 km",
-                          "Star Mobile Service Center": "2.8 km",
-                          "Yash Enterprises": "11.2 km",
-                          "Municipal Corporation": "1.5 km",
-                          "Unitech Info System": "6.4 km",
-                        };
-                  final keys = locations.keys.toList();
-                  return SingleChildScrollView(
-                    controller: controller,
-                    physics: const BouncingScrollPhysics(),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24.0, vertical: 12),
-                      child: Column(
-                        // crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          /// App Bar
-                          customAppBar(
-                            isHome: false,
-                            title: widget
-                                .snapshot.data!.decision.capitalizeFirstOfEach,
-                            rank: '12',
-                            points: '40',
-                            context: context,
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          CustomText(
-                            textName: "Nearby locations to dispose E-Waste",
-                            fontWeight: FontWeight.w800,
-                            fontSize: 18,
-                            textColor: AppColors.green,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+    return Scaffold(
+        backgroundColor: Colors.white,
+        body: LayoutBuilder(builder: (context, constraints) {
+          return GetBuilder(
+              init: tabController,
+              builder: (ctrl) {
+                Map<String, String> locations = ctrl.isLogin
+                    ? {
+                        "Surya Roshni Ltd": "4.2 km",
+                        "Unique Eco Recycle": "7.8 km",
+                        "Prometheus Recycling": "12.3 km",
+                        "Moonstar Enterprises": "9.1 km",
+                        "Excellent Services": "8.0 km",
+                        "Gayatri Incorporation": "3.7 km",
+                        "Satguru Systems": "6.9 km",
+                        "Smart Services": "10.4 km",
+                      }
+                    : {
+                        "Satguru Systems": "6.9 km",
+                        "Smart Services": "10.4 km",
+                        "Star Mobile Service Center": "2.8 km",
+                        "Yash Enterprises": "11.2 km",
+                        "Municipal Corporation": "1.5 km",
+                        "Unitech Info System": "6.4 km",
+                      };
+                final keys = locations.keys.toList();
+                return SingleChildScrollView(
+                  controller: controller,
+                  physics: const BouncingScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24.0, vertical: 12),
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        /// App Bar
+                        customAppBar(
+                          isHome: false,
+                          title: widget
+                              .snapshot.data!.decision.capitalizeFirstOfEach,
+                          rank: '12',
+                          points: '40',
+                          context: context,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        CustomText(
+                          textName: "Nearby locations to dispose E-Waste",
+                          fontWeight: FontWeight.w800,
+                          fontSize: 18,
+                          textColor: AppColors.green,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
 
-                          /// Sliding tab
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _authTab('Schedule Pickup', !ctrl.isLogin,
-                                  false), // Sign Up tab
-                              _authTab('Book appointment', ctrl.isLogin,
-                                  true), // Login tab
-                            ],
-                          ),
+                        /// Sliding tab
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _authTab('Schedule Pickup', !ctrl.isLogin,
+                                false), // Sign Up tab
+                            _authTab('Book appointment', ctrl.isLogin,
+                                true), // Login tab
+                          ],
+                        ),
 
-                          const SizedBox(height: 10),
-                          ListView.builder(
-                              itemCount: locations.length,
-                              shrinkWrap: true,
-                              controller: controller,
-                              physics: const BouncingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                final title = keys[index];
-                                final distance = locations[title]!;
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 12.0),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      DateTime tomorrow = DateTime.now()
-                                          .add(const Duration(days: 1));
+                        const SizedBox(height: 10),
+                        ListView.builder(
+                            itemCount: locations.length,
+                            shrinkWrap: true,
+                            controller: controller,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final title = keys[index];
+                              final distance = locations[title]!;
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 12.0),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    final String? selectedDate =
+                                        await pickDateTime(context);
 
-                                      String selectedDate =
-                                          "12-06-2025 At 12:40PM";
-                                      BottomPicker.dateTime(
-                                        dismissable: true,
-                                        pickerTextStyle:
-                                            const TextStyle(fontSize: 18),
-                                        titlePadding:
-                                            const EdgeInsets.only(top: 12),
-                                        pickerTitle: const CustomText(
-                                          textName: 'Select the time and date',
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 20,
-                                          textColor: Colors.black,
-                                        ),
-                                        onSubmit: (date) {
-                                          setState(() {
-                                            selectedDate = DateFormat(
-                                                    "dd-MM-yyyy 'At' hh:mma")
-                                                .format(date);
-                                          });
-
-                                          // Wait until after the pop completes
-                                          Future.delayed(
-                                              const Duration(milliseconds: 200),
-                                              () {
-                                            showOverlay(
-                                                context,
-                                                AppColors.white,
-                                                AppColors.green,
-                                                !ctrl.isLogin
-                                                    ? "Pickup Scheduled"
-                                                    : "Appointment Booked",
-                                                !ctrl.isLogin
-                                                    ? "Your Pickup is scheduled on the date - $selectedDate"
-                                                    : "Your appointment is booked on the date - $selectedDate",
-                                                screenshotController);
-                                          });
-
-                                          print(selectedDate);
-                                        },
-                                        onCloseButtonPressed: () {
-                                          print('Picker closed');
-                                        },
-                                        minDateTime: tomorrow,
-                                        maxDateTime: DateTime(2025, 7, 2),
-                                        buttonContent: Center(
-                                          child: FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: CustomText(
-                                              textName: "Confirm",
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w600,
-                                              textColor: AppColors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        buttonWidth: 256,
-                                        buttonPadding: 18,
-                                        buttonStyle: BoxDecoration(
-                                            color: AppColors.green,
-                                            borderRadius:
-                                                BorderRadius.circular(16)),
-                                        initialDateTime: tomorrow,
-                                      ).show(context);
-                                    },
-                                    child: ListTile(
-                                      leading: Icon(
-                                        Icons.location_on_rounded,
-                                        color: AppColors.dark,
-                                      ),
-                                      title: CustomText(
-                                        textName: title,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16,
-                                        textColor: AppColors.dark,
-                                      ),
-                                      trailing: CustomText(
-                                        textName: distance,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16,
-                                        textColor: AppColors.dark,
-                                      ),
-                                      tileColor: AppColors.green
-                                          .withValues(alpha: 0.5),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16)),
+                                    if (selectedDate != null) {
+                                      showOverlay(
+                                        context,
+                                        AppColors.white,
+                                        AppColors.green,
+                                        !ctrl.isLogin
+                                            ? "Pickup Scheduled"
+                                            : "Appointment Booked",
+                                        !ctrl.isLogin
+                                            ? "Your Pickup is scheduled on the date - $selectedDate"
+                                            : "Your appointment is booked on the date - $selectedDate",
+                                      );
+                                    }
+                                  },
+                                  child: ListTile(
+                                    leading: Icon(
+                                      Icons.location_on_rounded,
+                                      color: AppColors.dark,
                                     ),
+                                    title: CustomText(
+                                      textName: title,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                      textColor: AppColors.dark,
+                                    ),
+                                    trailing: CustomText(
+                                      textName: distance,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                      textColor: AppColors.dark,
+                                    ),
+                                    tileColor:
+                                        AppColors.green.withValues(alpha: 0.5),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(16)),
                                   ),
-                                );
-                              }),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                        ],
-                      ),
+                                ),
+                              );
+                            }),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                      ],
                     ),
-                  );
-                });
-          })),
-    );
+                  ),
+                );
+              });
+        }));
   }
 
   // Builds the tab selector for Login/Signup with styling
@@ -274,7 +219,7 @@ class TabController extends GetxController {
 }
 
 void showOverlay(BuildContext context, Color bg, Color accent, String title,
-    String subtitle, ScreenshotController screenshotController) {
+    String subtitle) {
   final GlobalKey previewContainer = GlobalKey();
 
   var dialog = AlertDialog(
@@ -284,70 +229,74 @@ void showOverlay(BuildContext context, Color bg, Color accent, String title,
         Radius.circular(25.0),
       ),
     ),
-    content: RepaintBoundary(
-      key: previewContainer,
-      child: IntrinsicHeight(
-        child: Column(
-          children: [
-            const SizedBox(height: 12),
-            Center(
-              child: CustomText(
-                fontWeight: FontWeight.w800,
-                fontSize: 24,
-                maxLines: 10,
-                textColor: AppColors.dark,
-                textName: title,
-              ),
-            ),
-            Lottie.asset(
-              'assets/done.json',
-              repeat: false,
-              height: MediaQuery.of(context).size.width * 0.6,
-              width: double.maxFinite,
-            ),
-            Center(
-              child: CustomText(
-                textAlign: TextAlign.center,
-                fontWeight: FontWeight.w600,
-                fontSize: 20,
-                maxLines: 10,
-                textColor: accent,
-                textName: subtitle,
-              ),
-            ),
-            const SizedBox(height: 18),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Get.offAllNamed(RouteNavigation.homeScreenRoute);
-                },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  fixedSize: const Size(double.maxFinite, 56),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  backgroundColor: AppColors.lightGreen,
-                ),
-                child: FittedBox(
-                  fit: BoxFit.fitWidth,
+    content: IntrinsicHeight(
+      child: Column(
+        children: [
+          RepaintBoundary(
+            key: previewContainer,
+            child: Column(
+              children: [
+                const SizedBox(height: 12),
+                Center(
                   child: CustomText(
-                    textName: "Okay",
-                    textColor: AppColors.dark.withValues(alpha: 0.6),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 24,
+                    maxLines: 10,
+                    textColor: AppColors.dark,
+                    textName: title,
                   ),
+                ),
+                Lottie.asset(
+                  'assets/done.json',
+                  repeat: false,
+                  height: MediaQuery.of(context).size.width * 0.6,
+                  width: double.maxFinite,
+                ),
+                Center(
+                  child: CustomText(
+                    textAlign: TextAlign.center,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    maxLines: 10,
+                    textColor: accent,
+                    textName: subtitle,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 18),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Get.offAllNamed(RouteNavigation.homeScreenRoute);
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                fixedSize: const Size(double.maxFinite, 56),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                backgroundColor: AppColors.lightGreen,
+              ),
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: CustomText(
+                  textName: "Okay",
+                  textColor: AppColors.dark.withValues(alpha: 0.6),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
                 ),
               ),
             ),
-            const SizedBox(height: 18),
-            Center(
-              child: ContinueButton(
-                globalKey: previewContainer,
-              ),
+          ),
+          const SizedBox(height: 18),
+          Center(
+            child: ContinueButton(
+              globalKey: previewContainer,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     ),
   );
