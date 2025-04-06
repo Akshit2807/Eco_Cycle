@@ -34,18 +34,18 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
           width: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(
+              colors: [Color(0xFFEFFBF1), Color(0xFF9BE7C4)],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              stops: const [0, 0.47],
-              colors: [AppColors.green, Colors.white],
-            ),
+            )
+
           ),
         ),
         Column(
           children: [
             const SizedBox(height: 24),
             CircleAvatar(
-                backgroundColor: Colors.white,
+                backgroundColor: Colors.white.withAlpha((255 * 0.3).toInt()),
                 radius: MediaQuery.of(context).size.width * 0.2,
                 child: Icon(
                   Icons.person,
