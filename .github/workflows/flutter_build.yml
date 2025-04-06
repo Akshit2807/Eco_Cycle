@@ -5,7 +5,7 @@ name: Flutter Builder
 on:
   push:
     branches:
-      - main # agr koi specific branch related triggering krni ho to yhn uss branch ka naam daal dena
+      - master # agr koi specific branch related triggering krni ho to yhn uss branch ka naam daal dena
     paths:
       - 'FlutterApp/**'
   workflow_dispatch:  # For the situations like apne hath jaggannath
