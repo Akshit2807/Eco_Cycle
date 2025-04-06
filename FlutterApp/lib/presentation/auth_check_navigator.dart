@@ -16,14 +16,16 @@ class AuthChecker extends StatelessWidget {
         }
         if (snapshot.hasError) {
           return const Center(
-              child: Text('An error occurred. Please try again.')); // Error state
+              child:
+                  Text('An error occurred. Please try again.')); // Error state
         } else {
           // Check if the user is logged in
           if (snapshot.hasData) {
             if (snapshot.data!.email == null) {
               return const SplashScreen(); // User is not verified
+            } else {
+              return const NavigationScreen(); // User is logged in
             }
-            return const NavigationScreen(); // User is logged in
           } else {
             return const SplashScreen(); // User is not logged in
           }
