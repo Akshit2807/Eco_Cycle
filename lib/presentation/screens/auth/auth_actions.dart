@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 final LoginController ctrl = Get.put(LoginController());
 
+
 void loginButtonAction({
   required AuthViewModel authViewModel,
   required BuildContext context,
@@ -20,10 +21,10 @@ void loginButtonAction({
       ctrl.nameController.text,
     );
 
-    // Clear all text fields after login
-    ctrl.clearControllers();
-
+    // Check if the user is successfully logged in
     if (authViewModel.userInfoMap != null) {
+      // Clear all text fields after login
+      ctrl.clearControllers();
       debugPrint("Login successful! Navigating to home screen.");
       Get.offAllNamed(RouteNavigation.navScreenRoute);
     } else {
