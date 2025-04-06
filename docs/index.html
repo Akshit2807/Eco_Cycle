@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
-<!--Kyu zyada chull machi h code dekhne ki??-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoCycle - Latest Release</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -22,45 +22,156 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            padding: 10px;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1.5" fill="%23ffffff20"/></svg>');
+            opacity: 0.1;
+            pointer-events: none;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 15px;
+            background: rgba(15, 23, 42, 0.7);
+            border-radius: 20px;
             padding: 40px;
             width: 90%;
-            max-width: 700px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #38bdf8, #0ea5e9, #0284c7);
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: rgba(56, 189, 248, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo i {
+            font-size: 36px;
+            color: #38bdf8;
         }
 
         h1 {
-            font-size: 24px;
+            font-size: 28px;
             color: #38bdf8;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
         .version {
             font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .version strong {
+            color: #e2e8f0;
+            background: rgba(56, 189, 248, 0.15);
+            padding: 3px 10px;
+            border-radius: 20px;
             font-weight: 600;
+        }
+
+        .release-date {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 25px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
             margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            color: #94a3b8;
+        }
+
+        .tab.active {
+            background: rgba(56, 189, 248, 0.15);
+            color: #38bdf8;
+        }
+
+        .tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .release-notes {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.5);
             padding: 25px;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
             text-align: left;
-            max-height: 250px;
+            max-height: 300px;
             overflow-y: auto;
             white-space: pre-wrap;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             scrollbar-width: thin;
             scrollbar-color: #38bdf8 transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.6;
         }
 
         .release-notes::-webkit-scrollbar {
@@ -76,92 +187,514 @@
             background: transparent;
         }
 
+        .release-notes h1, .release-notes h2, .release-notes h3 {
+            color: #38bdf8;
+            margin: 15px 0 10px;
+        }
+
+        .release-notes ul, .release-notes ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        .release-notes a {
+            color: #38bdf8;
+            text-decoration: none;
+        }
+
+        .release-notes a:hover {
+            text-decoration: underline;
+        }
+
+        .release-notes code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .highlight-card {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .highlight-icon {
+            font-size: 24px;
+            color: #38bdf8;
+            margin-bottom: 10px;
+        }
+
+        .highlight-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #e2e8f0;
+        }
+
+        .highlight-desc {
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         .download-btn {
-            display: inline-block;
-            padding: 14px 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
             background: linear-gradient(135deg, #38bdf8, #0ea5e9);
             color: #fff;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
             text-decoration: none;
             transition: all 0.3s ease-in-out;
             box-shadow: 0 6px 15px rgba(0, 183, 255, 0.3);
+            border: none;
+            cursor: pointer;
         }
 
         .download-btn:hover {
-            background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 183, 255, 0.4);
         }
 
-        .footer {
-            margin-top: 20px;
-            font-size: 14px;
-            opacity: 0.8;
+        .secondary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        @media (max-width: 600px) {
-    .container {
-        padding: 15px;
-        max-width: 95vw; 
-        min-height: 75vh; 
-    }
-    h1 {
-        font-size: 22px;
-    }
-    .version {
-        font-size: 18px;
-    }
-    .release-notes {
-        font-size: 15px;
-        max-height: 250px;
-    }
-    .download-btn {
-        font-size: 17px;
-        padding: 14px 22px;
-    }
-}
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
 
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #94a3b8;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
 
+        .footer a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer a:hover {
+            color: #38bdf8;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(56, 189, 248, 0.3);
+            border-radius: 50%;
+            border-top-color: #38bdf8;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 30px;
+        }
+
+        .loading-text {
+            color: #94a3b8;
+            font-size: 16px;
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loading-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 30%;
+            background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+            border-radius: 3px;
+            animation: loading 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { left: -30%; }
+            100% { left: 100%; }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+            background: #10b981;
+            color: white;
+        }
+
+        .badge.beta {
+            background: #f59e0b;
+        }
+
+        .badge.alpha {
+            background: #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                max-width: 95%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .logo {
+                width: 70px;
+                height: 70px;
+            }
+
+            .logo i {
+                font-size: 30px;
+            }
+
+            .highlights {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .download-btn, .secondary-btn {
+                width: 100%;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab {
+                margin-bottom: 5px;
+            }
+
+            .release-notes {
+                padding: 15px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>EcoCycle - Latest Release</h1>
-        <p class="version">Fetching latest version...</p>
-        <div class="release-notes">Loading release notes...</div>
-        <a href="#" class="download-btn" target="_blank">Download</a>
-    </div> 
+        <div id="loading" class="loading-container">
+            <div class="logo">
+                <i class="fas fa-recycle"></i>
+            </div>
+            <h1>EcoCycle</h1>
+            <p class="loading-text">Fetching latest release...</p>
+            <div class="loading-bar"></div>
+        </div>
+
+        <div id="content" style="display: none;">
+            <div class="logo">
+                <i class="fas fa-recycle"></i>
+            </div>
+            <h1>EcoCycle</h1>
+            <p class="version">Version: <span id="version-tag">Loading...</span></p>
+            <p class="release-date" id="release-date">Released on: Loading...</p>
+
+            <div class="tabs">
+                <div class="tab active" data-tab="notes">Release Notes</div>
+                <div class="tab" data-tab="highlights">Highlights</div>
+                <div class="tab" data-tab="changelog">Changelog</div>
+            </div>
+
+            <div class="tab-content active" id="notes">
+                <div class="release-notes" id="release-notes">Loading release notes...</div>
+            </div>
+
+            <div class="tab-content" id="highlights">
+                <div class="highlights" id="highlights-container">
+                    <!-- Highlights will be populated dynamically -->
+                </div>
+            </div>
+
+            <div class="tab-content" id="changelog">
+                <div class="release-notes" id="changelog-content">Loading changelog...</div>
+            </div>
+
+            <div class="buttons">
+                <a href="#" class="download-btn" id="download-btn" target="_blank">
+                    <i class="fas fa-download"></i> Download
+                </a>
+                <a href="#" class="secondary-btn" id="github-btn" target="_blank">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+            </div>
+
+            <div class="footer">
+                <a href="#" id="website-link" target="_blank"><i class="fas fa-globe"></i> Website</a>
+                <a href="#" id="issues-link" target="_blank"><i class="fas fa-bug"></i> Report Issues</a>
+                <a href="#" id="docs-link" target="_blank"><i class="fas fa-book"></i> Documentation</a>
+            </div>
+        </div>
+    </div>
 
     <script>
-        async function fetchLatestRelease() {
-    const repo = "Akshit2807/Eco_Cycle";
-    const apiUrl = `https://api.github.com/repos/${repo}/releases/latest`;
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and content
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
 
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        if (data.tag_name) {
-            document.querySelector(".version").innerHTML = `Version: <strong>${data.tag_name}</strong>`;
-
-            document.querySelector(".release-notes").innerHTML = marked.parse(data.body || "No release notes available.");
-
-            const asset = data.assets.length > 0 ? data.assets[0].browser_download_url : "#";
-            document.querySelector(".download-btn").href = asset;
-            document.querySelector(".download-btn").innerText = "Download Latest Release";
-        } else {
-            throw new Error("No release found");
+        // Function to extract highlights from release notes
+        function extractHighlights(releaseBody) {
+            const highlights = [];
+            
+            // Try to find sections that might contain features
+            const sections = releaseBody.split(/#{1,3}\s+/);
+            
+            // Look for bullet points that might be features
+            const bulletPoints = releaseBody.match(/[*-]\s+(.+)/g) || [];
+            
+            // Extract potential features from bullet points
+            bulletPoints.forEach(point => {
+                const text = point.replace(/[*-]\s+/, '').trim();
+                if (text.length > 10 && text.length < 100) {
+                    highlights.push({
+                        title: text.split(':')[0] || text.substring(0, Math.min(30, text.length)),
+                        description: text.split(':')[1] || text,
+                        icon: getIconForFeature(text)
+                    });
+                }
+            });
+            
+            // If we couldn't find enough highlights, create some generic ones
+            if (highlights.length < 3) {
+                highlights.push(
+                    { title: 'Performance Improvements', description: 'Enhanced speed and efficiency across the application.', icon: 'fa-bolt' },
+                    { title: 'Bug Fixes', description: 'Resolved issues reported by our community.', icon: 'fa-bug' },
+                    { title: 'New Features', description: 'Exciting new capabilities added in this release.', icon: 'fa-star' }
+                );
+            }
+            
+            // Limit to 6 highlights
+            return highlights.slice(0, 6);
         }
-    } catch (error) {
-        document.querySelector(".version").innerText = "Failed to fetch release 😢";
-        document.querySelector(".release-notes").innerText = "Could not load release notes.";
-    }
-}
+        
+        // Function to determine an appropriate icon for a feature based on its description
+        function getIconForFeature(text) {
+            const text_lower = text.toLowerCase();
+            
+            if (text_lower.includes('fix') || text_lower.includes('bug') || text_lower.includes('issue')) {
+                return 'fa-bug';
+            } else if (text_lower.includes('performance') || text_lower.includes('speed') || text_lower.includes('faster')) {
+                return 'fa-bolt';
+            } else if (text_lower.includes('ui') || text_lower.includes('interface') || text_lower.includes('design')) {
+                return 'fa-palette';
+            } else if (text_lower.includes('security') || text_lower.includes('auth')) {
+                return 'fa-shield-alt';
+            } else if (text_lower.includes('api') || text_lower.includes('endpoint')) {
+                return 'fa-code';
+            } else if (text_lower.includes('doc') || text_lower.includes('guide')) {
+                return 'fa-book';
+            } else if (text_lower.includes('data') || text_lower.includes('storage')) {
+                return 'fa-database';
+            } else if (text_lower.includes('user') || text_lower.includes('profile')) {
+                return 'fa-user';
+            } else if (text_lower.includes('notification') || text_lower.includes('alert')) {
+                return 'fa-bell';
+            } else if (text_lower.includes('setting') || text_lower.includes('config')) {
+                return 'fa-cog';
+            } else {
+                return 'fa-star';
+            }
+        }
 
-fetchLatestRelease();
+        // Function to determine release type badge
+        function getReleaseTypeBadge(version) {
+            if (version.includes('alpha')) {
+                return '<span class="badge alpha">Alpha</span>';
+            } else if (version.includes('beta')) {
+                return '<span class="badge beta">Beta</span>';
+            } else if (version.includes('rc')) {
+                return '<span class="badge beta">RC</span>';
+            } else {
+                return '<span class="badge">Stable</span>';
+            }
+        }
 
+        // Format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        async function fetchLatestRelease() {
+            const repo = "Akshit2807/Eco_Cycle";
+            const apiUrl = `https://api.github.com/repos/${repo}/releases/latest`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                // Hide loading screen and show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+
+                if (data.tag_name) {
+                    // Set version with badge
+                    const badge = getReleaseTypeBadge(data.tag_name);
+                    document.getElementById('version-tag').innerHTML = `<strong>${data.tag_name}</strong>${badge}`;
+                    
+                    // Set release date
+                    document.getElementById('release-date').innerText = `Released on: ${formatDate(data.published_at)}`;
+                    
+                    // Set release notes with markdown parsing
+                    document.getElementById('release-notes').innerHTML = marked.parse(data.body || "No release notes available.");
+                    
+                    // Set changelog (simplified version of release notes)
+                    document.getElementById('changelog-content').innerHTML = marked.parse(data.body || "No changelog available.");
+                    
+                    // Extract and display highlights
+                    const highlights = extractHighlights(data.body || "");
+                    const highlightsHTML = highlights.map(highlight => `
+                        <div class="highlight-card">
+                            <div class="highlight-icon"><i class="fas ${highlight.icon}"></i></div>
+                            <div class="highlight-title">${highlight.title}</div>
+                            <div class="highlight-desc">${highlight.description}</div>
+                        </div>
+                    `).join('');
+                    document.getElementById('highlights-container').innerHTML = highlightsHTML;
+                    
+                    // Set download button
+                    const asset = data.assets.length > 0 ? data.assets[0].browser_download_url : data.html_url;
+                    document.getElementById('download-btn').href = asset;
+                    
+                    // Set GitHub links
+                    document.getElementById('github-btn').href = data.html_url;
+                    document.getElementById('issues-link').href = `https://github.com/${repo}/issues`;
+                    document.getElementById('docs-link').href = `https://github.com/${repo}/wiki`;
+                    document.getElementById('website-link').href = `https://github.com/${repo}`;
+                    
+                    // Update download button text
+                    if (data.assets.length > 0) {
+                        const assetSize = (data.assets[0].size / 1048576).toFixed(2); // Convert to MB
+                        document.getElementById('download-btn').innerHTML = `<i class="fas fa-download"></i> Download (${assetSize} MB)`;
+                    } else {
+                        document.getElementById('download-btn').innerHTML = `<i class="fas fa-download"></i> View Release`;
+                    }
+                } else {
+                    throw new Error("No release found");
+                }
+            } catch (error) {
+                // Hide loading screen and show content with error
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+                
+                document.getElementById('version-tag').innerHTML = '<strong>Not Available</strong>';
+                document.getElementById('release-date').innerText = 'Could not fetch release information';
+                document.getElementById('release-notes').innerHTML = '<p>Could not load release notes. Please try again later or check the GitHub repository directly.</p>';
+                document.getElementById('highlights-container').innerHTML = '<p>No highlights available.</p>';
+                document.getElementById('changelog-content').innerHTML = '<p>No changelog available.</p>';
+                
+                // Set GitHub links to repo
+                const repoUrl = `https://github.com/${repo}`;
+                document.getElementById('download-btn').href = repoUrl;
+                document.getElementById('github-btn').href = repoUrl;
+                document.getElementById('issues-link').href = `${repoUrl}/issues`;
+                document.getElementById('docs-link').href = `${repoUrl}/wiki`;
+                document.getElementById('website-link').href = repoUrl;
+                
+                document.getElementById('download-btn').innerHTML = '<i class="fab fa-github"></i> View Repository';
+            }
+        }
+
+        // Initialize
+        fetchLatestRelease();
     </script>
 </body>
 </html>
+
