@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+<!--Kyu zyada chull machi h code dekhne ki??-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCycle - Latest Release</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #e2e8f0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 10px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 40px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #38bdf8;
+            margin-bottom: 15px;
+        }
+
+        .version {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .release-notes {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: left;
+            max-height: 250px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: #38bdf8 transparent;
+        }
+
+        .release-notes::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .release-notes::-webkit-scrollbar-thumb {
+            background: #38bdf8;
+            border-radius: 10px;
+        }
+
+        .release-notes::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 6px 15px rgba(0, 183, 255, 0.3);
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 183, 255, 0.4);
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+    .container {
+        padding: 15px;
+        max-width: 95vw; 
+        min-height: 75vh; 
+    }
+    h1 {
+        font-size: 22px;
+    }
+    .version {
+        font-size: 18px;
+    }
+    .release-notes {
+        font-size: 15px;
+        max-height: 250px;
+    }
+    .download-btn {
+        font-size: 17px;
+        padding: 14px 22px;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EcoCycle - Latest Release</h1>
+        <p class="version">Fetching latest version...</p>
+        <div class="release-notes">Loading release notes...</div>
+        <a href="#" class="download-btn" target="_blank">Download</a>
+    </div> 
+
+    <script>
+        async function fetchLatestRelease() {
+    const repo = "PunVas/EcoCycle-HackTheGap-MonoRepo";
+    const apiUrl = `https://api.github.com/repos/${repo}/releases/latest`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data.tag_name) {
+            document.querySelector(".version").innerHTML = `Version: <strong>${data.tag_name}</strong>`;
+
+            document.querySelector(".release-notes").innerHTML = marked.parse(data.body || "No release notes available.");
+
+            const asset = data.assets.length > 0 ? data.assets[0].browser_download_url : "#";
+            document.querySelector(".download-btn").href = asset;
+            document.querySelector(".download-btn").innerText = "Download Latest Release";
+        } else {
+            throw new Error("No release found");
+        }
+    } catch (error) {
+        document.querySelector(".version").innerText = "Failed to fetch release 😢";
+        document.querySelector(".release-notes").innerText = "Could not load release notes.";
+    }
+}
+
+fetchLatestRelease();
+
+    </script>
+</body>
+</html>
