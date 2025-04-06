@@ -87,3 +87,12 @@ flutter pub get
 
 # Run the app
 flutter run
+```
+## 📲 Download the App
+
+You can download the latest version of Eco_Cycle directly from our GitHub releases:
+
+1. Visit the [Releases page](https://github.com/Akshit2807/Eco_Cycle/releases)
+2. Find the latest release
+3. Download the APK file from the Assets section
+4. Install on your Android device (you may need to enable installation from unknown sources in your device settings)
