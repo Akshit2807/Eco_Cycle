@@ -1,6 +1,7 @@
 import 'package:e_waste/core/services/local_storage_service/hive_service.dart';
 import 'package:e_waste/core/utils/extensions.dart';
 import 'package:e_waste/data/repositories/user_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,7 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
   final SecureStorageService secureStorageService = SecureStorageService();
   final HiveService hiveService = HiveService();
   final UserRepository userRepository = UserRepository();
+  final User? firebaseUser = FirebaseAuth.instance.currentUser;
 
   return Drawer(
     shape: const RoundedRectangleBorder(
@@ -33,25 +35,38 @@ Drawer myDrawer(BuildContext context, UserModel? user) {
           height: double.infinity,
           width: double.infinity,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFFEFFBF1), Color(0xFF9BE7C4)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            )
-
-          ),
+              gradient: LinearGradient(
+            colors: [Color(0xFFEFFBF1), Color(0xFF9BE7C4)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          )),
         ),
         Column(
           children: [
             const SizedBox(height: 24),
-            CircleAvatar(
-                backgroundColor: Colors.white.withAlpha((255 * 0.3).toInt()),
-                radius: MediaQuery.of(context).size.width * 0.2,
-                child: Icon(
-                  Icons.person,
-                  color: Colors.green,
-                  size: MediaQuery.of(context).size.width * 0.2,
-                )),
+            ClipOval(
+              child: firebaseUser?.photoURL != null
+                  ? Image.network(
+                      firebaseUser!.photoURL!,
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.width * 0.4,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.network(
+                          'https://imgs.search.brave.com/prpbPTMAYp2IA5lapKLeVJlEtZBzWn_GGlcchFotrkU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQvbWluZWNyYWZ0/LW1lbWUtcGljdHVy/ZXMteW14d2U2dHk5/N2h2b2JrMC5qcGc',
+                          fit: BoxFit.cover,
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          height: MediaQuery.of(context).size.width * 0.4,
+                        );
+                      },
+                    )
+                  : Image.network(
+                      'https://imgs.search.brave.com/prpbPTMAYp2IA5lapKLeVJlEtZBzWn_GGlcchFotrkU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQvbWluZWNyYWZ0/LW1lbWUtcGljdHVy/ZXMteW14d2U2dHk5/N2h2b2JrMC5qcGc',
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.width * 0.4,
+                    ),
+            ),
             const SizedBox(height: 24),
             Center(
               child: CustomText(

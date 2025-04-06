@@ -6,6 +6,7 @@ import 'package:e_waste/viewmodels/point_history_viewmodel.dart';
 import 'package:e_waste/viewmodels/rewards_viewmodel.dart';
 import 'package:e_waste/widgets/custom_text.dart';
 import 'package:entry/entry.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -21,6 +22,7 @@ class RewardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final User? firebaseUser = FirebaseAuth.instance.currentUser;
     final List<String> rewardTitles = [
       "Discount on Next Pickup",
       "Eco-Friendly Tote Bag",

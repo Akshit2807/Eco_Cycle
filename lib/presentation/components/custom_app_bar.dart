@@ -1,6 +1,7 @@
 import 'package:e_waste/core/utils/app_colors.dart';
 import 'package:e_waste/core/utils/app_icons.dart';
 import 'package:e_waste/widgets/custom_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 Row customAppBar({
@@ -14,6 +15,7 @@ Row customAppBar({
 }) {
   double screenWidth = MediaQuery.of(context).size.width;
   double screenHeight = MediaQuery.of(context).size.height;
+  final User? firebaseUser = FirebaseAuth.instance.currentUser;
 
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,10 +46,28 @@ Row customAppBar({
         onTap: () {
           scaffoldKey?.currentState?.openDrawer();
         },
-        child: CircleAvatar(
-          radius: screenWidth * 0.07, // Dynamic size
-          backgroundColor: Colors.transparent,
-          child: prf,
+        child: ClipOval(
+          child: firebaseUser?.photoURL != null
+              ? Image.network(
+                  firebaseUser!.photoURL!,
+                  fit: BoxFit.cover,
+                  width: MediaQuery.of(context).size.width * 0.1,
+                  height: MediaQuery.of(context).size.width * 0.1,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.network(
+                      'https://imgs.search.brave.com/prpbPTMAYp2IA5lapKLeVJlEtZBzWn_GGlcchFotrkU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQvbWluZWNyYWZ0/LW1lbWUtcGljdHVy/ZXMteW14d2U2dHk5/N2h2b2JrMC5qcGc',
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width * 0.1,
+                      height: MediaQuery.of(context).size.width * 0.1,
+                    );
+                  },
+                )
+              : Image.network(
+                  'https://imgs.search.brave.com/prpbPTMAYp2IA5lapKLeVJlEtZBzWn_GGlcchFotrkU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvZmVhdHVy/ZWQvbWluZWNyYWZ0/LW1lbWUtcGljdHVy/ZXMteW14d2U2dHk5/N2h2b2JrMC5qcGc',
+                  fit: BoxFit.cover,
+                  width: MediaQuery.of(context).size.width * 0.12,
+                  height: MediaQuery.of(context).size.width * 0.12,
+                ),
         ),
       ),
     ],
