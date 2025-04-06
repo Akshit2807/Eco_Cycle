@@ -1,7 +1,7 @@
 # Eco_Cycle
 
 <p align="center">
-  <img src="assets/logo.png" alt="Eco_Cycle Logo" width="200"/>
+  <img src="FlutterApp/assets/logo.png" alt="Eco_Cycle Logo" width="200"/>
 </p>
 
 ## 🌱 About Eco_Cycle
