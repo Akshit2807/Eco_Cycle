@@ -27,12 +27,9 @@ class BlogPostListWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           final post = posts[index];
           // TODO: Replace "dummyUserId" with the actual current user ID from your authentication service.
-          return Entry.all(
-            delay: const Duration(milliseconds: 20),
-            child: PostCard(
-              post: post,
-              currentUserId: "dummyUserId",
-            ),
+          return PostCard(
+            post: post,
+            currentUserId: "dummyUserId",
           );
         },
       );
