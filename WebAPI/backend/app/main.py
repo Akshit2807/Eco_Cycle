@@ -296,21 +296,63 @@ async def gen_ques(data: QuestionGetterInput, current_user: dict = Depends(get_c
         raise HTTPException(status_code=500, detail=str(e))
 
 async def authenticate_websocket(websocket: WebSocket):
+    """
+    Authenticate WebSocket connection.
+    Flexible to handle however the mobile app sends the token:
+    1. Query parameter: ?token=TOKEN
+    2. Authorization header with Bearer: "Bearer TOKEN"
+    3. Authorization header without Bearer: "TOKEN"
+    4. Custom header: X-Auth-Token
+    """
     try:
-        auth_header = websocket.headers.get("Authorization")
-        if not auth_header:
+        token = None
+        
+        # Method 1: Query parameter
+        token = websocket.query_params.get("token")
+        logging.info(f"WS Auth - query param token: {'found' if token else 'not found'}")
+        
+        # Method 2: Authorization header
+        if not token:
+            auth_header = websocket.headers.get("Authorization") or websocket.headers.get("authorization")
+            logging.info(f"WS Auth - Authorization header: {auth_header[:50] if auth_header else 'not found'}...")
+            if auth_header:
+                # Handle "Bearer TOKEN" or just "TOKEN"
+                if auth_header.startswith("Bearer "):
+                    token = auth_header[7:]  # Remove "Bearer " prefix
+                elif auth_header.startswith("bearer "):
+                    token = auth_header[7:]  # Handle lowercase
+                else:
+                    token = auth_header  # Assume just the token
+        
+        # Method 3: Custom X-Auth-Token header (some mobile libs use this)
+        if not token:
+            token = websocket.headers.get("X-Auth-Token") or websocket.headers.get("x-auth-token")
+            if token:
+                logging.info("WS Auth - found token in X-Auth-Token header")
+        
+        # Log all headers for debugging (redacted)
+        if not token:
+            header_keys = list(websocket.headers.keys())
+            logging.warning(f"WS Auth - No token found. Available headers: {header_keys}")
+            await websocket.send_text("ERROR: No authentication token found")
             await websocket.close(code=4001)
-            raise HTTPException(status_code=4001, detail="Authentication required")
-        token = auth_header.split(" ")[1]
-        payload = decode_access_token(token)
-        logging.info(f"websocket payload:{payload}")
+            return None
+        
+        # Validate token
+        payload = decode_access_token(token.strip())
+        logging.info(f"WS Auth SUCCESS - user: {payload.get('name', 'unknown')}, sub: {payload.get('sub', 'unknown')}")
         return payload
+        
     except HTTPException as e:
+        logging.error(f"WS Auth FAILED - HTTPException: {e.detail}")
+        await websocket.send_text(f"ERROR: {e.detail}")
         await websocket.close(code=4001)
-        raise e
+        return None
     except Exception as e:
+        logging.error(f"WS Auth FAILED - Exception: {str(e)}")
+        await websocket.send_text(f"ERROR: Authentication failed")
         await websocket.close(code=4001)
-        raise HTTPException(status_code=4001, detail="Authentication failed")
+        return None
 
 
 
@@ -335,18 +377,33 @@ from fastapi import FastAPI, WebSocket
 @app.websocket("/chatqa/{product_name}/{product_description}")
 async def chat_endpoint(websocket: WebSocket, product_name: str, product_description: str):
     await websocket.accept()
+    connection_closed = False
     try:
         payload = await authenticate_websocket(websocket)
-        if bool(payload):
-            await chat_logic(websocket, product_name, product_description, payload)
+        if payload is None:
+            # Auth failed, connection already closed by authenticate_websocket
+            connection_closed = True
+            return
+        
+        user_id = payload.get('sub', 'unknown')
+        logging.info(f"WebSocket chat started - user: {user_id}, product: {product_name}")
+        
+        await chat_logic(websocket, product_name, product_description, payload)
+        
     except ConnectionClosedError:
-        print("Connection Closed Error in endpoint")
+        logging.info(f"WebSocket connection closed by client")
+        connection_closed = True
     except ConnectionClosedOK:
-        print("Connection Closed OK in endpoint")
+        logging.info(f"WebSocket connection closed normally")
+        connection_closed = True
     except Exception as e:
-        print(f"Error in chat_endpoint: {e}")
+        logging.error(f"Error in chat_endpoint: {e}")
     finally:
-        await websocket.close()
+        if not connection_closed:
+            try:
+                await websocket.close()
+            except Exception:
+                pass  # Already closed
 
 
 @app.websocket("/chatqasmpl")
