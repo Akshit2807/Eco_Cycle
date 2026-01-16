@@ -175,7 +175,7 @@ def categorize_ewaste_image(image_bytes: bytes) -> dict:
             "or the image is unfit for a customer to take a decision on or if it is blurry or unclear, return this " 
             "exact dictionary: {\"category\": \"IGN\", \"desc\": \"IGN\", \"generic_tag\": \"IGN\",\"search_tags\":[\"IGN\"]}." 
         ) 
-        response = client.models.generate_content(model="gemini-2.0-flash", contents=[system_prompt, image]) 
+        response = client.models.generate_content(model="gemini-2.5-flash", contents=[system_prompt, image]) 
         response_text = response.text if hasattr(response, "text") else str(response)
         
         category_data = extract_json(response_text)
@@ -238,7 +238,7 @@ def decide_recycle_or_resell(product_name: str, product_desc: str, user_answers:
         user_input = json.dumps({"answers": user_answers}) 
 
         response = client.models.generate_content( 
-            model="gemini-2.0-flash", contents=[system_prompt, user_input] 
+            model="gemini-2.5-flash", contents=[system_prompt, user_input] 
         ) 
         response_text = response.text if hasattr(response, "text") else str(response) 
         response_text=response_text.strip()
@@ -266,7 +266,7 @@ def decide_recycle_or_resell(product_name: str, product_desc: str, user_answers:
         else: 
             return {"r": "IGN", "g": {"initials":"IGN","pointers":{"headings":["IGN"],"description":["IGN"]}}} 
 
-        guide_response =client.models.generate_content(model="gemini-2.0-flash", contents=[guide_prompt, user_input])
+        guide_response =client.models.generate_content(model="gemini-2.5-flash", contents=[guide_prompt, user_input])
         guide_json=extract_json(guide_response.text)
         guide_json['pointers']={"headings":list(guide_json['pointers'].keys()),"description":list(guide_json['pointers'].values())}
         return {"r": response_text, "g": guide_json}
